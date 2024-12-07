@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true"
+    android:layoutDirection="rtl"
+    android:orientation="vertical"
+    android:background="@color/material_dynamic_neutral100">
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"/>
+
+    <EditText
+        android:id="@+id/editMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="پیام خود را بنویسید..."
+        android:lines="10"
+        android:layout_below="@+id/toolbar"
+        android:padding="5dp"
+        android:background="@null"
+        android:textColor="@android:color/black"
+        android:textColorHint="@android:color/darker_gray" />
+
+
+    <TextView
+        android:id="@+id/txtCharNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editMessage"
+        tools:text="1/60"
+
+       android:layout_gravity="end"
+        android:textColor="@android:color/darker_gray"
+        android:padding="5dp"
+        />
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+        android:layout_below="@+id/txtCharNumber"/>
+    <LinearLayout
+        android:id="@+id/txtLytDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/line">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="تاریخ شروع ارسال پیام:"
+            android:textColor="@android:color/black"
+            android:gravity="start"
+            android:padding="5dp"/>
+        <EditText
+            android:id="@+id/editDateStart"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColorHint="@android:color/darker_gray"
+            android:textColor="@android:color/black"
+            android:hint="1401/11/01"
+            android:gravity="center"/>
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/lytTimeEnd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/txtLytDate"
+        android:padding="10dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="بازه ارسالی در شبانه روز :"
+            android:layout_below="@+id/txtLytDate"
+            android:textColor="@android:color/black"
+            android:gravity="start"
+            android:padding="5dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="از ساعت:"
+            android:textColor="@android:color/black"
+            android:gravity="center"/>
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/spinerStartTime"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="تاساعت:"
+            android:textColor="@android:color/black"
+            android:gravity="center"/>
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/spinerEndTime"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"/>
+
+
+    </LinearLayout>
+
+
+
+
+
+
+
+
+</RelativeLayout>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/retangle_corner2"
+    android:layout_margin="10dp"
+    android:orientation="vertical"
+    android:layoutDirection="rtl">
+    <TextView
+        android:id="@+id/txtMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:justificationMode="inter_word"
+        android:padding="10dp"
+        android:text="وشتن چنین کتابی اخلاقی با این سبک سابقه نداشته است؛ خیلی از کتب حجیم، متن سنگین و ... می‌باشد ولی این کتاب روان، کوتاه، کاربردی و متناسب با فضای کتاب‌های داستانی نوشته شده است."/>
+    <TextView
+        android:id="@+id/txtDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/darker_gray"
+        android:text="تاریخ شروع:"
+        android:padding="5dp"/>
+
+</LinearLayout>

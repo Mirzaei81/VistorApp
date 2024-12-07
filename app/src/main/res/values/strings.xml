@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">alarmAmir</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="prompt_username">نام کاربری</string>
+    <string name="prompt_password">رمز عبور</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="confirm_your_number">تایید شماره شما</string>
+    <string name="number_mobile_your">ورود</string>
+</resources>
