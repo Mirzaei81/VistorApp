@@ -8,7 +8,7 @@ package org.visitor;
 
 public class BaseConfig {
 
-    public static String Base_Host = "192.168.220.246";
+    public static String Base_Host = "192.168.122.116";
     public static String BASE_URL_MASTER ="http:/"+Base_Host+"/api/";
 
 }

@@ -42,6 +42,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name="org.visitor.Service.view.ProductActivity"
             android:exported="false">
@@ -49,9 +50,8 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        <activity
-            android:name="org.visitor.Service.view.LoginActivity"
-            android:exported="true" />
+        <activity android:name="org.visitor.Service.view.ConfigActivity"/>
+        <activity android:name="org.visitor.Service.view.LoginActivity" />
         <activity
             android:name="org.visitor.Service.view.MainMoshtariActivity"
             android:exported="true" />

@@ -9,6 +9,8 @@ import androidx.annotation.Nullable;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.DataOutput;
+import java.io.DataOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -43,7 +45,7 @@ public class WebServiceNetwork {
     private ConnectivityManager connectivityManager;
     private NetworkInfo wifiInfo, mobileInfo;
     private boolean connected = false;
-    private int TIMEOUT = 70000;
+    private int TIMEOUT = 7000000;
     private static final String TAG = "WebServiceNetwork";
     //-----------------------------------------------
 
@@ -70,7 +72,6 @@ public class WebServiceNetwork {
     }
     public void requestWebServiceByPost(String serviceUrl, String jsonBody, NetworkListener networkListener) {
         URL url;
-        String response = "";
 
         try {
             networkListener.onStart();
@@ -78,32 +79,30 @@ public class WebServiceNetwork {
                 networkListener.onErrorInternetConnection();
                 return;
             } else {
-
                 url = new URL(serviceUrl);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestProperty("Content-Type","application/json");
                 conn.setReadTimeout(TIMEOUT);
                 conn.setConnectTimeout(TIMEOUT);
-                conn.setRequestMethod("POST");
+                conn.setRequestProperty("charset", "utf-8");
                 conn.setDoInput(true);
                 conn.setDoOutput(true);
-                OutputStream os = conn.getOutputStream();
-                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, StandardCharsets.UTF_8));
-                writer.write(jsonBody);
-
-                writer.flush();
-                writer.close();
-                os.close();
+                conn.setRequestProperty("Content-Length", Integer.toString(jsonBody.getBytes(StandardCharsets.UTF_8).length));
+                OutputStream op =conn.getOutputStream();
+                BufferedWriter dos = new BufferedWriter(new OutputStreamWriter(op,"UTF-8"));
+                dos.write(jsonBody);
+                op.flush();
+                dos.close();
                 int responseCode = conn.getResponseCode();
-
                 if (responseCode == HttpURLConnection.HTTP_OK) {
                     String line;
                     BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                    StringBuilder response = new StringBuilder();
                     while ((line = br.readLine()) != null) {
-                        response += line;
+                        response.append(line);
                     }
                     conn.disconnect();
-                    networkListener.onFinish(response);
+                    networkListener.onFinish(response.toString());
                 } else {
                     conn.disconnect();
                     InputStreamReader errorStream = new InputStreamReader(conn.getErrorStream());
@@ -113,55 +112,47 @@ public class WebServiceNetwork {
                     while((output= bufferedReader.readLine())!=null){
                         sb.append(output);
                     }
-                    networkListener.onErrorServer(sb.toString());
+                    System.out.println(sb);
+                    if(responseCode==HttpURLConnection.HTTP_NOT_FOUND){
+                        networkListener.onErrorServer(String.format("Server with address of %s Not found Please check you're server address",url));
+                    }else{
+                        networkListener.onErrorServer(sb.toString());
+                    }
                 }
 
             }
         } catch (Exception e) {
-            networkListener.onErrorServer(e.toString());
+            networkListener.onErrorServer(e.getMessage());
         }
     }
 
-    public String requestWebServiceByGet(String serviceUrl, @Nullable HashMap<String, String> postDataParams,NetworkListener networkListener) {
+    public String requestWebServiceByGet(String serviceUrl,String dbName, @Nullable HashMap<String, String> postDataParams,NetworkListener networkListener) {
         URL url;
         String response = "";
-
+        String ConfigCoockie = String.format("Configuration=%s",dbName);
         try {
             networkListener.onStart();
             if (!this.isOnline()) {
                 networkListener.onErrorInternetConnection();
                 return null;
             } else {
-//                postDataParams.put(KeyConst.APP_DEVICE_ID, SecureAndroid.getSecureId(context));
-//                postDataParams.put(KeyConst.APP_DEVICE_OS, "android");
                 if (postDataParams == null)
                     url = new URL(serviceUrl);
                 else
                     url = new URL(serviceUrl + "?" + getPostDataString(postDataParams));
-
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            //    trustEveryone();
                 conn.setReadTimeout(TIMEOUT);
                 CookieManager cookieManager = new CookieManager();
                 CookieHandler.setDefault(cookieManager);
+                conn.setRequestProperty("Cookie",ConfigCoockie);
                 conn.setConnectTimeout(TIMEOUT);
                 conn.setRequestMethod("GET");
+                conn.setRequestProperty("Connection","close");
                 conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
                 conn.setRequestProperty("Accept","application/json");
                 conn.setUseCaches(false);
                 conn.setAllowUserInteraction(false);
-
-         /*       OutputStream os = conn.getOutputStream();
-                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, Charset.forName("UTF-8")));
-                Map<String, List<String>> headerFields = conn.getHeaderFields();
-
-           //     writer.write(getPostDataString(postDataParams));
-
-//                writer.flush();
-//                writer.close();
-                os.close();*/
                 int responseCode = conn.getResponseCode();
-
                 if (responseCode == HttpURLConnection.HTTP_OK) {
                     String line;
                     BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -183,69 +174,10 @@ public class WebServiceNetwork {
                 }
             }
         } catch (Exception e) {
-            networkListener.onErrorServer(e.toString());
+            networkListener.onErrorServer(e.getMessage());
             return null;
         }
     }
-
-    public String requestWebServiceByGet(String serviceUrl, @Nullable HashMap<String, String> postDataParams) {
-        URL url;
-        String response = "";
-
-        try {
-
-            if (!this.isOnline()) {
-                //networkListener.onErrorInternetConnection();
-                return null;
-            } else {
-                postDataParams.put(KeyConst.APP_DEVICE_ID, SecureAndroid.getSecureId(context));
-                postDataParams.put(KeyConst.APP_DEVICE_OS, "android");
-                if (postDataParams == null)
-                    url = new URL(serviceUrl);
-                else
-                    url = new URL(serviceUrl + "?" + getPostDataString(postDataParams));
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-
-                conn.setReadTimeout(TIMEOUT);
-                CookieManager cookieManager = new CookieManager();
-                CookieHandler.setDefault(cookieManager);
-                conn.setConnectTimeout(TIMEOUT);
-                conn.setRequestMethod("GET");
-                conn.setDoInput(true);
-                conn.setDoOutput(true);
-                conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
-                conn.setRequestProperty("Accept","application/json");
-                OutputStream os = conn.getOutputStream();
-                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, Charset.forName("UTF-8")));
-                Map<String, List<String>> headerFields = conn.getHeaderFields();
-
-//                writer.write(getPostDataString(postDataParams));
-//
-//                writer.flush();
-//                writer.close();
-                os.close();
-                int responseCode = conn.getResponseCode();
-
-                if (responseCode == HttpURLConnection.HTTP_OK) {
-                    String line;
-                    BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                    while ((line = br.readLine()) != null) {
-                        response += line;
-                    }
-                    return response;
-                } else {
-                    return null;
-
-                }
-
-            }
-        } catch (Exception e) {
-
-
-            return null;
-        }
-    }
-
 
     //-----------------------------------------------
     private String getPostDataString(HashMap<String, String> params) throws UnsupportedEncodingException {

@@ -2,12 +2,16 @@ package org.visitor.Tools.Databace;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import com.google.gson.Gson;
 
 import org.visitor.BaseConfig;
+import org.visitor.Service.presenter.model.UserConfig;
 import org.visitor.Service.presenter.model.UserResponse;
 import org.visitor.userModel.ResponseUser;
+
+import java.util.concurrent.ExecutionException;
 
 
 public class DataSaver {
@@ -20,44 +24,44 @@ public class DataSaver {
     public DataSaver(Context context) {
         this.context = context;
     }
+    public boolean hasConfig(){
+        SharedPreferences sharedpreferences = PreferenceManager.getDefaultSharedPreferences(this.context);
+        return sharedpreferences.contains(CONFIG);
+    }
     public String getHost(){
-        SharedPreferences sharedpreferences = context.getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+        SharedPreferences sharedpreferences = PreferenceManager.getDefaultSharedPreferences(this.context);
         String hostAddress = sharedpreferences.getString(HOST_ADDRESS, "");
         if(hostAddress.isEmpty()){
             setHost(BaseConfig.Base_Host);
+            return BaseConfig.BASE_URL_MASTER;
         }
-        return "http:/"+hostAddress+"+/api/";
+        return "http://"+hostAddress+"/api/";
     }
     public void setHost(String host){
         String ipPattern  = "^((25[0-5]|(2[0-4]|1\\d|[1-9]|)\\d)\\.?\\b){4}$";
-        if(host.matches(ipPattern)){
-            SharedPreferences sharedpreferences = context.getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.putString(HOST_ADDRESS, "");
-            editor.apply();
-        }else{
-            throw new java.lang.RuntimeException("IP Address is invalid");
-        }
+        SharedPreferences sharedpreferences = PreferenceManager.getDefaultSharedPreferences(this.context);
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putString(HOST_ADDRESS, host);
+        editor.apply();
     }
-    public void setConfig(Config){
-        SharedPreferences sharedPreferences = context.getSharedPreferences(CONFIG,Context.MODE_PRIVATE);
+    public String getConfig(){
+        SharedPreferences sharedPreferences =  PreferenceManager.getDefaultSharedPreferences(this.context);
+        return sharedPreferences.getString(CONFIG,"");
+    }
+    public void setConfig(String DbName){
+        SharedPreferences sharedPreferences =  PreferenceManager.getDefaultSharedPreferences(this.context);
         SharedPreferences.Editor  editor = sharedPreferences.edit();
-        editor.putString()
+        editor.putString(CONFIG,DbName);
+        editor.apply();
     }
     public Boolean hasLogin() {
-        try {
-            SharedPreferences sharedpreferences = context.getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
-            String userJson = sharedpreferences.getString(USER_JSON, "");
-            return  userJson.isEmpty();
-        } catch (Exception e) {
-            return false;
-        }
+        SharedPreferences sharedpreferences =  PreferenceManager.getDefaultSharedPreferences(this.context);
+        return sharedpreferences.contains(USER_JSON);
     }
-
     public void setLogin(UserResponse userResponse) {
-        SharedPreferences sharedpreferences = context.getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+        SharedPreferences sharedpreferences =  PreferenceManager.getDefaultSharedPreferences(this.context);
         SharedPreferences.Editor editor = sharedpreferences.edit();
-        String userJson  = new Gson().toJson(userResponse);
+        String userJson  = new Gson().toJson(userResponse.UserObject);
         editor.putString(USER_JSON, userJson);
         editor.apply();
     }

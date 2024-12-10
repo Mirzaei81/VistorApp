@@ -1,97 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ParentView"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@android:color/white"
-    android:layoutDirection="rtl">
-    <RelativeLayout
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:gravity="center"
-        android:background="@android:color/holo_orange_light">
-
-        <TextView
-            android:id="@+id/txtTitle"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@android:color/white"
+        android:layoutDirection="rtl">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@android:color/holo_orange_light">
+        <ImageView
+            android:id="@+id/Settings"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginBottom="5dp"
-            android:padding="5dp"
-            android:text="@string/number_mobile_your"
-            android:textColor="@android:color/white"
-            android:textSize="16sp" />
+            android:layout_margin="5dp"
+            app:srcCompat="@drawable/cogwheel_outline_svgrepo_com" />
+            <TextView
+                android:id="@+id/txtTitle"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:padding="5dp"
+                android:text="@string/number_mobile_your"
+                android:textColor="@android:color/white"
+                android:textSize="24sp" />
 
-        <ImageView
-            android:id="@+id/login"
+            <ImageView
+                android:id="@+id/login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:padding="2dp"
+                android:layout_margin="5dp"
+                android:background="@drawable/ic_check"
+                android:backgroundTint="@android:color/white"/>
+        </RelativeLayout>
+        <ViewFlipper
+            android:id="@+id/viewflipper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/username"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="96dp"
+                    android:gravity="center"
+                    android:hint="@string/prompt_username"
+                    android:selectAllOnFocus="true"
+                    android:textColor="@android:color/black"
+                    android:textColorHint="@android:color/darker_gray"
+                    app:backgroundTint="@color/cardview_shadow_start_color" />
+
+                <EditText
+                    android:id="@+id/password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="96dp"
+                    android:gravity="center"
+                    android:hint="@string/prompt_password"
+                    android:inputType="textPassword"
+                    android:selectAllOnFocus="true"
+                    android:textColor="@android:color/black"
+                    android:textColorHint="@android:color/darker_gray"
+                    app:backgroundTint="@color/cardview_shadow_start_color" />
+            </LinearLayout>
+
+        </ViewFlipper>
+        <ProgressBar
+            android:id="@+id/loading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:padding="2dp"
-            android:layout_margin="5dp"
-            android:background="@drawable/ic_check"
-            android:backgroundTint="@android:color/white"/>
-    </RelativeLayout>
-    <ViewFlipper
-        android:id="@+id/viewflipper"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+            android:layout_gravity="center"
+            android:layout_marginTop="64dp"
+            android:layout_marginBottom="64dp"
+            android:visibility="gone"
+            />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <EditText
-                android:id="@+id/username"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="96dp"
-                android:gravity="center"
-                android:hint="@string/prompt_username"
-                android:selectAllOnFocus="true"
-                android:textColor="@android:color/black"
-                android:textColorHint="@android:color/darker_gray"
-                app:backgroundTint="@color/cardview_shadow_start_color" />
-
-            <EditText
-                android:id="@+id/password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="96dp"
-                android:gravity="center"
-                android:hint="@string/prompt_password"
-                android:inputType="text"
-                android:selectAllOnFocus="true"
-                android:textColor="@android:color/black"
-                android:textColorHint="@android:color/darker_gray"
-                app:backgroundTint="@color/cardview_shadow_start_color" />
-        </LinearLayout>
-
-    </ViewFlipper>
-
-
-
-
-
-
-
-
-    <ProgressBar
-        android:id="@+id/loading"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="64dp"
-        android:layout_marginBottom="64dp"
-        android:visibility="gone"
-        />
-
-</LinearLayout>
+    </LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

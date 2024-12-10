@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 
+import org.visitor.Service.presenter.ResaultConfigPresenter;
 import org.visitor.Service.presenter.ResultFactorPresenter;
 import org.visitor.Service.presenter.ResultLoginPresenter;
 import org.visitor.Service.presenter.model.AccHsbPrsnsKoliResponse;
@@ -19,6 +20,7 @@ import org.visitor.Service.presenter.model.UserResponse;
 import org.visitor.Tools.Databace.DataSaver;
 
 import java.util.HashMap;
+import java.util.Locale;
 
 
 public class Api {
@@ -26,11 +28,12 @@ public class Api {
     private Context context;
     private Thread thread;
     private DataSaver dataSaver;
+    private String DbName ;
 
     public Api(Context context,DataSaver ds) {
         this.context = context;
         dataSaver = ds;
-        PackageInfo packageInfo = null;
+        DbName = dataSaver.getConfig();
     }
 
 
@@ -413,12 +416,34 @@ public class Api {
         });
         thread.start();
     }*/
+    public void getDbName(final float year, final String Daftar, final String Company, final ResaultConfigPresenter resaultConfigPresenter)
+    {
+        final String url  = dataSaver.getHost()+"v1/Auth/db";
+        final  String body = String.format(Locale.forLanguageTag("en-US"),"{ \"year\":\"%f\",\"daftar\":\"%s\",\"company\":\"%s\"}",year,Daftar,Company);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                new WebServiceNetwork(context).requestWebServiceByPost(url, body, new NetworkListener() {
+                    @Override
+                    public void onStart(){}
+                    @Override
+                    public void onErrorInternetConnection(){resaultConfigPresenter.onErrorInternetConnection();}
+
+                    @Override
+                    public void onErrorServer(String e) {resaultConfigPresenter.onErrorServer(e);}
+
+                    @Override
+                    public void onFinish(String result) {resaultConfigPresenter.onFinish(result);}
+                });
+            }
+        }).start();
+    }
     public  void login(final String username, final String password,final ResultLoginPresenter resultLoginPresenter){
-       final  String url = dataSaver.getHost()+"Auth/login";
+       final  String url = dataSaver.getHost()+"v1/Auth";
        final  String body= "{" +
-               " \"username\":" +username +
-               " \"password\":" +password +
-               "}";
+               "\"username\":\""+username +
+               "\",\"password\":\"" +password +
+               "\"}";
        cancelRequest();
        thread = new Thread(new Runnable() {
            @Override
@@ -426,7 +451,6 @@ public class Api {
               new WebServiceNetwork(context).requestWebServiceByPost(url, body, new NetworkListener() {
                   @Override
                   public void onStart() {
-                      resultLoginPresenter.onStart();
                   }
 
                   @Override
@@ -436,13 +460,17 @@ public class Api {
 
                   @Override
                   public void onErrorServer(String e) {
-                      resultLoginPresenter.onError(e);
+                      resultLoginPresenter.onErrorServer(e);
                   }
 
                   @Override
                   public void onFinish(String result) {
                       UserResponse userResponse = new Gson().fromJson(result,UserResponse.class);
-                      resultLoginPresenter.onSuccessResultSearch(userResponse);
+                      if(userResponse!=null){
+                          resultLoginPresenter.onFinish(userResponse);
+                      }else{
+                          resultLoginPresenter.onErrorServer("500 Couldn't parse the result");
+                      }
                   }
               });
            }
@@ -460,7 +488,7 @@ public class Api {
                 HashMap<String, String> getHashMap = new HashMap<>();
                 getHashMap.put(KeyConst.APP_KEY, KeyConst.appKey);
                 getHashMap.put(KeyConst.APP_SECRET, KeyConst.appSecret);
-                new WebServiceNetwork(context).requestWebServiceByGet(url, null, new NetworkListener() {
+                new WebServiceNetwork(context).requestWebServiceByGet(url,DbName, null, new NetworkListener() {
                     @Override
                     public void onStart() {
                         resultSearchBusPresenter.onStart();
@@ -510,7 +538,7 @@ public class Api {
                 HashMap<String, String> getHashMap = new HashMap<>();
                 getHashMap.put(KeyConst.APP_KEY, KeyConst.appKey);
                 getHashMap.put(KeyConst.APP_SECRET, KeyConst.appSecret);
-                new WebServiceNetwork(context).requestWebServiceByGet(url,getHashMap, new NetworkListener() {
+                new WebServiceNetwork(context).requestWebServiceByGet(url,DbName,getHashMap, new NetworkListener() {
                     @Override
                     public void onStart() {
                         resultSearchBusPresenter.onStart();
@@ -562,7 +590,7 @@ public class Api {
                 HashMap<String, String> getHashMap = new HashMap<>();
                 getHashMap.put(KeyConst.APP_KEY, KeyConst.appKey);
                 getHashMap.put(KeyConst.APP_SECRET, KeyConst.appSecret);
-                new WebServiceNetwork(context).requestWebServiceByGet(url, null, new NetworkListener() {
+                new WebServiceNetwork(context).requestWebServiceByGet(url,DbName, null, new NetworkListener() {
                     @Override
                     public void onStart() {
                         resultSearchBusPresenter.onStart();
@@ -614,7 +642,7 @@ public class Api {
                 HashMap<String, String> getHashMap = new HashMap<>();
                 getHashMap.put(KeyConst.APP_KEY, KeyConst.appKey);
                 getHashMap.put(KeyConst.APP_SECRET, KeyConst.appSecret);
-                new WebServiceNetwork(context).requestWebServiceByGet(url, null, new NetworkListener() {
+                new WebServiceNetwork(context).requestWebServiceByGet(url,DbName, null, new NetworkListener() {
                     @Override
                     public void onStart() {
                         resultSearchBusPresenter.onStart();

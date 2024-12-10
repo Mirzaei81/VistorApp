@@ -45,45 +45,53 @@ public class MainKalaActivity extends AppCompatActivity {
     private Api busApi;
     private ProgressBar loading;
     private Snackbar snackbar;
-    private String HostAddress ;
     private AlertDialog.Builder builder;
 
     TextView txtTitle;
     ImageView imgBack;
     MyRoomDatabase myRoomDatabase;
-    private DataSaver dataServer;
+    public DataSaver dataSaver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        dataServer = new DataSaver(MainKalaActivity.this);
+        dataSaver = new DataSaver(MainKalaActivity.this);
         setContentView(R.layout.activity_main_kala);
+        if(!(dataSaver.hasLogin() && dataSaver.hasConfig())){
+             startActivity(new Intent(this,LoginActivity.class));
+             finish();
+             return;
+        }
         CoordinatorLayout view = findViewById(R.id.coordinator);
         snackbar = Snackbar.make(view,"",10000);
-        builder = new AlertDialog.Builder(this);
-        builder.setTitle("Server Address");
-        final EditText input = new EditText(this);
-        input.setInputType(InputType.TYPE_CLASS_NUMBER);
-        input.setKeyListener(DigitsKeyListener.getInstance("09123456789."));
-        builder.setView(input);
 
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                BaseConfig.Base_Host= input.getText().toString();
-                busApi.getKalas(resultPresenterGetGroup);
-            }
-        });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-        ImageView Settings = (ImageView) findViewById(R.id.Settings);
+        ImageView Settings =  findViewById(R.id.Settings);
         Settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                builder = new AlertDialog.Builder(MainKalaActivity.this);
+                builder.setTitle("Server Address");
+                final EditText input = new EditText(MainKalaActivity.this);
+                input.setInputType(InputType.TYPE_CLASS_TEXT);
+                builder.setView(input);
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        try{
+                            dataSaver.setHost(input.getText().toString());
+                        }catch (Exception e){
+                            snackbar.setText(e.toString());
+                            snackbar.show();
+                        }
+                        busApi.getKalas(resultPresenterGetGroup);
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
                 builder.show();
             }
         });
@@ -104,7 +112,7 @@ public class MainKalaActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        busApi = new Api(MainKalaActivity.this,dataServer);
+        busApi = new Api(MainKalaActivity.this,dataSaver);
 
         FloatingActionButton btnAddGroup=findViewById(R.id.btnAddMoshtari);
         btnAddGroup.setOnClickListener(onclickListener);
@@ -123,21 +131,11 @@ public class MainKalaActivity extends AppCompatActivity {
         busApi.getKalas(resultPresenterGetGroup);
 
     }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        busApi.getKalas(resultPresenterGetGroup);
-    }
-
     View.OnClickListener onclickListener=new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            switch (view.getId()){
-                case R.id.btnAddMoshtari:
-                    busApi.getKalas(resultPresenterGetGroup);
-                    break;
-
+            if (view.getId() == R.id.btnAddMoshtari) {
+                busApi.getKalas(resultPresenterGetGroup);
             }
         }
     };
@@ -256,7 +254,7 @@ public class MainKalaActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     Log.i(TAG, "success");
-                    if (response.getKalas().size()>0){
+                    if (response.getKalas()!=null&&response.getKalas().size()>0){
                         setupRecycler(response.getKalas(),myRoomDatabase.kalaDao().getAllKalaList());
                     }else
                         setupRecycler(new ArrayList<>(), myRoomDatabase.kalaDao().getAllKalaList());
