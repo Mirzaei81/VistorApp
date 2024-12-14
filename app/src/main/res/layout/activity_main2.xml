@@ -6,15 +6,35 @@
     android:layout_height="match_parent"
     tools:context="org.visitor.Service.view.MainActivity"
     android:orientation="vertical">
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnPro"
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="محصولات"/>
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnFac"
-        android:layout_width="match_parent"
+        android:background="@color/background"
+        app:tabTextColor="@color/white"
+        app:tabSelectedTextColor="@color/selected"
+        android:tooltipText="اطلاعات پایه">
+    <com.google.android.material.tabs.TabItem
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="فاکتورهای گذشته"/>
+        android:text="خزانه"
+        />
+    <com.google.android.material.tabs.TabItem
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="سفارش گیری"
+        />
 
+    <com.google.android.material.tabs.TabItem
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="اطلاعات پایه"
+        />
+    </com.google.android.material.tabs.TabLayout>
+    <androidx.viewpager2.widget.ViewPager2
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
 </LinearLayout>

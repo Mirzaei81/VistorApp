@@ -8,118 +8,118 @@ import com.google.gson.annotations.SerializedName;
 public class Moshtari implements Serializable
 {
 
-    @SerializedName("mCode")
+    @SerializedName("MCode")
     @Expose
     private Integer mCode;
-    @SerializedName("mGoroh")
+    @SerializedName("MGoroh")
     @Expose
     private Integer mGoroh;
-    @SerializedName("mName")
+    @SerializedName("MName")
     @Expose
     private String mName;
-    @SerializedName("mAtbar")
+    @SerializedName("MAtbar")
     @Expose
     private Integer mAtbar;
-    @SerializedName("mTel1")
+    @SerializedName("MTel1")
     @Expose
     private String mTel1;
-    @SerializedName("mTel2")
+    @SerializedName("MTel2")
     @Expose
     private String mTel2;
-    @SerializedName("mMobil")
+    @SerializedName("MMobil")
     @Expose
     private String mMobil;
-    @SerializedName("mAddress")
+    @SerializedName("MAddress")
     @Expose
     private String mAddress;
-    @SerializedName("mMeli")
+    @SerializedName("MMeli")
     @Expose
     private String mMeli;
-    @SerializedName("mLog")
+    @SerializedName("MLog")
     @Expose
     private Boolean mLog;
-    @SerializedName("mLogHsab")
+    @SerializedName("MLogHsab")
     @Expose
     private Boolean mLogHsab;
-    @SerializedName("mKol")
+    @SerializedName("MKol")
     @Expose
     private String mKol;
-    @SerializedName("mMoein")
+    @SerializedName("MMoein")
     @Expose
     private String mMoein;
-    @SerializedName("mTfzili")
+    @SerializedName("MTfzili")
     @Expose
     private String mTfzili;
-    @SerializedName("mAcc")
+    @SerializedName("MAcc")
     @Expose
     private String mAcc;
-    @SerializedName("mPic")
+    @SerializedName("MPic")
     @Expose
     private String mPic;
-    @SerializedName("mTxt")
+    @SerializedName("MTxt")
     @Expose
     private String mTxt;
-    @SerializedName("mHmkar")
+    @SerializedName("MHmkar")
     @Expose
     private Integer mHmkar;
-    @SerializedName("mLan")
+    @SerializedName("MLan")
     @Expose
     private Integer mLan;
-    @SerializedName("mNameL")
+    @SerializedName("MNameL")
     @Expose
     private String mNameL;
-    @SerializedName("mOnvan")
+    @SerializedName("MOnvan")
     @Expose
     private Integer mOnvan;
-    @SerializedName("mDateList")
+    @SerializedName("MDateList")
     @Expose
     private Object mDateList;
-    @SerializedName("mEconomy")
+    @SerializedName("MEconomy")
     @Expose
     private String mEconomy;
-    @SerializedName("mPost")
+    @SerializedName("MPost")
     @Expose
     private String mPost;
-    @SerializedName("mCity")
+    @SerializedName("MCity")
     @Expose
     private String mCity;
-    @SerializedName("mOstan")
+    @SerializedName("MOstan")
     @Expose
     private String mOstan;
-    @SerializedName("mPorsant")
+    @SerializedName("MPorsant")
     @Expose
     private Object mPorsant;
-    @SerializedName("mEmail")
+    @SerializedName("MEmail")
     @Expose
     private String mEmail;
-    @SerializedName("mCodeMantagh")
+    @SerializedName("MCodeMantagh")
     @Expose
     private Integer mCodeMantagh;
-    @SerializedName("mTel3")
+    @SerializedName("MTel3")
     @Expose
     private String mTel3;
-    @SerializedName("mTel4")
+    @SerializedName("MTel4")
     @Expose
     private String mTel4;
-    @SerializedName("mMobile2")
+    @SerializedName("MMobile2")
     @Expose
     private String mMobile2;
-    @SerializedName("mTelSms")
+    @SerializedName("MTelSms")
     @Expose
     private Boolean mTelSms;
-    @SerializedName("mSabt")
+    @SerializedName("MSabt")
     @Expose
     private String mSabt;
-    @SerializedName("mModir")
+    @SerializedName("MModir")
     @Expose
     private Boolean mModir;
-    @SerializedName("mAccNavigation")
+    @SerializedName("MAccNavigation")
     @Expose
     private Object mAccNavigation;
-    @SerializedName("mGorohNavigation")
+    @SerializedName("MGorohNavigation")
     @Expose
     private Object mGorohNavigation;
-    @SerializedName("moshtariTkmili")
+    @SerializedName("MoshtariTkmili")
     @Expose
     private Object moshtariTkmili;
     private final static long serialVersionUID = 8492332403414069907L;

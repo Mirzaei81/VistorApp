@@ -31,16 +31,8 @@ import java.util.List;
 
 public class MainMoshtariActivity extends AppCompatActivity {
     private static final int PERMISSION_SEND_SMS = 123;
-
-
-
     private MoshtariAdapter moshtariAdapter;
-
    private RecyclerView list;
-
-
-
-
 
     private Api busApi;
     private ProgressBar loading;
@@ -120,7 +112,6 @@ public class MainMoshtariActivity extends AppCompatActivity {
     private SelectItemList<Moshtari> selectItem = new SelectItemList<Moshtari>() {
         @Override
         public void onSelectItem(Moshtari moshtari, int position, View view, View view2) {
-
             Intent returnIntent = new Intent();
             returnIntent.putExtra(Moshtari.class.getName(),moshtari);
             setResult(Activity.RESULT_OK,returnIntent);

@@ -55,9 +55,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
             final byte[] decodedBytes = Base64.decode(pureBase64Encoded, Base64.DEFAULT);
             Glide.with(context).load(decodedBytes).transform(new CenterCrop(),new RoundedCorners(25)).into(viewHolder.img);
         }
-        viewHolder.txtNumber.setText(String.valueOf(kala.getNumber()));
-
-
+//        viewHolder.txtNumber.setText(String.valueOf(kala.getNumber()));
     }
 
     public void addItems(List<Kala> listItem) {

@@ -114,7 +114,7 @@ public class WebServiceNetwork {
                     }
                     System.out.println(sb);
                     if(responseCode==HttpURLConnection.HTTP_NOT_FOUND){
-                        networkListener.onErrorServer(String.format("Server with address of %s Not found Please check you're server address",url));
+                        networkListener.onErrorServer(sb.toString());
                     }else{
                         networkListener.onErrorServer(sb.toString());
                     }
@@ -159,7 +159,6 @@ public class WebServiceNetwork {
                     while ((line = br.readLine()) != null) {
                         response +=line;
                     }
-
                     networkListener.onFinish(response);
                     return response;
                 } else {

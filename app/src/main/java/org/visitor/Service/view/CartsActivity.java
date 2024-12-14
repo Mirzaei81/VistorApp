@@ -26,6 +26,7 @@ import org.visitor.Service.presenter.model.KalaResponse;
 import org.visitor.Tools.Databace.DataSaver;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class CartsActivity extends AppCompatActivity {
@@ -85,7 +86,7 @@ public class CartsActivity extends AppCompatActivity {
 
 
     private void setupRecycler(List<Kala> kalaList) {
-        cartAdapter = new CartAdapter(this,kalaList, selectItem);
+        cartAdapter = new CartAdapter(this, kalaList, selectItem);
         list.setAdapter(cartAdapter);
     }
 
@@ -95,8 +96,6 @@ public class CartsActivity extends AppCompatActivity {
             Intent intent = new Intent(CartsActivity.this, ProductActivity.class);
             intent.putExtra(kala.getClass().getName(), kala); //second param is Serializable
             startActivity(intent);
-
-
         }
 
         @Override
@@ -114,13 +113,13 @@ public class CartsActivity extends AppCompatActivity {
                                     int number=Integer.parseInt(txtNumber.getText().toString());
                                     // Update UI components here
                                     txtNumber.setText(String.valueOf(number+1));
-                                    kala.setNumber((long) (number+1));
+//                                    kala.setNumber((long) (number+1));
                                     myRoomDatabase.kalaDao().updateKala(kala);
                                 }
                             });
 
                         }else {
-                            kala.setNumber((long) 1);
+//                            kala.setNumber((long) 1);
                             myRoomDatabase.kalaDao().insertKalas(kala);
                         }
 
@@ -137,7 +136,7 @@ public class CartsActivity extends AppCompatActivity {
 
                                 }else {
                                     txtNumber.setText(String.valueOf(number - 1));
-                                    kala.setNumber((long) (number - 1));
+//                                    kala.setNumber((long) (number - 1));
                                     myRoomDatabase.kalaDao().updateKala(kala);
                                 }
                             }
@@ -188,8 +187,8 @@ public class CartsActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     Log.i(TAG, "success");
-                    if (response.getKalas().size()>0){
-                        setupRecycler(response.getKalas());
+                    if (!response.Kalas.isEmpty()){
+                        setupRecycler(response.Kalas);
                     }else
                         setupRecycler(new ArrayList<>());
                 }

@@ -8,9 +8,13 @@
     <string name="prompt_company">شرکت</string>
     <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
-    <string name="welcome">"Welcome !"</string>
+    <string name="welcome">خوش امدید</string>
     <string name="invalid_username">Not a valid username</string>
     <string name="login_failed">"Login failed"</string>
     <string name="confirm_your_number">تایید شماره شما</string>
     <string name="number_mobile_your">ورود</string>
+    <string name="remember_me">مرا به یاد داشته باش </string>
+    <string name="kalas">محصولات</string>
+    <string name="add">افزودن</string>
+    <string name="persons">اشخاص</string>
 </resources>

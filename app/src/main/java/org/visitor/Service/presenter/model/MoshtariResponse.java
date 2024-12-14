@@ -10,7 +10,7 @@ import com.google.gson.annotations.SerializedName;
 public class MoshtariResponse implements Serializable
 {
 
-    @SerializedName("moshtaris")
+    @SerializedName("Moshtaris")
     @Expose
     private List<Moshtari> moshtaris;
     private final static long serialVersionUID = 1058134121181443936L;

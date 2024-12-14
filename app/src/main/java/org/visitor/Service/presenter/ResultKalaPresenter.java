@@ -1,6 +1,7 @@
 package org.visitor.Service.presenter;
 
 
+import org.visitor.Service.presenter.model.Kala;
 import org.visitor.Service.presenter.model.KalaResponse;
 
 /**

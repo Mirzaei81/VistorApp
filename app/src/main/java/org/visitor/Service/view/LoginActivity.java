@@ -6,6 +6,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,9 +15,12 @@ import android.text.method.DigitsKeyListener;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
@@ -31,20 +35,24 @@ import org.visitor.KeyConst;
 import org.visitor.NetworkListener;
 import org.visitor.ResponseUser;
 import org.visitor.Service.presenter.ResultLoginPresenter;
+import org.visitor.Service.presenter.ResultUserNamePreasenter;
 import org.visitor.Service.presenter.model.UserResponse;
 import org.visitor.WebServiceNetwork;
 import org.visitor.userModel.ResultUserPresenter;
 import org.visitor.Tools.Databace.DataSaver;
 
+import java.util.Collections;
+
 public class LoginActivity extends AppCompatActivity {
     private Api busApi;
-    private EditText username,password ;
+    private EditText password ;
     private ImageView login;
 
     private ImageView settings;
     private DataSaver dataSaver;
     private Snackbar snackbar;
     private AlertDialog.Builder builder;
+    public String SelectedUser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,14 +62,8 @@ public class LoginActivity extends AppCompatActivity {
         init();
     }
     public  void init(){
-
         dataSaver =new DataSaver(LoginActivity.this);
-//        if (dataSaver.hasLogin()) {
-//            goMain();
-//            finish();
-//        }
         busApi = new Api(this,dataSaver);
-        username=findViewById(R.id.username);
         password=findViewById(R.id.password);
         login=findViewById(R.id.login);
         settings=findViewById(R.id.Settings);
@@ -79,6 +81,7 @@ public class LoginActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         try{
                             dataSaver.setHost(input.getText().toString());
+                            getUser();
                         }catch (Exception e){
                             snackbar.setText(e.getMessage());
                             snackbar.show();
@@ -130,12 +133,52 @@ public class LoginActivity extends AppCompatActivity {
                         startActivity(ConfigActivity);
                     }
                 };
-                busApi.login(username.getText().toString(),password.getText().toString(),resultLoginPresenter);
+                busApi.login(LoginActivity.this.SelectedUser,password.getText().toString(),resultLoginPresenter);
+            }
+        });
+        getUser();
+    }
+    private void getUser(){
+        busApi.getUsers(new ResultUserNamePreasenter() {
+            @Override
+            public void onErrorServer(String e) {
+                snackbar.setText(e);
+                snackbar.show();
+
+            }
+
+            @Override
+            public void onErrorInternetConnection() {
+                snackbar.setText("Check you're internet connection");
+                snackbar.show();
+            }
+            @Override
+            public void onFinish(String[] response) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        initUserNamesSpinner(response);
+                    }
+                });
             }
         });
     }
-    private void goMain() {
-        Intent intent=new Intent(LoginActivity.this, MainKalaActivity.class);
-        startActivity(intent);
+    private void initUserNamesSpinner(String[] userNameItem){
+        Spinner userName=  findViewById(R.id.usernames);
+        ArrayAdapter<String> companyAdapter =  new ArrayAdapter<>(LoginActivity.this, com.google.android.material.R.layout.support_simple_spinner_dropdown_item, userNameItem);
+        companyAdapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
+        userName.setAdapter(companyAdapter);
+        LoginActivity.this.SelectedUser =  companyAdapter.getItem(0);
+        ItemSelect companyItemSelect = new ItemSelect();
+        userName.setOnItemSelectedListener(companyItemSelect);
     }
+    private class ItemSelect extends Activity implements AdapterView.OnItemSelectedListener{
+        @Override
+        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+            LoginActivity.this.SelectedUser = (String)adapterView.getItemAtPosition(i);
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> adapterView) {}
+    };
 }

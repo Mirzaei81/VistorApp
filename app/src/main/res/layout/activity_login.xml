@@ -12,10 +12,13 @@
         android:orientation="vertical"
         android:background="@android:color/white"
         android:layoutDirection="rtl">
+
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@android:color/holo_orange_light">
+
         <ImageView
             android:id="@+id/Settings"
             android:layout_width="wrap_content"
@@ -36,7 +39,7 @@
                 android:textColor="@android:color/white"
                 android:textSize="24sp" />
 
-            <ImageView
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/login"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -44,25 +47,36 @@
                 android:padding="2dp"
                 android:layout_margin="5dp"
                 android:background="@drawable/ic_check"
-                android:backgroundTint="@android:color/white"/>
+                android:backgroundTint="@color/success"/>
         </RelativeLayout>
-        <ViewFlipper
-            android:id="@+id/viewflipper"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <EditText
-                    android:id="@+id/username"
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:outlineProvider="bounds"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/person" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/welcome"
+                    android:textColor="@color/black"
+                    android:textSize="50dp"
+                    android:textStyle="bold"
+                    />
+                <Spinner
+                    android:id="@+id/usernames"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="96dp"
                     android:gravity="center"
-                    android:hint="@string/prompt_username"
                     android:selectAllOnFocus="true"
                     android:textColor="@android:color/black"
                     android:textColorHint="@android:color/darker_gray"
@@ -80,9 +94,13 @@
                     android:textColor="@android:color/black"
                     android:textColorHint="@android:color/darker_gray"
                     app:backgroundTint="@color/cardview_shadow_start_color" />
-            </LinearLayout>
 
-        </ViewFlipper>
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="35dp"
+                    android:text="@string/remember_me" />
+            </LinearLayout>
         <ProgressBar
             android:id="@+id/loading"
             android:layout_width="wrap_content"

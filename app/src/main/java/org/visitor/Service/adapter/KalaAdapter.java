@@ -61,7 +61,7 @@ public class KalaAdapter extends RecyclerView.Adapter<KalaAdapter.MyViewHolder> 
                 if (kala == mkala) {
                     viewHolder.lytNumbric.setVisibility(View.VISIBLE);
                     viewHolder.txtCart.setVisibility(View.GONE);
-                    viewHolder.txtNumber.setText(String.valueOf(kala.getNumber()));
+//                    viewHolder.txtNumber.setText(String.valueOf(kala.()));
                 }
 
             }

@@ -37,6 +37,7 @@ import org.visitor.Tools.Databace.DataSaver;
 import org.w3c.dom.CDATASection;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MainKalaActivity extends AppCompatActivity {
@@ -139,17 +140,6 @@ public class MainKalaActivity extends AppCompatActivity {
             }
         }
     };
-
-
-
-
-
-
-
-
-
-
-
     private void setupRecycler(List<Kala> kalaList, List<Kala> listRoom) {
         kalaAdapter = new KalaAdapter(this,kalaList,listRoom, selectItem);
         list.setAdapter(kalaAdapter);
@@ -179,13 +169,13 @@ public class MainKalaActivity extends AppCompatActivity {
                                     int number=Integer.parseInt(txtNumber.getText().toString());
                                     // Update UI components here
                                     txtNumber.setText(String.valueOf(number+1));
-                                    kala.setNumber((long) (number+1));
+//                                    kala.setNumber((long) (number+1));
                                     myRoomDatabase.kalaDao().updateKala(kala);
                                 }
                             });
 
                         }else {
-                            kala.setNumber((long) 1);
+//                            kala.setNumber((long) 1);
                             myRoomDatabase.kalaDao().insertKalas(kala);
                         }
 
@@ -201,7 +191,7 @@ public class MainKalaActivity extends AppCompatActivity {
                                  //   setupRecycler(myRoomDatabase.kalaDao().getAllKalaList());
                                 }else {
                                     txtNumber.setText(String.valueOf(number - 1));
-                                    kala.setNumber((long) (number - 1));
+//                                    kala.setNumber((long) (number - 1));
                                     myRoomDatabase.kalaDao().updateKala(kala);
                                 }
                             }
@@ -215,7 +205,7 @@ public class MainKalaActivity extends AppCompatActivity {
 
 
     };
-    private ResultKalaPresenter resultPresenterGetGroup = new ResultKalaPresenter() {
+    private final ResultKalaPresenter resultPresenterGetGroup = new ResultKalaPresenter() {
         @Override
         public void onStart() {
             runOnUiThread(new Runnable() {
@@ -244,6 +234,8 @@ public class MainKalaActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+                    snackbar.setText("Check you're Internet conenction");
+                    snackbar.show();
                     loading.setVisibility(View.GONE);
                 }
             });
@@ -254,8 +246,8 @@ public class MainKalaActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     Log.i(TAG, "success");
-                    if (response.getKalas()!=null&&response.getKalas().size()>0){
-                        setupRecycler(response.getKalas(),myRoomDatabase.kalaDao().getAllKalaList());
+                    if (response!=null && !response.Kalas.isEmpty()){
+                        setupRecycler(response.Kalas,myRoomDatabase.kalaDao().getAllKalaList());
                     }else
                         setupRecycler(new ArrayList<>(), myRoomDatabase.kalaDao().getAllKalaList());
                 }

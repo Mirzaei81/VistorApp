@@ -2,327 +2,321 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "6d9d346b867e37f84c951fd1cab4caef",
+    "identityHash": "24a75bf15f42473c6973b2c7fcd6aa4e",
     "entities": [
       {
         "tableName": "kala_info",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`kCode` INTEGER, `number` INTEGER, `kGoroh` INTEGER, `kName` TEXT, `kVahed` TEXT, `kVahedKoli` TEXT, `kZarib` REAL, `kForoshM` REAL, `kArz` INTEGER, `kArzMab` REAL, `kMinF` REAL, `kMaxF` REAL, `kForoshH` REAL, `kFani` TEXT, `kSharh` TEXT, `kPic` TEXT, `kLog` INTEGER, `kLan` INTEGER, `kNameL` TEXT, `kTolid` TEXT, `kHtolid` TEXT, `kSarbar` TEXT, `kHtmam` TEXT, `kBarcode` TEXT, `kOmde` REAL, `kVazn` REAL, `kDarsad` REAL, `kKeshvar` TEXT, `kFmonth` TEXT, `kFyear` TEXT, `kFmonth2` REAL, `kFmonth3` REAL, `kFmonth4` REAL, `kFmonth1` REAL, `kFmonth5` REAL, `kFmonth6` REAL, `kFmonth7` REAL, `kFmonth8` REAL, `kFmonth9` REAL, `kFmonth10` REAL, `kFmonth11` REAL, `kFmonth12` REAL, `kMaliatIs` INTEGER, `kMaliat` TEXT, `kAvarezIs` INTEGER, `kAvarez` TEXT, `kFani2` TEXT, `kPorsant` REAL, `kIsBarcode` INTEGER, `kForoshN` INTEGER, `kForoshMd` INTEGER, `kForoshMsrf` INTEGER, `kGorohNavigation` TEXT, PRIMARY KEY(`kCode`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`KGoroh` INTEGER, `KName` TEXT, `KCode` INTEGER, `KVahed` TEXT, `KVahedKoli` TEXT, `KZarib` REAL, `KForoshM` REAL, `KArz` INTEGER, `KArzMab` REAL, `KMinF` REAL, `KMaxF` REAL, `KForoshH` REAL, `KFani` TEXT, `KSharh` TEXT, `KPic` TEXT, `KLog` INTEGER, `KLan` INTEGER, `KNameL` TEXT, `KTolid` TEXT, `KHtolid` TEXT, `KSarbar` TEXT, `KHtmam` TEXT, `KBarcode` TEXT, `KOmde` REAL, `KVazn` REAL, `KDarsad` REAL, `KKeshvar` TEXT, `KFmonth` TEXT, `KFyear` TEXT, `KFmonth2` REAL, `KFmonth3` REAL, `KFmonth4` REAL, `KFmonth1` REAL, `KFmonth5` REAL, `KFmonth6` REAL, `KFmonth7` REAL, `KFmonth8` REAL, `KFmonth9` REAL, `KFmonth10` REAL, `KFmonth11` REAL, `KFmonth12` REAL, `KMaliatIs` INTEGER, `KMaliat` TEXT, `KAvarezIs` INTEGER, `KAvarez` TEXT, `KFani2` TEXT, `KPorsant` REAL, `KIsBarcode` INTEGER, `KForoshN` INTEGER, `KForoshMd` INTEGER, `KForoshMsrf` INTEGER, `KGorohNavigation` TEXT, PRIMARY KEY(`KCode`))",
         "fields": [
           {
-            "fieldPath": "kCode",
-            "columnName": "kCode",
+            "fieldPath": "KGoroh",
+            "columnName": "KGoroh",
             "affinity": "INTEGER",
             "notNull": false
           },
           {
-            "fieldPath": "number",
-            "columnName": "number",
+            "fieldPath": "KName",
+            "columnName": "KName",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "KCode",
+            "columnName": "KCode",
             "affinity": "INTEGER",
             "notNull": false
           },
           {
-            "fieldPath": "kGoroh",
-            "columnName": "kGoroh",
+            "fieldPath": "KVahed",
+            "columnName": "KVahed",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "KVahedKoli",
+            "columnName": "KVahedKoli",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "KZarib",
+            "columnName": "KZarib",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "KForoshM",
+            "columnName": "KForoshM",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "KArz",
+            "columnName": "KArz",
             "affinity": "INTEGER",
             "notNull": false
           },
           {
-            "fieldPath": "kName",
-            "columnName": "kName",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "kVahed",
-            "columnName": "kVahed",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "kVahedKoli",
-            "columnName": "kVahedKoli",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "kZarib",
-            "columnName": "kZarib",
+            "fieldPath": "KArzMab",
+            "columnName": "KArzMab",
             "affinity": "REAL",
             "notNull": false
           },
           {
-            "fieldPath": "kForoshM",
-            "columnName": "kForoshM",
+            "fieldPath": "KMinF",
+            "columnName": "KMinF",
             "affinity": "REAL",
             "notNull": false
           },
           {
-            "fieldPath": "kArz",
-            "columnName": "kArz",
+            "fieldPath": "KMaxF",
+            "columnName": "KMaxF",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "KForoshH",
+            "columnName": "KForoshH",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "KFani",
+            "columnName": "KFani",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "KSharh",
+            "columnName": "KSharh",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "KPic",
+            "columnName": "KPic",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "KLog",
+            "columnName": "KLog",
             "affinity": "INTEGER",
             "notNull": false
           },
           {
-            "fieldPath": "kArzMab",
-            "columnName": "kArzMab",
-            "affinity": "REAL",
-            "notNull": false
-          },
-          {
-            "fieldPath": "kMinF",
-            "columnName": "kMinF",
-            "affinity": "REAL",
-            "notNull": false
-          },
-          {
-            "fieldPath": "kMaxF",
-            "columnName": "kMaxF",
-            "affinity": "REAL",
-            "notNull": false
-          },
-          {
-            "fieldPath": "kForoshH",
-            "columnName": "kForoshH",
-            "affinity": "REAL",
-            "notNull": false
-          },
-          {
-            "fieldPath": "kFani",
-            "columnName": "kFani",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "kSharh",
-            "columnName": "kSharh",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "kPic",
-            "columnName": "kPic",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "kLog",
-            "columnName": "kLog",
+            "fieldPath": "KLan",
+            "columnName": "KLan",
             "affinity": "INTEGER",
             "notNull": false
           },
           {
-            "fieldPath": "kLan",
-            "columnName": "kLan",
+            "fieldPath": "KNameL",
+            "columnName": "KNameL",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "KTolid",
+            "columnName": "KTolid",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "KHtolid",
+            "columnName": "KHtolid",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "KSarbar",
+            "columnName": "KSarbar",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "KHtmam",
+            "columnName": "KHtmam",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "KBarcode",
+            "columnName": "KBarcode",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "KOmde",
+            "columnName": "KOmde",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "KVazn",
+            "columnName": "KVazn",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "KDarsad",
+            "columnName": "KDarsad",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "KKeshvar",
+            "columnName": "KKeshvar",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "KFmonth",
+            "columnName": "KFmonth",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "KFyear",
+            "columnName": "KFyear",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "KFmonth2",
+            "columnName": "KFmonth2",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "KFmonth3",
+            "columnName": "KFmonth3",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "KFmonth4",
+            "columnName": "KFmonth4",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "KFmonth1",
+            "columnName": "KFmonth1",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "KFmonth5",
+            "columnName": "KFmonth5",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "KFmonth6",
+            "columnName": "KFmonth6",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "KFmonth7",
+            "columnName": "KFmonth7",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "KFmonth8",
+            "columnName": "KFmonth8",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "KFmonth9",
+            "columnName": "KFmonth9",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "KFmonth10",
+            "columnName": "KFmonth10",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "KFmonth11",
+            "columnName": "KFmonth11",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "KFmonth12",
+            "columnName": "KFmonth12",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "KMaliatIs",
+            "columnName": "KMaliatIs",
             "affinity": "INTEGER",
             "notNull": false
           },
           {
-            "fieldPath": "kNameL",
-            "columnName": "kNameL",
+            "fieldPath": "KMaliat",
+            "columnName": "KMaliat",
             "affinity": "TEXT",
             "notNull": false
           },
           {
-            "fieldPath": "kTolid",
-            "columnName": "kTolid",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "kHtolid",
-            "columnName": "kHtolid",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "kSarbar",
-            "columnName": "kSarbar",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "kHtmam",
-            "columnName": "kHtmam",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "kBarcode",
-            "columnName": "kBarcode",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "kOmde",
-            "columnName": "kOmde",
-            "affinity": "REAL",
-            "notNull": false
-          },
-          {
-            "fieldPath": "kVazn",
-            "columnName": "kVazn",
-            "affinity": "REAL",
-            "notNull": false
-          },
-          {
-            "fieldPath": "kDarsad",
-            "columnName": "kDarsad",
-            "affinity": "REAL",
-            "notNull": false
-          },
-          {
-            "fieldPath": "kKeshvar",
-            "columnName": "kKeshvar",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "kFmonth",
-            "columnName": "kFmonth",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "kFyear",
-            "columnName": "kFyear",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "kFmonth2",
-            "columnName": "kFmonth2",
-            "affinity": "REAL",
-            "notNull": false
-          },
-          {
-            "fieldPath": "kFmonth3",
-            "columnName": "kFmonth3",
-            "affinity": "REAL",
-            "notNull": false
-          },
-          {
-            "fieldPath": "kFmonth4",
-            "columnName": "kFmonth4",
-            "affinity": "REAL",
-            "notNull": false
-          },
-          {
-            "fieldPath": "kFmonth1",
-            "columnName": "kFmonth1",
-            "affinity": "REAL",
-            "notNull": false
-          },
-          {
-            "fieldPath": "kFmonth5",
-            "columnName": "kFmonth5",
-            "affinity": "REAL",
-            "notNull": false
-          },
-          {
-            "fieldPath": "kFmonth6",
-            "columnName": "kFmonth6",
-            "affinity": "REAL",
-            "notNull": false
-          },
-          {
-            "fieldPath": "kFmonth7",
-            "columnName": "kFmonth7",
-            "affinity": "REAL",
-            "notNull": false
-          },
-          {
-            "fieldPath": "kFmonth8",
-            "columnName": "kFmonth8",
-            "affinity": "REAL",
-            "notNull": false
-          },
-          {
-            "fieldPath": "kFmonth9",
-            "columnName": "kFmonth9",
-            "affinity": "REAL",
-            "notNull": false
-          },
-          {
-            "fieldPath": "kFmonth10",
-            "columnName": "kFmonth10",
-            "affinity": "REAL",
-            "notNull": false
-          },
-          {
-            "fieldPath": "kFmonth11",
-            "columnName": "kFmonth11",
-            "affinity": "REAL",
-            "notNull": false
-          },
-          {
-            "fieldPath": "kFmonth12",
-            "columnName": "kFmonth12",
-            "affinity": "REAL",
-            "notNull": false
-          },
-          {
-            "fieldPath": "kMaliatIs",
-            "columnName": "kMaliatIs",
+            "fieldPath": "KAvarezIs",
+            "columnName": "KAvarezIs",
             "affinity": "INTEGER",
             "notNull": false
           },
           {
-            "fieldPath": "kMaliat",
-            "columnName": "kMaliat",
+            "fieldPath": "KAvarez",
+            "columnName": "KAvarez",
             "affinity": "TEXT",
             "notNull": false
           },
           {
-            "fieldPath": "kAvarezIs",
-            "columnName": "kAvarezIs",
-            "affinity": "INTEGER",
-            "notNull": false
-          },
-          {
-            "fieldPath": "kAvarez",
-            "columnName": "kAvarez",
+            "fieldPath": "KFani2",
+            "columnName": "KFani2",
             "affinity": "TEXT",
             "notNull": false
           },
           {
-            "fieldPath": "kFani2",
-            "columnName": "kFani2",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "kPorsant",
-            "columnName": "kPorsant",
+            "fieldPath": "KPorsant",
+            "columnName": "KPorsant",
             "affinity": "REAL",
             "notNull": false
           },
           {
-            "fieldPath": "kIsBarcode",
-            "columnName": "kIsBarcode",
+            "fieldPath": "KIsBarcode",
+            "columnName": "KIsBarcode",
             "affinity": "INTEGER",
             "notNull": false
           },
           {
-            "fieldPath": "kForoshN",
-            "columnName": "kForoshN",
+            "fieldPath": "KForoshN",
+            "columnName": "KForoshN",
             "affinity": "INTEGER",
             "notNull": false
           },
           {
-            "fieldPath": "kForoshMd",
-            "columnName": "kForoshMd",
+            "fieldPath": "KForoshMd",
+            "columnName": "KForoshMd",
             "affinity": "INTEGER",
             "notNull": false
           },
           {
-            "fieldPath": "kForoshMsrf",
-            "columnName": "kForoshMsrf",
+            "fieldPath": "KForoshMsrf",
+            "columnName": "KForoshMsrf",
             "affinity": "INTEGER",
             "notNull": false
           },
           {
-            "fieldPath": "kGorohNavigation",
-            "columnName": "kGorohNavigation",
+            "fieldPath": "KGorohNavigation",
+            "columnName": "KGorohNavigation",
             "affinity": "TEXT",
             "notNull": false
           }
@@ -330,7 +324,7 @@
         "primaryKey": {
           "autoGenerate": false,
           "columnNames": [
-            "kCode"
+            "KCode"
           ]
         },
         "indices": [],
@@ -340,7 +334,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '6d9d346b867e37f84c951fd1cab4caef')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '24a75bf15f42473c6973b2c7fcd6aa4e')"
     ]
   }
 }

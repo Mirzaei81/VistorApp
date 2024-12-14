@@ -7,11 +7,15 @@ import android.content.pm.PackageManager;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 import org.visitor.Service.presenter.ResaultConfigPresenter;
 import org.visitor.Service.presenter.ResultFactorPresenter;
 import org.visitor.Service.presenter.ResultLoginPresenter;
+import org.visitor.Service.presenter.ResultUserNamePreasenter;
 import org.visitor.Service.presenter.model.AccHsbPrsnsKoliResponse;
+import org.visitor.Service.presenter.model.Kala;
 import org.visitor.Service.presenter.model.KalaResponse;
 import org.visitor.Service.presenter.ResultKalaPresenter;
 import org.visitor.Service.presenter.model.MoshtariResponse;
@@ -19,6 +23,8 @@ import org.visitor.Service.presenter.ResultGroupPresenter;
 import org.visitor.Service.presenter.model.UserResponse;
 import org.visitor.Tools.Databace.DataSaver;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 
@@ -35,387 +41,6 @@ public class Api {
         dataSaver = ds;
         DbName = dataSaver.getConfig();
     }
-
-
-/*    public void searchBus( final ResultUserPresenter resultSearchBusPresenter) {
-
-        final String url = "https://www.farsishop.com/opt/api.php";
-        cancelRequest();
-
-        thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                HashMap<String, String> getHashMap = new HashMap<>();
-                getHashMap.put(KeyConst.APP_KEY, KeyConst.appKey);
-                getHashMap.put(KeyConst.APP_SECRET, KeyConst.appSecret);
-                new WebServiceNetwork(context).requestWebServiceByGet(url, null, new NetworkListener() {
-                    @Override
-                    public void onStart() {
-                        resultSearchBusPresenter.onStart();
-                    }
-
-                    @Override
-                    public void onErrorInternetConnection() {
-                        resultSearchBusPresenter.onErrorInternetConnection();
-                        resultSearchBusPresenter.onFinish();
-                    }
-
-                    @Override
-                    public void onErrorServer() {
-                        resultSearchBusPresenter.onErrorServer();
-                        resultSearchBusPresenter.onFinish();
-                    }
-
-                    @Override
-                    public void onFinish(String result) {
-                        try {
-                            Gson gson = new Gson();
-                            ResponseUser response = gson.fromJson(result, ResponseUser.class);
-//                            if (response != null  ) {
-//                                resultSearchBusPresenter.onSuccessResultSearch(response);
-//                            } else
-//                                resultSearchBusPresenter.noBus();
-                            resultSearchBusPresenter.noBus();
-                        } catch (Exception e) {
-
-
-                            resultSearchBusPresenter.onErrorServer();
-                        } finally {
-                            resultSearchBusPresenter.onFinish();
-                        }
-
-                    }
-                });
-
-            }
-        });
-        thread.start();
-    }
-    public void searchMobileLogin(final ResultUserPresenter resultSearchBusPresenter, SendLogin sendLogin) {
-
-        final String url = "https://www.farsishop.com/api/payamak/login.php";
-        cancelRequest();
-
-        thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                HashMap<String, String> getHashMap = new HashMap<>();
-                getHashMap.put(KeyConst.APP_KEY, KeyConst.appKey);
-                getHashMap.put(KeyConst.APP_SECRET, KeyConst.appSecret);
-                new WebServiceNetwork(context).requestWebServiceByPost(url, sendLogin.toString(), new NetworkListener() {
-                    @Override
-                    public void onStart() {
-                        resultSearchBusPresenter.onStart();
-                    }
-
-                    @Override
-                    public void onErrorInternetConnection() {
-                        resultSearchBusPresenter.onErrorInternetConnection();
-                        resultSearchBusPresenter.onFinish();
-                    }
-
-                    @Override
-                    public void onErrorServer() {
-                        resultSearchBusPresenter.onErrorServer();
-                        resultSearchBusPresenter.onFinish();
-                    }
-
-                    @Override
-                    public void onFinish(String result) {
-                        try {
-                            Gson gson = new Gson();
-                            ResponseUser response = gson.fromJson(result, ResponseUser.class);
-                            if (response != null  &&response.getCode()>0) {
-                                resultSearchBusPresenter.onSuccessResultSearch(response);
-                            } else
-                                resultSearchBusPresenter.noBus();
-                            resultSearchBusPresenter.noBus();
-                        } catch (Exception e) {
-
-
-                            resultSearchBusPresenter.onErrorServer();
-                        } finally {
-                            resultSearchBusPresenter.onFinish();
-                        }
-
-                    }
-                });
-
-            }
-        });
-        thread.start();
-    }
-    public void searchCodeLogin(final ResultUserPresenter resultSearchBusPresenter, SendLogin sendLogin) {
-
-        final String url = "https://www.farsishop.com/api/payamak/login.php";
-        cancelRequest();
-
-        thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                HashMap<String, String> getHashMap = new HashMap<>();
-                getHashMap.put(KeyConst.APP_KEY, KeyConst.appKey);
-                getHashMap.put(KeyConst.APP_SECRET, KeyConst.appSecret);
-                new WebServiceNetwork(context).requestWebServiceByPost(url, sendLogin.toString(), new NetworkListener() {
-                    @Override
-                    public void onStart() {
-                        resultSearchBusPresenter.onStart();
-                    }
-
-                    @Override
-                    public void onErrorInternetConnection() {
-                        resultSearchBusPresenter.onErrorInternetConnection();
-                        resultSearchBusPresenter.onFinish();
-                    }
-
-                    @Override
-                    public void onErrorServer() {
-                        resultSearchBusPresenter.onErrorServer();
-                        resultSearchBusPresenter.onFinish();
-                    }
-
-                    @Override
-                    public void onFinish(String result) {
-                        try {
-                            Gson gson = new Gson();
-                            ResponseUser response = gson.fromJson(result, ResponseUser.class);
-                            if (response != null &&response.getCode()>0&& response.getResult().getStatus()>0) {
-                                resultSearchBusPresenter.onSuccessResultSearch(response);
-                            } else
-                                resultSearchBusPresenter.noBus();
-                            resultSearchBusPresenter.noBus();
-                        } catch (Exception e) {
-
-
-                            resultSearchBusPresenter.onErrorServer();
-                        } finally {
-                            resultSearchBusPresenter.onFinish();
-                        }
-
-                    }
-                });
-
-            }
-        });
-        thread.start();
-    }
-    public void registerGroupSms(final ResultGroupPresenter resultSearchBusPresenter, SendLogin sendLogin) {
-
-        final String url = "https://www.farsishop.com/api/payamak/group.php";
-        cancelRequest();
-
-        thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                HashMap<String, String> getHashMap = new HashMap<>();
-                getHashMap.put(KeyConst.APP_KEY, KeyConst.appKey);
-                getHashMap.put(KeyConst.APP_SECRET, KeyConst.appSecret);
-                new WebServiceNetwork(context).requestWebServiceByPost(url, sendLogin.toString(), new NetworkListener() {
-                    @Override
-                    public void onStart() {
-                        resultSearchBusPresenter.onStart();
-                    }
-
-                    @Override
-                    public void onErrorInternetConnection() {
-                        resultSearchBusPresenter.onErrorInternetConnection();
-                        resultSearchBusPresenter.onFinish();
-                    }
-
-                    @Override
-                    public void onErrorServer() {
-                        resultSearchBusPresenter.onErrorServer();
-                        resultSearchBusPresenter.onFinish();
-                    }
-
-                    @Override
-                    public void onFinish(String result) {
-                        try {
-                            Gson gson = new Gson();
-                            GroupResponse response = gson.fromJson(result, GroupResponse.class);
-                            if (response != null&&response.getCode()>0 ) {
-                                resultSearchBusPresenter.onSuccessResultSearch(response);
-                            } else
-                                resultSearchBusPresenter.noBus();
-                            resultSearchBusPresenter.noBus();
-                        } catch (Exception e) {
-
-
-                            resultSearchBusPresenter.onErrorServer();
-                        } finally {
-                            resultSearchBusPresenter.onFinish();
-                        }
-
-                    }
-                });
-
-            }
-        });
-        thread.start();
-    }
-    public void getGroupMessage(final ResultGroupPresenter resultSearchBusPresenter, SendLogin sendLogin) {
-
-        final String url = "https://www.farsishop.com/api/payamak/group.php";
-        cancelRequest();
-
-        thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                HashMap<String, String> getHashMap = new HashMap<>();
-                getHashMap.put(KeyConst.APP_KEY, KeyConst.appKey);
-                getHashMap.put(KeyConst.APP_SECRET, KeyConst.appSecret);
-                new WebServiceNetwork(context).requestWebServiceByPost(url, sendLogin.toString(), new NetworkListener() {
-                    @Override
-                    public void onStart() {
-                        resultSearchBusPresenter.onStart();
-                    }
-
-                    @Override
-                    public void onErrorInternetConnection() {
-                        resultSearchBusPresenter.onErrorInternetConnection();
-                        resultSearchBusPresenter.onFinish();
-                    }
-
-                    @Override
-                    public void onErrorServer() {
-                        resultSearchBusPresenter.onErrorServer();
-                        resultSearchBusPresenter.onFinish();
-                    }
-
-                    @Override
-                    public void onFinish(String result) {
-                        try {
-                            Gson gson = new Gson();
-                            GroupResponse response = gson.fromJson(result, GroupResponse.class);
-                            if (response != null &&response.getCode()>0 ) {
-                                resultSearchBusPresenter.onSuccessResultSearch(response);
-                            } else
-                                resultSearchBusPresenter.noBus();
-                        } catch (Exception e) {
-
-
-                            resultSearchBusPresenter.onErrorServer();
-                        } finally {
-                            resultSearchBusPresenter.onFinish();
-                        }
-
-                    }
-                });
-
-            }
-        });
-        thread.start();
-    }
-
-
-    public void reghisterGroup(final ResultGroupPresenter resultSearchBusPresenter, SendLogin sendLogin) {
-
-        final String url = "https://www.farsishop.com/api/payamak/group.php";
-        cancelRequest();
-
-        thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                HashMap<String, String> getHashMap = new HashMap<>();
-                getHashMap.put(KeyConst.APP_KEY, KeyConst.appKey);
-                getHashMap.put(KeyConst.APP_SECRET, KeyConst.appSecret);
-                new WebServiceNetwork(context).requestWebServiceByPost(url, sendLogin.toString(), new NetworkListener() {
-                    @Override
-                    public void onStart() {
-                        resultSearchBusPresenter.onStart();
-                    }
-
-                    @Override
-                    public void onErrorInternetConnection() {
-                        resultSearchBusPresenter.onErrorInternetConnection();
-                        resultSearchBusPresenter.onFinish();
-                    }
-
-                    @Override
-                    public void onErrorServer() {
-                        resultSearchBusPresenter.onErrorServer();
-                        resultSearchBusPresenter.onFinish();
-                    }
-
-                    @Override
-                    public void onFinish(String result) {
-                        try {
-                            Gson gson = new Gson();
-                            GroupResponse response = gson.fromJson(result, GroupResponse.class);
-                            if (response != null  ) {
-                                resultSearchBusPresenter.onSuccessResultSearch(response);
-                            } else
-                                resultSearchBusPresenter.noBus();
-                            resultSearchBusPresenter.noBus();
-                        } catch (Exception e) {
-
-
-                            resultSearchBusPresenter.onErrorServer();
-                        } finally {
-                            resultSearchBusPresenter.onFinish();
-                        }
-
-                    }
-                });
-
-            }
-        });
-        thread.start();
-    }
-    public void updateGroup(final ResultGroupPresenter resultSearchBusPresenter, SendLogin sendLogin) {
-
-        final String url = "https://www.farsishop.com/api/payamak/group.php";
-        cancelRequest();
-
-        thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                HashMap<String, String> getHashMap = new HashMap<>();
-                getHashMap.put(KeyConst.APP_KEY, KeyConst.appKey);
-                getHashMap.put(KeyConst.APP_SECRET, KeyConst.appSecret);
-                new WebServiceNetwork(context).requestWebServiceByPost(url, sendLogin.toString(), new NetworkListener() {
-                    @Override
-                    public void onStart() {
-                        resultSearchBusPresenter.onStart();
-                    }
-
-                    @Override
-                    public void onErrorInternetConnection() {
-                        resultSearchBusPresenter.onErrorInternetConnection();
-                        resultSearchBusPresenter.onFinish();
-                    }
-
-                    @Override
-                    public void onErrorServer() {
-                        resultSearchBusPresenter.onErrorServer();
-                        resultSearchBusPresenter.onFinish();
-                    }
-
-                    @Override
-                    public void onFinish(String result) {
-                        try {
-                            Gson gson = new Gson();
-                            GroupResponse response = gson.fromJson(result, GroupResponse.class);
-                            if (response != null  ) {
-                                resultSearchBusPresenter.onSuccessResultSearch(response);
-                            } else
-                                resultSearchBusPresenter.noBus();
-                            resultSearchBusPresenter.noBus();
-                        } catch (Exception e) {
-
-
-                            resultSearchBusPresenter.onErrorServer();
-                        } finally {
-                            resultSearchBusPresenter.onFinish();
-                        }
-
-                    }
-                });
-
-            }
-        });
-        thread.start();
-    }*/
     public void getDbName(final float year, final String Daftar, final String Company, final ResaultConfigPresenter resaultConfigPresenter)
     {
         final String url  = dataSaver.getHost()+"v1/Auth/db";
@@ -477,11 +102,47 @@ public class Api {
        });
        thread.start();
     }
-    public void getKalas(final ResultKalaPresenter resultSearchBusPresenter) {
+    public void getUsers(final ResultUserNamePreasenter resultUserNamePreasenter){
+        final  String url = dataSaver.getHost()+"v1/Auth/users";
+        cancelRequest();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                new WebServiceNetwork(context).requestWebServiceByGet(url,DbName, null, new NetworkListener() {
+                    @Override
+                    public void onStart() {}
 
+                    @Override
+                    public void onErrorInternetConnection() {
+                        resultUserNamePreasenter.onErrorInternetConnection();
+                    }
+
+                    @Override
+                    public void onErrorServer(String e) {
+                        resultUserNamePreasenter.onErrorServer(e);
+                    }
+
+                    @Override
+                    public void onFinish(String result) {
+                        try {
+                            String[] response = new Gson().fromJson(result,String[].class);
+                            if (response != null  ) {
+                                resultUserNamePreasenter.onFinish(response);
+                            }else{
+                                resultUserNamePreasenter.onErrorServer(result);
+                            }
+                        } catch (Exception e) {
+                            resultUserNamePreasenter.onErrorServer(e.getMessage());
+                        }
+
+                    }
+                });
+            };
+        }).start();
+    }
+    public void getKalas(final ResultKalaPresenter resultSearchBusPresenter) {
         final String url =dataSaver.getHost()+"kalas";
         cancelRequest();
-
         thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -509,9 +170,10 @@ public class Api {
                     @Override
                     public void onFinish(String result) {
                         try {
-                            Gson gson = new Gson();
+                            Type tokenType = new TypeToken<KalaResponse>() {}.getType();
+                            Gson gson = new GsonBuilder().create();
                             KalaResponse response = gson.fromJson(result, KalaResponse.class);
-                            if (response != null  ) {
+                            if (response !=null &&  !response.Kalas.isEmpty()  ) {
                                 resultSearchBusPresenter.onSuccessResultSearch(response);
                             } else
                                 resultSearchBusPresenter.noBus();
@@ -656,7 +318,7 @@ public class Api {
 
                     @Override
                     public void onErrorServer(String e) {
-                        resultSearchBusPresenter.onErrorServer(e.toString());
+                        resultSearchBusPresenter.onErrorServer(e);
                         resultSearchBusPresenter.onFinish();
                     }
 
