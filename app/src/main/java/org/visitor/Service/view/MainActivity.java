@@ -13,19 +13,22 @@ import com.google.android.material.tabs.TabLayout;
 
 import org.alarmamir.R;
 import org.visitor.Service.adapter.MainPagerAdapter;
+import org.visitor.Tools.Databace.DataSaver;
 
 public class MainActivity extends AppCompatActivity {
-    private ViewPager2 viewPager2;
-    private TabLayout tabLayout;
-    private MainPagerAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
-        tabLayout= findViewById(R.id.tab_layout);
-        viewPager2= findViewById(R.id.pager);
-        adapter = new MainPagerAdapter(getSupportFragmentManager(),getLifecycle());
+        DataSaver dataSaver = new DataSaver(this);
+        if(!dataSaver.hasConfig()&&!dataSaver.hasLogin()) {
+            startActivity(new Intent(MainActivity.this,LoginActivity.class));
+            finish();
+            return;
+        }
+        ViewPager2 viewPager2 = findViewById(R.id.pager);
+        MainPagerAdapter adapter = new MainPagerAdapter(getSupportFragmentManager(), getLifecycle());
         viewPager2.setAdapter(adapter);
 
     }

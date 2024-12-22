@@ -35,8 +35,6 @@
             android:background="@android:color/holo_red_dark"
             android:textColor="@android:color/white"
             android:padding="2dp"/>
-
-
     </FrameLayout>
     <ImageView
         android:id="@+id/imgBack"
@@ -44,9 +42,8 @@
         android:layout_height="40dp"
         android:src="@drawable/ic_arrow_left"
         android:padding="2dp"
-        android:layout_toStartOf="@+id/flCarts"
+        android:layout_alignParentStart="true"
         android:rotation="180"/>
-
     <TextView
         android:id="@+id/txtTitle"
         android:layout_width="wrap_content"
@@ -59,7 +56,8 @@
         android:id="@+id/progressbar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@+id/imgConfirm" />
+        android:layout_alignParentEnd="true"
+        android:layout_toEndOf="@+id/flCarts" />
     <ImageView
         android:id="@+id/imgConfirm"
         android:layout_width="wrap_content"

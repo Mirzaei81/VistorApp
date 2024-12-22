@@ -16,11 +16,13 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.LayoutRes;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.alarmamir.R;
 import org.jetbrains.annotations.NotNull;
@@ -35,25 +37,21 @@ import org.visitor.Tools.Databace.DataSaver;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import ir.hamsaa.persiandatepicker.PersianDatePickerDialog;
 import ir.hamsaa.persiandatepicker.api.PersianPickerDate;
 import ir.hamsaa.persiandatepicker.api.PersianPickerListener;
 import ir.hamsaa.persiandatepicker.util.PersianCalendarUtils;
 
-public class MainFactorActivity extends AppCompatActivity {
+public class MainFactorActivity extends BaseActivity {
     private static final int PERMISSION_SEND_SMS = 123;
     private FactorAdapter factorAdapter;
-
-   private RecyclerView list;
-
-
-
-
-
+    private RecyclerView list;
     private Api busApi;
     private ProgressBar loading;
     private DataSaver dataServer;
+    public Snackbar snackbar;
 
     TextView txtTitle;
     ImageView imgBack;
@@ -62,13 +60,12 @@ public class MainFactorActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_factor);
-       /* if (getIntent() != null) {
+        if (getIntent().getExtras() != null) {
             moshtari = (Moshtari) getIntent().getExtras().getSerializable(Moshtari.class.getName());
-        }*/
+        }else{
+            snackbar.setText("Moshtari is null please Contact devs");
+        }
         init();
-
-
     }
     private void init(){
         dataServer = new DataSaver(MainFactorActivity.this);
@@ -86,6 +83,9 @@ public class MainFactorActivity extends AppCompatActivity {
         btnEndDate.setOnClickListener(onClickListener);
         btnSearch.setOnClickListener(onClickListener);
 
+        btnStartDate.setText(dataServer.getConfig().dateTo);
+        btnStartDate.setText(dataServer.getConfig().dateFrom);
+
         loading =findViewById(R.id.progressbar);
         loading.setVisibility(View.GONE);
         list =findViewById(R.id.list);
@@ -93,14 +93,10 @@ public class MainFactorActivity extends AppCompatActivity {
         txtTitle=findViewById(R.id.txtTitle);
         txtTitle.setText("صورت حساب مشتری");
         imgBack=findViewById(R.id.imgBack);
-        busApi.getFactor(btnEndDate.getText().toString(), btnStartDate.getText().toString(), btnMoshtari.getText().toString(), resultPresenterGetGroup);
-
-
-
-
-
-
-
+        String EndDate = btnEndDate.getText().toString();
+        String StartDate =  btnStartDate.getText().toString();
+        String Moshtari =  btnMoshtari.getText().toString();
+        busApi.getFactor(EndDate, StartDate, String.format(Locale.getDefault(),"%d",moshtari.getmCode()), resultPresenterGetGroup);
     }
 
     View.OnClickListener onClickListener=new View.OnClickListener() {
@@ -132,6 +128,10 @@ public class MainFactorActivity extends AppCompatActivity {
         }
     };
 
+    @Override
+    protected  @LayoutRes int getLayoutResource(){
+        return R.layout.activity_main_factor;
+    };
     private void showCalendar(AppCompatButton btnDate) {
         PersianDatePickerDialog picker = new PersianDatePickerDialog(this)
                 .setPositiveButtonString("باشه")
@@ -192,9 +192,9 @@ public class MainFactorActivity extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             switch (view.getId()){
-                /*case R.id.btnAddMoshtari:
+               case R.id.btnAddMoshtari:
                     busApi.getFactor(btnEndDate.getText().toString(), btnStartDate.getText().toString(), btnMoshtari.getText().toString(), resultPresenterGetGroup);
-                    break;*/
+                    break;
                 case R.id.imgBack:
                     onBackPressed();
                     break;
@@ -202,17 +202,6 @@ public class MainFactorActivity extends AppCompatActivity {
             }
         }
     };
-
-
-
-
-
-
-
-
-
-
-
     private void setupRecyclerGrup(List<HsbPrsnsKoli> hsbPrsnsKolis) {
         factorAdapter = new FactorAdapter(this,hsbPrsnsKolis, selectItem);
         list.setAdapter(factorAdapter);
@@ -256,6 +245,7 @@ public class MainFactorActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+
                     loading.setVisibility(View.GONE);
                 }
             });

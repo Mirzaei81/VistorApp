@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -46,9 +47,6 @@ import java.util.Collections;
 public class LoginActivity extends AppCompatActivity {
     private Api busApi;
     private EditText password ;
-    private ImageView login;
-
-    private ImageView settings;
     private DataSaver dataSaver;
     private Snackbar snackbar;
     private AlertDialog.Builder builder;
@@ -65,76 +63,73 @@ public class LoginActivity extends AppCompatActivity {
         dataSaver =new DataSaver(LoginActivity.this);
         busApi = new Api(this,dataSaver);
         password=findViewById(R.id.password);
-        login=findViewById(R.id.login);
-        settings=findViewById(R.id.Settings);
-        settings.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                builder = new AlertDialog.Builder(LoginActivity.this);
-                builder.setTitle("Server Address");
-                final EditText input = new EditText(LoginActivity.this);
-                input.setInputType(InputType.TYPE_CLASS_TEXT);
-                input.setKeyListener(DigitsKeyListener.getInstance("09123456789.:"));
-                builder.setView(input);
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        try{
-                            dataSaver.setHost(input.getText().toString());
-                            getUser();
-                        }catch (Exception e){
-                            snackbar.setText(e.getMessage());
+        ImageView login = findViewById(R.id.login);
+        ImageView settings = findViewById(R.id.Settings);
+        settings.setOnClickListener(view -> {
+            builder = new AlertDialog.Builder(LoginActivity.this);
+            builder.setTitle("Server Address");
+            final EditText input = new EditText(LoginActivity.this);
+            input.setInputType(InputType.TYPE_CLASS_TEXT);
+            input.setKeyListener(DigitsKeyListener.getInstance("09123456789.:"));
+            builder.setView(input);
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    try{
+                        dataSaver.setHost(input.getText().toString());
+                        getUser();
+                    }catch (Exception e){
+                        snackbar.setText(e.getMessage());
+                        snackbar.show();
+                    }
+                }
+            });
+            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+            builder.show();
+        });
+        login.setOnClickListener(view -> {
+            ResultLoginPresenter resultLoginPresenter = new ResultLoginPresenter() {
+                @Override
+                public void onErrorServer(String e) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            snackbar.setText(e);
                             snackbar.show();
                         }
-                    }
-                });
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-                builder.show();
-            }
-        });
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ResultLoginPresenter resultLoginPresenter = new ResultLoginPresenter() {
-                    @Override
-                    public void onErrorServer(String e) {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                snackbar.setText(e);
-                                snackbar.show();
-                            }
-                        });
-                    }
+                    });
+                }
 
-                    @Override
-                    public void onErrorInternetConnection() {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                snackbar.setText("Couldn't connect to internet please check you're connection");
-                                snackbar.show();
-                            }
-                        });
-                    }
+                @Override
+                public void onErrorInternetConnection() {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            snackbar.setText("Couldn't connect to internet please check you're connection");
+                            snackbar.show();
+                        }
+                    });
+                }
 
-                    @Override
-                    public void onFinish(UserResponse response) {
+                @Override
+                public void onFinish(UserResponse response) {
+                    CheckBox checkBox = findViewById(androidx.appcompat.R.id.checkbox);
+                    if(checkBox.isChecked()){
                         dataSaver.setLogin(response);
-                        Intent ConfigActivity = new Intent(LoginActivity.this,ConfigActivity.class);
-                        Bundle bundle =new Bundle();
-                        bundle.putSerializable("Configurations",response.serverDetail);
-                        ConfigActivity.putExtras(bundle);
-                        startActivity(ConfigActivity);
                     }
-                };
-                busApi.login(LoginActivity.this.SelectedUser,password.getText().toString(),resultLoginPresenter);
-            }
+                    Intent ConfigActivity = new Intent(LoginActivity.this,ConfigActivity.class);
+                    Bundle bundle =new Bundle();
+                    bundle.putSerializable("Configurations",response.serverDetail);
+                    ConfigActivity.putExtras(bundle);
+                    startActivity(ConfigActivity);
+                }
+            };
+            busApi.login(LoginActivity.this.SelectedUser,password.getText().toString(),resultLoginPresenter);
         });
         getUser();
     }

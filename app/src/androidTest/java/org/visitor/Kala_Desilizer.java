@@ -24,7 +24,7 @@ public class Kala_Desilizer {
         context = InstrumentationRegistry.getInstrumentation().getTargetContext();
         DataSaver dataSaver = new DataSaver(context);
         url = dataSaver.getHost()+"kalas";
-        DbName = dataSaver.getConfig();
+        DbName = dataSaver.getConfig().databaseName;
     }
     @Test
     public void getUser(){

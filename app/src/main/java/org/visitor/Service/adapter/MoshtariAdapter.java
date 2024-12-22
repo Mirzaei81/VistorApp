@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.alarmamir.R;
@@ -15,6 +16,7 @@ import org.visitor.Service.presenter.model.Moshtari;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 
 public class MoshtariAdapter extends RecyclerView.Adapter<MoshtariAdapter.MyViewHolder> {
@@ -31,6 +33,7 @@ public class MoshtariAdapter extends RecyclerView.Adapter<MoshtariAdapter.MyView
         this.context = context;
     }
 
+    @NonNull
     @Override
     public MoshtariAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_moshtari, parent, false);
@@ -41,7 +44,7 @@ public class MoshtariAdapter extends RecyclerView.Adapter<MoshtariAdapter.MyView
     public void onBindViewHolder(final MoshtariAdapter.MyViewHolder viewHolder, final int position) {
         Moshtari group = listItem.get(position);
         viewHolder.txtName.setText(group.getmName());
-        viewHolder.txtCode.setText(group.getmCode()+"");
+        viewHolder.txtCode.setText(String.format(Locale.getDefault(),"%d",group.getmCode()));
 
     }
 
@@ -66,13 +69,7 @@ public class MoshtariAdapter extends RecyclerView.Adapter<MoshtariAdapter.MyView
 
             txtName = itemLayoutView.findViewById(R.id.txtName);
             txtCode = itemLayoutView.findViewById(R.id.txtCode);
-            itemLayoutView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    selectItemGroupDb.onSelectItem(listItem.get(getAdapterPosition()), getAdapterPosition(), txtName, null);
-
-                }
-            });
+            itemLayoutView.setOnClickListener(v -> selectItemGroupDb.onSelectItem(listItem.get(getAdapterPosition()), getAdapterPosition(), txtName, null));
         }
     }
     public void setFilter(String name) {

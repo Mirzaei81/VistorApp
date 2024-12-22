@@ -16,9 +16,12 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:id="@+id/prod"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:contentDescription="@string/kalas"
+            android:layout_gravity="center"
+            android:layout_centerVertical="true"
             app:srcCompat="@drawable/box" />
 
         <TextView
@@ -26,15 +29,17 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_centerInParent="true"
+            android:layout_toEndOf="@+id/prod"
             android:text="@string/kalas"
             android:textColor="@color/black"
-            android:textSize="42sp"
+            android:textSize="32sp"
+            android:layout_marginStart="10dp"
             tools:ignore="RelativeOverlap" />
 
         <ImageView
             android:id="@+id/imageView2"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:contentDescription="@string/add"
             app:srcCompat="@drawable/ic_baseline_add_24"
             android:layout_alignParentEnd="true"
@@ -52,23 +57,27 @@
         android:layoutDirection="rtl"
         >
         <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:id="@+id/person"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:layout_centerVertical="true"
             android:contentDescription="@string/persons"
             app:srcCompat="@drawable/persons" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textColor="@color/black"
-            android:layout_centerInParent="true"
+            android:layout_toEndOf="@id/person"
+            android:layout_marginStart="10dp"
+            android:layout_centerVertical="true"
             android:text="@string/persons"
-            android:textSize="42sp"
-            tools:ignore="RelativeOverlap" />
+            android:textColor="@color/black"
+            android:textSize="32sp" />
         <ImageView
             android:id="@+id/imageView3"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_alignParentEnd="true"
             android:contentDescription="@string/add"
             app:srcCompat="@drawable/ic_baseline_add_24"

@@ -53,7 +53,9 @@
         <activity android:name="org.visitor.Service.view.LoginActivity" />
         <activity
             android:name="org.visitor.Service.view.MainMoshtariActivity"
-            android:exported="true" />
+            android:exported="true"
+        >
+            </activity>
         <activity
             android:name="org.visitor.Service.view.MainFactorActivity"
             android:exported="true" />

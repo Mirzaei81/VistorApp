@@ -17,4 +17,6 @@
     <string name="kalas">محصولات</string>
     <string name="add">افزودن</string>
     <string name="persons">اشخاص</string>
+    <string name="groups">groups</string>
+    <string name="group_description">group1</string>
 </resources>

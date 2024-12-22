@@ -19,20 +19,22 @@ import org.visitor.Room.AppExecutors;
 import org.visitor.Room.MyRoomDatabase;
 import org.visitor.Service.presenter.model.Kala;
 
-public class ProductActivity extends AppCompatActivity {
+public class ProductActivity extends BaseActivity {
     MyRoomDatabase myRoomDatabase;
     private  Kala kala;
     private TextView txtNumber;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_product);
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             kala = (Kala)getIntent().getSerializableExtra(Kala.class.getName()); //Obtaining data
             setData(kala);
         }
-
+    }
+    @Override
+    protected int getLayoutResource() {
+        return R.layout.activity_product;
     }
 
     private void setData(Kala kala) {

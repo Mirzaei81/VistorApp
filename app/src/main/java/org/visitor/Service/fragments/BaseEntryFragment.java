@@ -1,12 +1,14 @@
 package org.visitor.Service.fragments;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.content.Context;
 import android.widget.RelativeLayout;
+
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,18 +29,19 @@ public class  BaseEntryFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         RelativeLayout mahsolat =  view.findViewById(R.id.btnFac);
         RelativeLayout persons = view.findViewById(R.id.btnPro);
-        mahsolat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(view.getContext(), MainKalaActivity.class));
-            }
-        });
-        persons.setOnClickListener(new View.OnClickListener() {
-                                       @Override
-                                       public void onClick(View view) {
-                                           startActivity(new Intent(view.getContext(), MainMoshtariActivity.class));
-                                       }
-                                   }
+        mahsolat.setOnClickListener(view1 ->{
+                    Activity context =(Activity) view1.getContext();
+                    Intent intent = new Intent(context, MainKalaActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
+                }
+        );
+        persons.setOnClickListener(view1 ->{
+                    Activity context =(Activity) view1.getContext();
+                    Intent intent = new Intent(context, MainMoshtariActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
+                }
         );
     }
 }

@@ -1,182 +1,187 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="org.visitor.Service.view.ProductActivity"
     android:orientation="vertical"
-    android:layoutDirection="ltr">
-    <include
-        android:id="@+id/lytToolbar"
-        layout="@layout/toolbar"/>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardImage"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_margin="10dp"
-        app:cardCornerRadius="10dp"
-        android:elevation="5dp"
-        android:layout_below="@+id/lytToolbar">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:background="@android:color/white">
-
-            <ImageView
-                android:id="@+id/img"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/production"
-                android:scaleType="centerInside"
-                android:padding="5dp"/>
-
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
-
-    <TextView
-        android:id="@+id/txtName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/cardImage"
-        tools:text="کلم سفید"
-        android:gravity="start"
-        android:textColor="@android:color/black"
-        android:padding="10dp"/>
-    <TextView
-        android:id="@+id/txtCode"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/txtName"
-        tools:text="123"
-        android:textAlignment="viewEnd"
-        android:textColor="@android:color/black"
-        android:padding="10dp"/>
-
-    <TextView
-        android:id="@+id/txtKVahed"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/txtCode"
-        tools:text="واحد: 2کیلوگرم+100گرم"
-        android:layout_marginTop="10dp"
-        android:gravity="start"
-        android:textColor="@android:color/black"
-        android:padding="10dp"/>
-    <TextView
-        android:id="@+id/txtKVahedColi"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/txtKVahed"
-        tools:text="واحد: 2کیلوگرم+100گرم"
-        android:gravity="start"
-        android:textColor="@android:color/black"
-        android:padding="10dp"/>
-    <TextView
-        android:id="@+id/txtZarib"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/txtKVahedColi"
-        tools:text="واحد: 2کیلوگرم+100گرم"
-        android:gravity="start"
-        android:textColor="@android:color/black"
-        android:padding="10dp"/>
-
-    <TextView
-        android:id="@+id/txtPriceHamkar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/txtZarib"
-        android:layout_marginTop="10dp"
-        tools:text="36600تومان"
-        android:gravity="start"
-        android:textColor="@android:color/black"
-        android:padding="10dp"/>
-    <TextView
-        android:id="@+id/txtPriceForosh"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/txtPriceHamkar"
-        tools:text="36600تومان"
-        android:gravity="start"
-        android:textColor="@android:color/black"
-        android:padding="10dp"/>
-    <TextView
-        android:id="@+id/txtPriceOmde"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/txtPriceForosh"
-        tools:text="36600تومان"
-        android:gravity="start"
-        android:textColor="@android:color/black"
-        android:padding="10dp"/>
-
-    <TextView
-        android:id="@+id/txtDetail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_below="@+id/txtPriceOmde"
-        android:gravity="start"
-        tools:text="راه‌گذر شمال - جنوب یا کریدور شمال-جنوب از مسیرهای راهبردی در نیم‌کره شرقی جهان است."
-        app:autoSizeTextType="uniform"
-        app:autoSizeMinTextSize="12sp"
-        app:autoSizeMaxTextSize="100sp"
-        app:autoSizeStepGranularity="2sp"
-        android:textColor="@android:color/black"
-        android:padding="10dp"/>
-
+    >
     <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:gravity="center"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:id="@+id/lytNumbric"
-        android:layout_above="@+id/txtCart"
-       android:layout_margin="5dp"
-        android:padding="10dp"
-        android:background="@android:color/holo_orange_dark">
-        <ImageView
-            android:id="@+id/imgRemove"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:src="@drawable/ic_baseline_remove_24"
-            app:tint="@android:color/white"
-            android:padding="2dp"/>
+        android:layout_height="match_parent">
+        <include
+            android:id="@+id/lytToolbar"
+            layout="@layout/toolbar"/>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardImage"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_margin="10dp"
+            app:cardCornerRadius="10dp"
+            android:elevation="5dp"
+            android:layout_below="@+id/lytToolbar">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="@android:color/white">
+
+                <ImageView
+                    android:id="@+id/img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/production"
+                    android:scaleType="centerInside"
+                    android:padding="5dp"/>
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
         <TextView
-            android:id="@+id/txtNumber"
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:text="1"
+            android:id="@+id/txtName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/cardImage"
+            tools:text="کلم سفید"
+            android:gravity="start"
+            android:textColor="@android:color/black"
+            android:padding="10dp"/>
+        <TextView
+            android:id="@+id/txtCode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtName"
+            tools:text="123"
+            android:textAlignment="viewEnd"
+            android:textColor="@android:color/black"
+            android:padding="10dp"/>
+
+        <TextView
+            android:id="@+id/txtKVahed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtCode"
+            tools:text="واحد: 2کیلوگرم+100گرم"
+            android:layout_marginTop="10dp"
+            android:gravity="start"
+            android:textColor="@android:color/black"
+            android:padding="10dp"/>
+        <TextView
+            android:id="@+id/txtKVahedColi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtKVahed"
+            tools:text="واحد: 2کیلوگرم+100گرم"
+            android:gravity="start"
+            android:textColor="@android:color/black"
+            android:padding="10dp"/>
+        <TextView
+            android:id="@+id/txtZarib"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtKVahedColi"
+            tools:text="واحد: 2کیلوگرم+100گرم"
+            android:gravity="start"
+            android:textColor="@android:color/black"
+            android:padding="10dp"/>
+
+        <TextView
+            android:id="@+id/txtPriceHamkar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtZarib"
+            android:layout_marginTop="10dp"
+            tools:text="36600تومان"
+            android:gravity="start"
+            android:textColor="@android:color/black"
+            android:padding="10dp"/>
+        <TextView
+            android:id="@+id/txtPriceForosh"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtPriceHamkar"
+            tools:text="36600تومان"
+            android:gravity="start"
+            android:textColor="@android:color/black"
+            android:padding="10dp"/>
+        <TextView
+            android:id="@+id/txtPriceOmde"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtPriceForosh"
+            tools:text="36600تومان"
+            android:gravity="start"
+            android:textColor="@android:color/black"
+            android:padding="10dp"/>
+
+        <TextView
+            android:id="@+id/txtDetail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/txtPriceOmde"
+            android:gravity="start"
+            tools:text="راه‌گذر شمال - جنوب یا کریدور شمال-جنوب از مسیرهای راهبردی در نیم‌کره شرقی جهان است."
+            app:autoSizeTextType="uniform"
+            app:autoSizeMinTextSize="12sp"
+            app:autoSizeMaxTextSize="100sp"
+            app:autoSizeStepGranularity="2sp"
+            android:textColor="@android:color/black"
+            android:padding="10dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:gravity="center"
-            android:textColor="@android:color/white"/>
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/lytNumbric"
+            android:layout_above="@+id/txtCart"
+            android:layout_margin="5dp"
+            android:padding="10dp"
+            android:background="@android:color/holo_orange_dark">
+            <ImageView
+                android:id="@+id/imgRemove"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_baseline_remove_24"
+                app:tint="@android:color/white"
+                android:padding="2dp"/>
 
-        <ImageView
-            android:id="@+id/imgAdd"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:src="@drawable/ic_add"
-            app:tint="@android:color/white"
-            android:padding="2dp"/>
+            <TextView
+                android:id="@+id/txtNumber"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:text="1"
+                android:gravity="center"
+                android:textColor="@android:color/white"/>
 
+            <ImageView
+                android:id="@+id/imgAdd"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_add"
+                app:tint="@android:color/white"
+                android:padding="2dp"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/txtCart"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@android:color/holo_orange_dark"
+            android:gravity="center"
+            android:text="افزودن به سبد"
+            android:textColor="@android:color/white" />
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/txtCart"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginBottom="5dp"
-        android:background="@android:color/holo_orange_dark"
-        android:gravity="center"
-        android:text="افزودن به سبد"
-        android:textColor="@android:color/white" />
-
-</RelativeLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

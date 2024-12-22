@@ -20,22 +20,22 @@
             android:id="@+id/btnMoshtari"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="نام مشتری "/>
+            android:hint="نام مشتری "/>
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnStartDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="تاریخ ابتدا"/>
+            android:hint="تاریخ ابتدا"/>
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnEndDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="تاریخ انتها"/>
+            android:hint="تاریخ انتها"/>
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnSearch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="جستجو"/>
+            android:hint="جستجو"/>
     </LinearLayout>
 
     <HorizontalScrollView

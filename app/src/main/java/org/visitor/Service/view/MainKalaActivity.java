@@ -2,21 +2,18 @@ package org.visitor.Service.view;
 
 import static android.content.ContentValues.TAG;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.InputType;
-import android.text.method.DigitsKeyListener;
+import android.os.PersistableBundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.LayoutRes;
+import androidx.annotation.Nullable;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,7 +22,6 @@ import com.google.android.material.snackbar.Snackbar;
 
 import org.alarmamir.R;
 import org.visitor.Api;
-import org.visitor.BaseConfig;
 import org.visitor.Room.AppExecutors;
 import org.visitor.Room.MyRoomDatabase;
 import org.visitor.Service.adapter.KalaAdapter;
@@ -34,73 +30,42 @@ import org.visitor.Service.presenter.model.KalaResponse;
 import org.visitor.Service.presenter.ResultKalaPresenter;
 import org.visitor.Service.presenter.SelectItemList;
 import org.visitor.Tools.Databace.DataSaver;
-import org.w3c.dom.CDATASection;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-public class MainKalaActivity extends AppCompatActivity {
+public class MainKalaActivity extends BaseActivity {
     private KalaAdapter kalaAdapter;
     private RecyclerView list;
     private Api busApi;
     private ProgressBar loading;
-    private Snackbar snackbar;
-    private AlertDialog.Builder builder;
-
     TextView txtTitle;
     ImageView imgBack;
     MyRoomDatabase myRoomDatabase;
     public DataSaver dataSaver;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         dataSaver = new DataSaver(MainKalaActivity.this);
-        setContentView(R.layout.activity_main_kala);
         if(!(dataSaver.hasLogin() && dataSaver.hasConfig())){
              startActivity(new Intent(this,LoginActivity.class));
              finish();
              return;
         }
         CoordinatorLayout view = findViewById(R.id.coordinator);
-        snackbar = Snackbar.make(view,"",10000);
-
-        ImageView Settings =  findViewById(R.id.Settings);
-        Settings.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                builder = new AlertDialog.Builder(MainKalaActivity.this);
-                builder.setTitle("Server Address");
-                final EditText input = new EditText(MainKalaActivity.this);
-                input.setInputType(InputType.TYPE_CLASS_TEXT);
-                builder.setView(input);
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        try{
-                            dataSaver.setHost(input.getText().toString());
-                        }catch (Exception e){
-                            snackbar.setText(e.toString());
-                            snackbar.show();
-                        }
-                        busApi.getKalas(resultPresenterGetGroup);
-                    }
-                });
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-                builder.show();
-            }
-        });
+        if(view!=null)
+            snackbar = Snackbar.make(view,"",10000);
         init();
     }
-
-
-
+    @Override
+    protected  @LayoutRes int  getLayoutResource()
+    {
+        return  R.layout.activity_main_kala;
+    };
+    @Override
+    protected void OnPositiveClick() {
+        busApi.getKalas(resultPresenterGetGroup);
+    }
 
     private void init(){
         myRoomDatabase = MyRoomDatabase.getAppDatabase(this);
@@ -234,7 +199,7 @@ public class MainKalaActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    snackbar.setText("Check you're Internet conenction");
+                    snackbar.setText("Check you're Internet connection");
                     snackbar.show();
                     loading.setVisibility(View.GONE);
                 }
@@ -245,7 +210,7 @@ public class MainKalaActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    Log.i(TAG, "success");
+                    loading.setVisibility(View.GONE);
                     if (response!=null && !response.Kalas.isEmpty()){
                         setupRecycler(response.Kalas,myRoomDatabase.kalaDao().getAllKalaList());
                     }else
@@ -282,7 +247,6 @@ public class MainKalaActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     loading.setVisibility(View.GONE);
-
                 }
             });
         }

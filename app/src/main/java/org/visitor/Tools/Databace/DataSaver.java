@@ -7,6 +7,7 @@ import android.preference.PreferenceManager;
 import com.google.gson.Gson;
 
 import org.visitor.BaseConfig;
+import org.visitor.Service.presenter.model.ConfigResponse;
 import org.visitor.Service.presenter.model.UserConfig;
 import org.visitor.Service.presenter.model.UserResponse;
 import org.visitor.userModel.ResponseUser;
@@ -15,14 +16,26 @@ import java.util.concurrent.ExecutionException;
 
 
 public class DataSaver {
-    private Context context;
+    private final Context context;
+    private final SharedPreferences sharedpreferences;
     public static final String MyPREFERENCES = "MyPrefs";
     public static final String USER_JSON = "userJson";
     public static final String HOST_ADDRESS = "hostAddress";
     public static final String CONFIG = "initialConfig";
+    public static  final  String SnackbarDuration = "SnackbarDuration";
 
     public DataSaver(Context context) {
         this.context = context;
+        sharedpreferences = PreferenceManager.getDefaultSharedPreferences(this.context);
+    }
+    public int getDuraiton(){
+        return sharedpreferences.getInt(SnackbarDuration,10);
+    }
+    public void setDuration(int Duration){
+        SharedPreferences sharedpreferences = PreferenceManager.getDefaultSharedPreferences(this.context);
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putInt(DataSaver.SnackbarDuration,Duration);
+        editor.apply();
     }
     public boolean hasConfig(){
         SharedPreferences sharedpreferences = PreferenceManager.getDefaultSharedPreferences(this.context);
@@ -44,9 +57,10 @@ public class DataSaver {
         editor.putString(HOST_ADDRESS, host);
         editor.apply();
     }
-    public String getConfig(){
+    public ConfigResponse getConfig(){
         SharedPreferences sharedPreferences =  PreferenceManager.getDefaultSharedPreferences(this.context);
-        return sharedPreferences.getString(CONFIG,"");
+        String configS = sharedPreferences.getString(CONFIG,"");
+        return new Gson().fromJson(configS, ConfigResponse.class);
     }
     public void setConfig(String DbName){
         SharedPreferences sharedPreferences =  PreferenceManager.getDefaultSharedPreferences(this.context);

@@ -98,34 +98,14 @@ public class KalaAdapter extends RecyclerView.Adapter<KalaAdapter.MyViewHolder> 
             imgAdd=itemLayoutView.findViewById(R.id.imgAdd);
             imgRemove=itemLayoutView.findViewById(R.id.imgRemove);
             lytNumbric=itemLayoutView.findViewById(R.id.lytNumbric);
-
-            imgAdd.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    selectItemGroupDb.onSelectItemForCats(listItem.get(getAdapterPosition()), getAdapterPosition(), txtName, txtNumber,true);
-                }
+            imgAdd.setOnClickListener(view -> selectItemGroupDb.onSelectItemForCats(listItem.get(getAdapterPosition()), getAdapterPosition(), txtName, txtNumber,true));
+            imgRemove.setOnClickListener(view -> selectItemGroupDb.onSelectItemForCats(listItem.get(getAdapterPosition()), getAdapterPosition(), txtName, txtNumber,false));
+            txtCart.setOnClickListener(view -> {
+                selectItemGroupDb.onSelectItemForCats(listItem.get(getAdapterPosition()), getAdapterPosition(), txtName, txtNumber,true);
+                lytNumbric.setVisibility(View.VISIBLE);
+                txtCart.setVisibility(View.GONE);
             });
-            imgRemove.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    selectItemGroupDb.onSelectItemForCats(listItem.get(getAdapterPosition()), getAdapterPosition(), txtName, txtNumber,false);
-                }
-            });
-            txtCart.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    selectItemGroupDb.onSelectItemForCats(listItem.get(getAdapterPosition()), getAdapterPosition(), txtName, txtNumber,true);
-                    lytNumbric.setVisibility(View.VISIBLE);
-                    txtCart.setVisibility(View.GONE);
-                }
-            });
-            itemLayoutView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    selectItemGroupDb.onSelectItem(listItem.get(getAdapterPosition()), getAdapterPosition(), txtName, null);
-
-                }
-            });
+            itemLayoutView.setOnClickListener(v -> selectItemGroupDb.onSelectItem(listItem.get(getAdapterPosition()), getAdapterPosition(), txtName, null));
         }
     }
     public void setFilter(String name) {

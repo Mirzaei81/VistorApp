@@ -67,31 +67,28 @@ public class ConfigActivity extends AppCompatActivity {
         CoordinatorLayout view = findViewById(R.id.parentView);
         snackbar = Snackbar.make(view,"",10000);
         submit = findViewById(R.id.submit);
-        submit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ResaultConfigPresenter resaultConfigPresenter = new ResaultConfigPresenter() {
-                    @Override
-                    public void onErrorServer(String e) {
-                        snackbar.setText(e);
-                        snackbar.show();
-                    }
+        submit.setOnClickListener(view1 -> {
+            ResaultConfigPresenter resaultConfigPresenter = new ResaultConfigPresenter() {
+                @Override
+                public void onErrorServer(String e) {
+                    snackbar.setText(e);
+                    snackbar.show();
+                }
 
-                    @Override
-                    public void onErrorInternetConnection() {
-                        snackbar.setText("Check you're internet connection");
-                        snackbar.show();
-                    }
+                @Override
+                public void onErrorInternetConnection() {
+                    snackbar.setText("Check you're internet connection");
+                    snackbar.show();
+                }
 
-                    @Override
-                    public void onFinish(String response) {
-                        dataSaver.setConfig(response);
-                        startActivity(new Intent(ConfigActivity.this,MainKalaActivity.class));
-                        finish();
-                    }
-                };
-                busApi.getDbName(SelectedYear,SelectedDaftar,SelectedCompany,resaultConfigPresenter);
-            }
+                @Override
+                public void onFinish(String response) {
+                    dataSaver.setConfig(response);
+                    startActivity(new Intent(ConfigActivity.this,MainKalaActivity.class));
+                    finish();
+                }
+            };
+            busApi.getDbName(SelectedYear,SelectedDaftar,SelectedCompany,resaultConfigPresenter);
         });
         initYearSpinner();
         initDaftarSpinner();

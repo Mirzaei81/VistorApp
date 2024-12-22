@@ -6,10 +6,12 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
+import org.alarmamir.R;
 import org.visitor.Service.presenter.ResaultConfigPresenter;
 import org.visitor.Service.presenter.ResultFactorPresenter;
 import org.visitor.Service.presenter.ResultLoginPresenter;
@@ -39,7 +41,9 @@ public class Api {
     public Api(Context context,DataSaver ds) {
         this.context = context;
         dataSaver = ds;
-        DbName = dataSaver.getConfig();
+        if(dataSaver.hasConfig()) {
+            DbName = dataSaver.getConfig().databaseName;
+        }
     }
     public void getDbName(final float year, final String Daftar, final String Company, final ResaultConfigPresenter resaultConfigPresenter)
     {
@@ -241,17 +245,12 @@ public class Api {
         thread.start();
     }
 
-    public void getFactor(String endDate, String startDate, String codeMoshtari, final ResultFactorPresenter resultSearchBusPresenter) {
-
-        final String url =BaseConfig.BASE_URL_MASTER+"acc_HsbPrsnsKoli?dateTo="+endDate+"&dateFrom="+startDate+"&codeM="+codeMoshtari+"&mrkaz=1&mandDate=0&kind=A";
+    public void getFactor(String endDate, String startDate,String codeMoshtari, final ResultFactorPresenter resultSearchBusPresenter) {
+        final String url =dataSaver.getHost()+"acc_HsbPrsnsKoli?dateTo="+endDate+"&dateFrom="+startDate+"&codeM="+codeMoshtari+"&mrkaz=1&mandDate=0&kind=A";
         cancelRequest();
-
         thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                HashMap<String, String> getHashMap = new HashMap<>();
-                getHashMap.put(KeyConst.APP_KEY, KeyConst.appKey);
-                getHashMap.put(KeyConst.APP_SECRET, KeyConst.appSecret);
                 new WebServiceNetwork(context).requestWebServiceByGet(url,DbName, null, new NetworkListener() {
                     @Override
                     public void onStart() {
