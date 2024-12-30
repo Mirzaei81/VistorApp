@@ -14,8 +14,6 @@ import java.util.List;
 
 @Dao
 public abstract class KalaDao {
-
-
     ///// user2
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     public abstract void insertKalas(Kala kala);

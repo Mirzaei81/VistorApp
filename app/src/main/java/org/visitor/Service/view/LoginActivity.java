@@ -124,6 +124,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
                     Intent ConfigActivity = new Intent(LoginActivity.this,ConfigActivity.class);
                     Bundle bundle =new Bundle();
+                    bundle.putBoolean("RememberMe",checkBox.isChecked());
                     bundle.putSerializable("Configurations",response.serverDetail);
                     ConfigActivity.putExtras(bundle);
                     startActivity(ConfigActivity);

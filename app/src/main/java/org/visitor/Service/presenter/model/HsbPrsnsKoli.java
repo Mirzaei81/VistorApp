@@ -6,37 +6,37 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 
 public class HsbPrsnsKoli implements Serializable {
-    @SerializedName("brws")
+    @SerializedName("Brws")
     @Expose
     private Integer brws;
-    @SerializedName("kindFactor")
+    @SerializedName("KindFactor")
     @Expose
     private String kindFactor;
-    @SerializedName("date")
+    @SerializedName("Date")
     @Expose
     private String date;
-    @SerializedName("no")
+    @SerializedName("No")
     @Expose
     private Integer no;
     @SerializedName("kind")
     @Expose
     private String kind;
-    @SerializedName("sharh")
+    @SerializedName("Sharh")
     @Expose
     private String sharh;
-    @SerializedName("bes")
+    @SerializedName("Bes")
     @Expose
     private Double bes;
-    @SerializedName("bed")
+    @SerializedName("Bed")
     @Expose
     private Double bed;
-    @SerializedName("f_Factor")
+    @SerializedName("F_Factor")
     @Expose
     private Integer fFactor;
-    @SerializedName("f")
+    @SerializedName("F")
     @Expose
     private Object f;
-    @SerializedName("mande")
+    @SerializedName("Mande")
     @Expose
     private Integer mande;
     private final static long serialVersionUID = 3178013527405488621L;

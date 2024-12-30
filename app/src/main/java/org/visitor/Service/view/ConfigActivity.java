@@ -3,16 +3,13 @@ package org.visitor.Service.view;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
@@ -20,10 +17,8 @@ import com.google.android.material.snackbar.Snackbar;
 
 import org.alarmamir.R;
 import org.visitor.Api;
-import org.visitor.Service.presenter.ResaultConfigPresenter;
-import org.visitor.Service.presenter.ResultLoginPresenter;
+import org.visitor.Service.presenter.ResultConfigPresenter;
 import org.visitor.Service.presenter.model.UserConfig;
-import org.visitor.Service.presenter.model.UserResponse;
 import org.visitor.Tools.Databace.DataSaver;
 
 import java.util.ArrayList;
@@ -51,9 +46,11 @@ public class ConfigActivity extends AppCompatActivity {
         busApi = new Api(this,dataSaver);
         if (b == null) {
             Log.v("Config","Config Detail not Found");
+            return;
         } else if (!b.containsKey("Configurations")){
             Log.v("Bundle","Config Detail type is Incorrect");
         }
+        Boolean rememberMe = b.getBoolean("RememberMe");
         ArrayList<UserConfig> serverDetail = (ArrayList<UserConfig>) b.get("Configurations");
         assert serverDetail != null;
         yearItems = new ArrayList<>();
@@ -68,7 +65,7 @@ public class ConfigActivity extends AppCompatActivity {
         snackbar = Snackbar.make(view,"",10000);
         submit = findViewById(R.id.submit);
         submit.setOnClickListener(view1 -> {
-            ResaultConfigPresenter resaultConfigPresenter = new ResaultConfigPresenter() {
+            ResultConfigPresenter resaultConfigPresenter = new ResultConfigPresenter() {
                 @Override
                 public void onErrorServer(String e) {
                     snackbar.setText(e);
@@ -84,7 +81,11 @@ public class ConfigActivity extends AppCompatActivity {
                 @Override
                 public void onFinish(String response) {
                     dataSaver.setConfig(response);
-                    startActivity(new Intent(ConfigActivity.this,MainKalaActivity.class));
+                    Intent intent = new Intent(ConfigActivity.this,MainActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putBoolean("RememberMe",rememberMe);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
                     finish();
                 }
             };

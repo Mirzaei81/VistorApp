@@ -65,8 +65,6 @@ public class MoshtariAdapter extends RecyclerView.Adapter<MoshtariAdapter.MyView
         public TextView txtCode;
         public MyViewHolder(final View itemLayoutView) {
             super(itemLayoutView);
-        //    UtilFonts.overrideFonts(context, itemLayoutView, UtilFonts.IRAN_SANS_NORMAL);
-
             txtName = itemLayoutView.findViewById(R.id.txtName);
             txtCode = itemLayoutView.findViewById(R.id.txtCode);
             itemLayoutView.setOnClickListener(v -> selectItemGroupDb.onSelectItem(listItem.get(getAdapterPosition()), getAdapterPosition(), txtName, null));

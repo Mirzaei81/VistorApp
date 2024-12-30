@@ -24,7 +24,10 @@ import org.alarmamir.R;
 import org.visitor.Api;
 
 import org.visitor.Service.adapter.MoshtariAdapter;
+import org.visitor.Service.presenter.ResultFactorPresenter;
 import org.visitor.Service.presenter.ResultGroupPresenter;
+import org.visitor.Service.presenter.ResultMoshtariPresenter;
+import org.visitor.Service.presenter.model.AccHsbPrsnsKoliResponse;
 import org.visitor.Service.presenter.model.Moshtari;
 import org.visitor.Service.presenter.model.MoshtariResponse;
 import org.visitor.Service.presenter.SelectItemList;
@@ -51,7 +54,7 @@ public class MainMoshtariActivity extends BaseActivity{
     }
     @Override
     protected void OnPositiveClick() {
-        busApi.getMoshtaris(resultPresenterGetGroup);
+        busApi.getMoshtaris(resultPresenterGetMoshtaries);
     }
     @Override
     protected  int getLayoutResource(){
@@ -60,11 +63,11 @@ public class MainMoshtariActivity extends BaseActivity{
     private void init(){
         dataServer = new DataSaver(MainMoshtariActivity.this);
         busApi = new Api(MainMoshtariActivity.this,dataServer);
+
         snackbar = Snackbar.make(this.findViewById(R.id.constraint),"",dataServer.getDuraiton());
 
         FloatingActionButton btnAddGroup=findViewById(R.id.btnAddMoshtari);
         btnAddGroup.setOnClickListener(onclickListener);
-
 
         loading =findViewById(R.id.progressbar);
         loading.setVisibility(View.GONE);
@@ -88,14 +91,14 @@ public class MainMoshtariActivity extends BaseActivity{
                 return false;
             }
         });
-        busApi.getMoshtaris(resultPresenterGetGroup);
+        busApi.getMoshtaris(resultPresenterGetMoshtaries);
     }
     View.OnClickListener onclickListener=new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             switch (view.getId()){
                 case R.id.btnAddMoshtari:
-                    busApi.getMoshtaris(resultPresenterGetGroup);
+                    busApi.getMoshtaris(resultPresenterGetMoshtaries);
                     break;
 
             }
@@ -122,18 +125,7 @@ public class MainMoshtariActivity extends BaseActivity{
         }
     };
 
-    private ResultGroupPresenter resultPresenterGetGroup = new ResultGroupPresenter() {
-        @Override
-        public void onStart() {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    loading.setVisibility(View.VISIBLE);
-                }
-            });
-
-        }
-
+    private ResultMoshtariPresenter resultPresenterGetMoshtaries = new ResultMoshtariPresenter() {
         @Override
         public void onErrorServer(String e) {
             runOnUiThread(new Runnable() {
@@ -171,37 +163,6 @@ public class MainMoshtariActivity extends BaseActivity{
                 }
             });
 
-        }
-        @Override
-        public void noBus() {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    loading.setVisibility(View.GONE);
-                }
-            });
-
-
-        }
-
-        @Override
-        public void onError(final String msg) {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    loading.setVisibility(View.GONE);
-                }
-            });
-        }
-
-        @Override
-        public void onFinish() {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    loading.setVisibility(View.GONE);
-                }
-            });
         }
     };
 }

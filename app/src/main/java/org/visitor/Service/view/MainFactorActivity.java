@@ -17,7 +17,6 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.LayoutRes;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -45,12 +44,9 @@ import ir.hamsaa.persiandatepicker.api.PersianPickerListener;
 import ir.hamsaa.persiandatepicker.util.PersianCalendarUtils;
 
 public class MainFactorActivity extends BaseActivity {
-    private static final int PERMISSION_SEND_SMS = 123;
-    private FactorAdapter factorAdapter;
     private RecyclerView list;
     private Api busApi;
     private ProgressBar loading;
-    private DataSaver dataServer;
     public Snackbar snackbar;
 
     TextView txtTitle;
@@ -68,8 +64,8 @@ public class MainFactorActivity extends BaseActivity {
         init();
     }
     private void init(){
-        dataServer = new DataSaver(MainFactorActivity.this);
-        busApi = new Api(this,dataServer);
+        DataSaver dataServer = new DataSaver(MainFactorActivity.this);
+        busApi = new Api(this, dataServer);
         FloatingActionButton btnAddGroup=findViewById(R.id.btnAddMoshtari);
         btnAddGroup.setOnClickListener(onclickListener);
 
@@ -84,7 +80,7 @@ public class MainFactorActivity extends BaseActivity {
         btnSearch.setOnClickListener(onClickListener);
 
         btnStartDate.setText(dataServer.getConfig().dateTo);
-        btnStartDate.setText(dataServer.getConfig().dateFrom);
+        btnEndDate.setText(dataServer.getConfig().dateFrom);
 
         loading =findViewById(R.id.progressbar);
         loading.setVisibility(View.GONE);
@@ -95,7 +91,6 @@ public class MainFactorActivity extends BaseActivity {
         imgBack=findViewById(R.id.imgBack);
         String EndDate = btnEndDate.getText().toString();
         String StartDate =  btnStartDate.getText().toString();
-        String Moshtari =  btnMoshtari.getText().toString();
         busApi.getFactor(EndDate, StartDate, String.format(Locale.getDefault(),"%d",moshtari.getmCode()), resultPresenterGetGroup);
     }
 
@@ -203,43 +198,10 @@ public class MainFactorActivity extends BaseActivity {
         }
     };
     private void setupRecyclerGrup(List<HsbPrsnsKoli> hsbPrsnsKolis) {
-        factorAdapter = new FactorAdapter(this,hsbPrsnsKolis, selectItem);
+        FactorAdapter factorAdapter = new FactorAdapter(this, hsbPrsnsKolis);
         list.setAdapter(factorAdapter);
     }
-
-    private SelectItemList<HsbPrsnsKoli> selectItem = new SelectItemList<HsbPrsnsKoli>() {
-        @Override
-        public void onSelectItem(HsbPrsnsKoli moshtari, int position, View view, View view2) {
-            Intent intent=new Intent(MainFactorActivity.this, MainFactorActivity.class);
-            intent.putExtra(Moshtari.class.getName(),moshtari);
-            startActivity(intent);
-
-        }
-
-        @Override
-        public void onSelectItemForCats(HsbPrsnsKoli object, int position, View view, TextView txtMojodi, boolean booleanAdd) {
-
-        }
-    };
-
-
-
-
-
-
-
-    private ResultFactorPresenter resultPresenterGetGroup = new ResultFactorPresenter() {
-        @Override
-        public void onStart() {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    loading.setVisibility(View.VISIBLE);
-                }
-            });
-
-        }
-
+    private final ResultFactorPresenter resultPresenterGetGroup = new ResultFactorPresenter() {
         @Override
         public void onErrorServer(String e) {
             runOnUiThread(new Runnable() {
@@ -261,53 +223,16 @@ public class MainFactorActivity extends BaseActivity {
         }
         @Override
         public void onSuccessResultSearch(AccHsbPrsnsKoliResponse response) {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    Log.i(TAG, "success");
-                    if (response.getHsbPrsnsKoli().size()>0){
-                        setupRecyclerGrup(response.getHsbPrsnsKoli());
-                    }else
-                        setupRecyclerGrup(new ArrayList<>());
-                }
-            });
-
-        }
-        @Override
-        public void noBus() {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    loading.setVisibility(View.GONE);
-                }
-            });
-
-
-        }
-
-        @Override
-        public void onError(final String msg) {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    loading.setVisibility(View.GONE);
-                }
-            });
-        }
-
-        @Override
-        public void onFinish() {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    loading.setVisibility(View.GONE);
-
-                }
-            });
+            if(response!=null && response.getHsbPrsnsKoli()!=null){
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (!response.getHsbPrsnsKoli().isEmpty()){
+                            setupRecyclerGrup(response.getHsbPrsnsKoli());
+                        }else setupRecyclerGrup(new ArrayList<>());
+                    }
+                });
+            }
         }
     };
-
-
-
-
 }

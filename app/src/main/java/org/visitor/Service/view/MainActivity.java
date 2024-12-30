@@ -21,11 +21,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
+        Bundle b = getIntent().getExtras();
         DataSaver dataSaver = new DataSaver(this);
         if(!dataSaver.hasConfig()&&!dataSaver.hasLogin()) {
-            startActivity(new Intent(MainActivity.this,LoginActivity.class));
-            finish();
-            return;
+            if(b==null){
+                startActivity(new Intent(MainActivity.this,LoginActivity.class));
+                finish();
+                return;
+            }
         }
         ViewPager2 viewPager2 = findViewById(R.id.pager);
         MainPagerAdapter adapter = new MainPagerAdapter(getSupportFragmentManager(), getLifecycle());

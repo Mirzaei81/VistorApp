@@ -70,7 +70,7 @@ public class CartsActivity extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             if (view.getId()==R.id.btnAddMoshtari){
-                busApi.getKalas(resultPresenterGetGroup);
+                //busApi.getKalas(resultPresenter);
             }
         }
     };
@@ -182,13 +182,13 @@ public class CartsActivity extends AppCompatActivity {
             });
         }
         @Override
-        public void onSuccessResultSearch(KalaResponse response) {
+        public void onSuccessResultSearch(ArrayList<Kala> response) {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     Log.i(TAG, "success");
-                    if (!response.Kalas.isEmpty()){
-                        setupRecycler(response.Kalas);
+                    if (!response.isEmpty()){
+                        setupRecycler(response);
                     }else
                         setupRecycler(new ArrayList<>());
                 }
@@ -197,12 +197,7 @@ public class CartsActivity extends AppCompatActivity {
         }
         @Override
         public void noBus() {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    loading.setVisibility(View.GONE);
-                }
-            });
+            runOnUiThread(() -> loading.setVisibility(View.GONE));
 
 
         }

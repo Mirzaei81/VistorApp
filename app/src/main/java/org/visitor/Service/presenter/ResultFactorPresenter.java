@@ -2,6 +2,7 @@ package org.visitor.Service.presenter;
 
 
 import org.visitor.Service.presenter.model.AccHsbPrsnsKoliResponse;
+import org.visitor.Service.presenter.model.FactorDetail;
 import org.visitor.Service.presenter.model.HsbPrsnsKoli;
 import org.visitor.Service.presenter.model.MoshtariResponse;
 
@@ -13,18 +14,9 @@ import java.util.List;
 
 public interface ResultFactorPresenter {
 
-    void onStart();
-
     void onErrorServer(String e);
 
     void onErrorInternetConnection();
 
     void onSuccessResultSearch(AccHsbPrsnsKoliResponse response);
-
-    void noBus();
-
-    void onError(String msg);
-
-    void onFinish();
-
 }

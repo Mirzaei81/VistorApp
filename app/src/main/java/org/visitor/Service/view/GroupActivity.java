@@ -1,19 +1,14 @@
 package org.visitor.Service.view;
 
-import static android.content.ContentValues.TAG;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.ProgressBar;
 
 import androidx.annotation.LayoutRes;
-import androidx.annotation.Nullable;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -24,22 +19,20 @@ import org.alarmamir.R;
 import org.visitor.Api;
 import org.visitor.Room.AppExecutors;
 import org.visitor.Room.MyRoomDatabase;
-import org.visitor.Service.adapter.KalaAdapter;
-import org.visitor.Service.presenter.model.Kala;
-import org.visitor.Service.presenter.model.KalaResponse;
-import org.visitor.Service.presenter.ResultKalaPresenter;
+import org.visitor.Service.adapter.GroupAdapter;
+import org.visitor.Service.presenter.ResultGroupPresenter;
 import org.visitor.Service.presenter.SelectItemList;
+import org.visitor.Service.presenter.model.Groups;
 import org.visitor.Tools.Databace.DataSaver;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainKalaActivity extends BaseActivity {
-    private KalaAdapter kalaAdapter;
+public class GroupActivity extends BaseActivity {
+    private GroupAdapter groupAdapter;
     private RecyclerView list;
     private Api busApi;
     private ProgressBar loading;
-    private int gId;
     TextView txtTitle;
     ImageView imgBack;
     MyRoomDatabase myRoomDatabase;
@@ -47,11 +40,11 @@ public class MainKalaActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        dataSaver = new DataSaver(MainKalaActivity.this);
+        dataSaver = new DataSaver( GroupActivity.this);
         if(!(dataSaver.hasLogin() && dataSaver.hasConfig())){
-             startActivity(new Intent(this,LoginActivity.class));
-             finish();
-             return;
+            startActivity(new Intent(this,LoginActivity.class));
+            finish();
+            return;
         }
         CoordinatorLayout view = findViewById(R.id.coordinator);
         if(view!=null)
@@ -61,32 +54,28 @@ public class MainKalaActivity extends BaseActivity {
     @Override
     protected  @LayoutRes int  getLayoutResource()
     {
-        return  R.layout.activity_main_kala;
+        return  R.layout.activity_groups;
     };
     @Override
     protected void OnPositiveClick() {
-        busApi.getKalas(gId,resultPresenterGetGroup);
+        busApi.getGroups(resultPresenterGetGroups);
     }
 
     private void init(){
         myRoomDatabase = MyRoomDatabase.getAppDatabase(this);
         FrameLayout flCarts=findViewById(R.id.flCarts);
         flCarts.setVisibility(View.VISIBLE);
-        Bundle b = getIntent().getExtras();
-        assert b!=null;
-        gId = b.getInt(MainKalaActivity.class.getName());
-        assert  gId!=0;
         flCarts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(MainKalaActivity.this,CartsActivity.class);
+                Intent intent=new Intent( GroupActivity.this,MainKalaActivity.class);
                 startActivity(intent);
             }
         });
-        busApi = new Api(MainKalaActivity.this,dataSaver);
+        busApi = new Api(GroupActivity.this,dataSaver);
 
-        FloatingActionButton btnAddGroup=findViewById(R.id.btnAddMoshtari);
-        btnAddGroup.setOnClickListener(onclickListener);
+        FloatingActionButton btnAddGroups=findViewById(R.id.btnAddMoshtari);
+        btnAddGroups.setOnClickListener(onclickListener);
 
 
         loading =findViewById(R.id.progressbar);
@@ -98,40 +87,39 @@ public class MainKalaActivity extends BaseActivity {
         txtTitle.setText("لیست کالاها");
         imgBack=findViewById(R.id.imgBack);
         imgBack.setVisibility(View.GONE);
-
-        busApi.getKalas(gId,resultPresenterGetGroup);
+        busApi.getGroups(resultPresenterGetGroups);
 
     }
     View.OnClickListener onclickListener=new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             if (view.getId() == R.id.btnAddMoshtari) {
-                busApi.getKalas(gId,resultPresenterGetGroup);
+                busApi.getGroups(resultPresenterGetGroups);
             }
         }
     };
-    private void setupRecycler(List<Kala> kalaList, List<Kala> listRoom) {
-        kalaAdapter = new KalaAdapter(this,kalaList,listRoom, selectItem);
-        list.setAdapter(kalaAdapter);
+    private void setupRecycler(List<Groups> groupList , List<Groups> listRoom) {
+        groupAdapter = new GroupAdapter(this,groupList,listRoom, selectItem);
+        list.setAdapter(groupAdapter);
     }
 
-    private SelectItemList<Kala> selectItem = new SelectItemList<Kala>() {
+    private SelectItemList<Groups> selectItem = new SelectItemList<Groups>() {
         @Override
-        public void onSelectItem(Kala kala, int position, View view, View view2) {
-            Intent intent = new Intent(MainKalaActivity.this, ProductActivity.class);
-            intent.putExtra(kala.getClass().getName(), kala); //second param is Serializable
+        public void onSelectItem(Groups kala, int position, View view, View view2) {
+            Intent intent = new Intent(GroupActivity.this, ProductActivity.class);
+            intent.putExtra(GroupActivity.class.getName(), kala.id); //second param is Serializable
             startActivity(intent);
 
 
         }
 
         @Override
-        public void onSelectItemForCats(Kala kala, int position, View view, TextView txtNumber, boolean booleanAdd) {
+        public void onSelectItemForCats(Groups group, int position, View view, TextView txtNumber, boolean booleanAdd) {
             AppExecutors.getInstance().diskIO().execute(new Runnable() {
                 @Override
                 public void run() {
                     if (booleanAdd) {
-                        if (null!=myRoomDatabase.kalaDao().existItemInDatabase(kala.getkCode())){
+                        if (null!=myRoomDatabase.groupDao().existItemInDatabase(group.id)){
 
                             runOnUiThread(new Runnable() {
                                 @Override
@@ -139,30 +127,30 @@ public class MainKalaActivity extends BaseActivity {
                                     int number=Integer.parseInt(txtNumber.getText().toString());
                                     // Update UI components here
                                     txtNumber.setText(String.valueOf(number+1));
-//                                    kala.setNumber((long) (number+1));
-                                    myRoomDatabase.kalaDao().updateKala(kala);
+//                                    group.setNumber((long) (number+1));
+                                    myRoomDatabase.groupDao().updateGroup(group);
                                 }
                             });
 
                         }else {
-//                            kala.setNumber((long) 1);
-                            myRoomDatabase.kalaDao().insertKalas(kala);
+//                            group.setNumber((long) 1);
+                            myRoomDatabase.groupDao().insertGroups(group);
                         }
 
 
-                    }else if(null!=myRoomDatabase.kalaDao().existItemInDatabase(kala.getkCode())) {
+                    }else if(null!=myRoomDatabase.groupDao().existItemInDatabase(group.id)) {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 int number=Integer.parseInt(txtNumber.getText().toString());
                                 if (number==1){
-                                    myRoomDatabase.kalaDao().deleteKalas(kala);
-                                    kalaAdapter.notifyDataSetChanged();
-                                 //   setupRecycler(myRoomDatabase.kalaDao().getAllKalaList());
+                                    myRoomDatabase.groupDao().deleteGroups(group);
+                                    groupAdapter.notifyDataSetChanged();
+                                    //   setupRecycler(myRoomDatabase.groupDao().getAllGroupsList());
                                 }else {
                                     txtNumber.setText(String.valueOf(number - 1));
-//                                    kala.setNumber((long) (number - 1));
-                                    myRoomDatabase.kalaDao().updateKala(kala);
+//                                    group.setNumber((long) (number - 1));
+                                    myRoomDatabase.groupDao().updateGroup(group);
                                 }
                             }
                         });
@@ -175,17 +163,7 @@ public class MainKalaActivity extends BaseActivity {
 
 
     };
-    private final ResultKalaPresenter resultPresenterGetGroup = new ResultKalaPresenter() {
-        @Override
-        public void onStart() {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    loading.setVisibility(View.VISIBLE);
-                }
-            });
-
-        }
+    private final ResultGroupPresenter resultPresenterGetGroups = new ResultGroupPresenter() {
 
         @Override
         public void onErrorServer(String e) {
@@ -211,53 +189,18 @@ public class MainKalaActivity extends BaseActivity {
             });
         }
         @Override
-        public void onSuccessResultSearch(ArrayList<Kala> response) {
+        public void onSuccessResultSearch(ArrayList<Groups> response) {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     loading.setVisibility(View.GONE);
                     if (response!=null && !response.isEmpty()){
-                        setupRecycler(response,myRoomDatabase.kalaDao().getAllKalaList());
+                        setupRecycler(response,myRoomDatabase.groupDao().getAllGroupList());
                     }else
-                        setupRecycler(new ArrayList<>(), myRoomDatabase.kalaDao().getAllKalaList());
+                        setupRecycler(new ArrayList<>(), myRoomDatabase.groupDao().getAllGroupList());
                 }
             });
 
-        }
-        @Override
-        public void noBus() {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    loading.setVisibility(View.GONE);
-                }
-            });
-
-
-        }
-
-        @Override
-        public void onError(final String msg) {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    loading.setVisibility(View.GONE);
-                }
-            });
-        }
-
-        @Override
-        public void onFinish() {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    loading.setVisibility(View.GONE);
-                }
-            });
         }
     };
-
-
-
-
 }

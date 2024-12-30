@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import org.alarmamir.R;
+import org.visitor.Service.view.GroupActivity;
 import org.visitor.Service.view.MainKalaActivity;
 import org.visitor.Service.view.MainMoshtariActivity;
 
@@ -31,7 +32,7 @@ public class  BaseEntryFragment extends Fragment {
         RelativeLayout persons = view.findViewById(R.id.btnPro);
         mahsolat.setOnClickListener(view1 ->{
                     Activity context =(Activity) view1.getContext();
-                    Intent intent = new Intent(context, MainKalaActivity.class);
+                    Intent intent = new Intent(context, GroupActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent);
                 }

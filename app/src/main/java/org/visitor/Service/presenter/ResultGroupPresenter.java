@@ -1,7 +1,9 @@
 package org.visitor.Service.presenter;
 
 
-import org.visitor.Service.presenter.model.MoshtariResponse;
+import org.visitor.Service.presenter.model.Groups;
+
+import java.util.ArrayList;
 
 /**
  * Created by renjer on 1/10/2017.
@@ -9,18 +11,11 @@ import org.visitor.Service.presenter.model.MoshtariResponse;
 
 public interface ResultGroupPresenter {
 
-    void onStart();
-
     void onErrorServer(String e);
 
     void onErrorInternetConnection();
 
-    void onSuccessResultSearch(MoshtariResponse response);
+    void onSuccessResultSearch(ArrayList<Groups> response);
 
-    void noBus();
-
-    void onError(String msg);
-
-    void onFinish();
 
 }

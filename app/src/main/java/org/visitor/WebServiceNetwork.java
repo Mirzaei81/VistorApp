@@ -161,6 +161,9 @@ public class WebServiceNetwork {
                     }
                     networkListener.onFinish(response);
                     return response;
+                } else if (responseCode==HttpsURLConnection.HTTP_NOT_FOUND) {
+                   networkListener.onErrorServer("404 not found");
+                   return null;
                 } else {
                     String line;
                     BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));

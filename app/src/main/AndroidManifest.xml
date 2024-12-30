@@ -60,6 +60,9 @@
             android:name="org.visitor.Service.view.MainFactorActivity"
             android:exported="true" />
         <activity
+            android:name="org.visitor.Service.view.GroupActivity"
+            android:exported="true" />
+        <activity
             android:exported="true"
             android:name="org.visitor.Service.view.MainActivity">
             <intent-filter>
@@ -67,7 +70,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <activity
+            android:name="org.visitor.Service.view.FactorDetailActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
     </application>
 
 </manifest>

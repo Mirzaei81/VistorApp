@@ -8,17 +8,17 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 
+import org.visitor.Service.presenter.model.Groups;
 import org.visitor.Service.presenter.model.Kala;
 
 
-@Database(entities = {Kala.class},
+@Database(entities = {Kala.class, Groups.class},
         version = 1, exportSchema = true)
 public abstract class MyRoomDatabase extends RoomDatabase {
 
     private static MyRoomDatabase INSTANCE;
-
-
     public abstract KalaDao kalaDao();
+    public abstract GroupDao groupDao();
     public static synchronized MyRoomDatabase getAppDatabase(Context context) {
         if (INSTANCE == null) {
             INSTANCE = Room

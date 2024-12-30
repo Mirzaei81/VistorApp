@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/parent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -9,40 +10,12 @@
     <include
         android:id="@+id/lytToolbar"
         layout="@layout/toolbar"/>
-    <LinearLayout
-        android:id="@+id/lytSearch"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layoutDirection="rtl"
-        android:layout_below="@+id/lytToolbar"
-        android:layout_margin="10dp">
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnMoshtari"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="نام مشتری "/>
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnStartDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="تاریخ ابتدا"/>
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnEndDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="تاریخ انتها"/>
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnSearch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="جستجو"/>
-    </LinearLayout>
 
     <HorizontalScrollView
         android:id="@+id/ScrollView"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_below="@+id/lytSearch">
+        android:layout_below="@+id/lytToolbar">
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -52,13 +25,13 @@
                 android:layout_height="1dp"
                 android:background="@android:color/black"/>
             <include
-                layout="@layout/acc_hsb_prsn_koli_header"/>
+                layout="@layout/factor_detail_fragment"/>
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/row_acc_hsbprsns_koli"/>
+                tools:listitem="@layout/factor_detail_fragment"/>
         </LinearLayout>
     </HorizontalScrollView>
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -71,4 +44,6 @@
         android:src="@drawable/ic_baseline_refresh_24"
         android:tint="@android:color/white"
         android:visibility="gone"/>
+
+
 </RelativeLayout>

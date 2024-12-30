@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "24a75bf15f42473c6973b2c7fcd6aa4e",
+    "identityHash": "69ae910c8ea01b90ab84799773141722",
     "entities": [
       {
         "tableName": "kala_info",
@@ -329,12 +329,38 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "groups_info",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '24a75bf15f42473c6973b2c7fcd6aa4e')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '69ae910c8ea01b90ab84799773141722')"
     ]
   }
 }

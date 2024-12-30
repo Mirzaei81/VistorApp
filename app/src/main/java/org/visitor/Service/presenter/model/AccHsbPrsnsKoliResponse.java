@@ -9,7 +9,7 @@ import com.google.gson.annotations.SerializedName;
 public class AccHsbPrsnsKoliResponse implements Serializable
 {
 
-    @SerializedName("hsbPrsnsKoli")
+    @SerializedName("HsbPrsnsKoli")
     @Expose
     private List<HsbPrsnsKoli> hsbPrsnsKoli;
 
