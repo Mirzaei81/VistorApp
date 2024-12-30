@@ -91,7 +91,7 @@ public class MainFactorActivity extends BaseActivity {
         imgBack=findViewById(R.id.imgBack);
         String EndDate = btnEndDate.getText().toString();
         String StartDate =  btnStartDate.getText().toString();
-        busApi.getFactor(EndDate, StartDate, String.format(Locale.getDefault(),"%d",moshtari.getmCode()), resultPresenterGetGroup);
+        busApi.getFactor(EndDate, StartDate, String.format(Locale.forLanguageTag("en-US"),"%d",moshtari.getmCode()), resultPresenterGetGroup);
     }
 
     View.OnClickListener onClickListener=new View.OnClickListener() {

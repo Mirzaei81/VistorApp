@@ -36,13 +36,13 @@ public class FactorDetailAdapter extends RecyclerView.Adapter<FactorDetailAdapte
             if(factorDetail.fK_Num==0){
                 viewHolder.view.setBackgroundColor(Color.parseColor("#CCCCCC"));
             }
-            viewHolder.txtNO.setText(String.format(Locale.getDefault(),"%d",factorDetail.fK_Num ));
-            viewHolder.txtCode.setText(factorDetail.k_Code);
+            viewHolder.txtNO.setText(String.format(Locale.forLanguageTag("en-US"),"%d",factorDetail.fK_Num ));
+            viewHolder.txtCode.setText(String.format(Locale.forLanguageTag("en-US"),"%d",factorDetail.k_Code));
             viewHolder.txtName.setText(factorDetail.k_Name);
-            viewHolder.txtCount.setText(String.format(Locale.getDefault(),"%d",factorDetail.fK_koli));
-            viewHolder.txtperPeckage.setText(String.format(Locale.getDefault(),"%d",factorDetail.k_zarib));
-            viewHolder.txtPrice.setText(String.format(Locale.getDefault(), "%d",factorDetail.fK_Mab));
-            viewHolder.txtTotal.setText(String.format(Locale.getDefault(), "%d",factorDetail.fK_Mab_koli));
+            viewHolder.txtCount.setText(String.format(Locale.forLanguageTag("en-US"),"%d",factorDetail.fK_koli));
+            viewHolder.txtperPeckage.setText(String.format(Locale.forLanguageTag("en-US"),"%d",factorDetail.k_zarib));
+            viewHolder.txtPrice.setText(String.format(Locale.forLanguageTag("en-US"), "%d",factorDetail.fK_Mab));
+            viewHolder.txtTotal.setText(String.format(Locale.forLanguageTag("en-US"), "%d",factorDetail.fK_Mab_koli));
             //   viewHolder.txtStatus.setText(group.getStatus());
 
         }

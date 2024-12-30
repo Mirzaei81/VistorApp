@@ -44,7 +44,7 @@ public class MoshtariAdapter extends RecyclerView.Adapter<MoshtariAdapter.MyView
     public void onBindViewHolder(final MoshtariAdapter.MyViewHolder viewHolder, final int position) {
         Moshtari group = listItem.get(position);
         viewHolder.txtName.setText(group.getmName());
-        viewHolder.txtCode.setText(String.format(Locale.getDefault(),"%d",group.getmCode()));
+        viewHolder.txtCode.setText(String.format(Locale.forLanguageTag("en-US"),"%d",group.getmCode()));
 
     }
 

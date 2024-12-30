@@ -61,14 +61,14 @@ public class FactorAdapter extends RecyclerView.Adapter<FactorAdapter.MyViewHold
             viewHolder.detailView.setOnClickListener(this.onItemClick(position));
             viewHolder.detailView.setImageResource(R.drawable.clipboard);
         }
-        viewHolder.txtBrws.setText(String.format(Locale.getDefault(),"%d", hsbPrsnsKoli.getBrws()));
+        viewHolder.txtBrws.setText(String.format(Locale.forLanguageTag("en-US"),"%d", hsbPrsnsKoli.getBrws()));
         viewHolder.txtDate.setText(hsbPrsnsKoli.getDate());
-        viewHolder.txtNo.setText(String.format(Locale.getDefault(),"%d", hsbPrsnsKoli.getNo()));
+        viewHolder.txtNo.setText(String.format(Locale.forLanguageTag("en-US"),"%d", hsbPrsnsKoli.getNo()));
         viewHolder.txtKind.setText(hsbPrsnsKoli.getKind());
         viewHolder.txtSharh.setText(hsbPrsnsKoli.getSharh());
         viewHolder.txtBed.setText(String.format("%s", hsbPrsnsKoli.getBed()));
         viewHolder.txtBes.setText(String.format("%s", hsbPrsnsKoli.getBes()));
-        viewHolder.txtMande.setText(String.format(Locale.getDefault(),"%d", hsbPrsnsKoli.getMande()));
+        viewHolder.txtMande.setText(String.format(Locale.forLanguageTag("en-US"),"%d", hsbPrsnsKoli.getMande()));
      //   viewHolder.txtStatus.setText(group.getStatus());
 
     }
