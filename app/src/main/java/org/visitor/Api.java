@@ -6,6 +6,7 @@ import android.content.Context;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import org.visitor.Service.presenter.ResultAnbarPresenter;
 import org.visitor.Service.presenter.ResultConfigPresenter;
 import org.visitor.Service.presenter.ResultFactorDetailPresenter;
 import org.visitor.Service.presenter.ResultFactorPresenter;
@@ -13,6 +14,7 @@ import org.visitor.Service.presenter.ResultLoginPresenter;
 import org.visitor.Service.presenter.ResultMoshtariPresenter;
 import org.visitor.Service.presenter.ResultUserNamePreasenter;
 import org.visitor.Service.presenter.model.AccHsbPrsnsKoliResponse;
+import org.visitor.Service.presenter.model.Anbar;
 import org.visitor.Service.presenter.model.FactorDetail;
 import org.visitor.Service.presenter.model.Groups;
 import org.visitor.Service.presenter.model.Kala;
@@ -189,11 +191,43 @@ public class Api {
         });
         thread.start();
     }
+    public void getAnbars(final ResultAnbarPresenter resultAnbarPresenter){
+        final String  url = dataSaver.getHost()+"anbar";
+        new Thread(()->{
+            new WebServiceNetwork(context).requestWebServiceByGet(url,DbName,null, new NetworkListener() {
+                @Override
+                public void onStart() {
+                }
+                @Override
+                public void onErrorInternetConnection() {
+                    resultAnbarPresenter.onErrorInternetConnection();
+                }
+
+                @Override
+                public void onErrorServer(String e) {
+                    resultAnbarPresenter.onErrorServer(e);
+                }
+
+                @Override
+                public void onFinish(String result) {
+                    try {
+                        Type anbarType =new TypeToken<ArrayList<Anbar>>(){}.getType();
+                        ArrayList<Anbar> response =  new Gson().fromJson(result, anbarType);
+                        if (!response.isEmpty() ) {
+                            resultAnbarPresenter.onFinish(response);
+                        } else
+                            resultAnbarPresenter.onErrorServer("404 No Moshtari Found");
+                    } catch (Exception e) {
+                        resultAnbarPresenter.onErrorServer(e.toString());
+                    }
+                }
+            });
+        }).start();
+    }
     public void getMoshtaris(final ResultMoshtariPresenter resultSearchBusPresenter) {
         final String url =dataSaver.getHost()+"moshtaris";
-        cancelRequest();
 
-        thread = new Thread(() -> {
+        new Thread(() -> {
             HashMap<String, String> getHashMap = new HashMap<>();
             getHashMap.put(KeyConst.APP_KEY, KeyConst.appKey);
             getHashMap.put(KeyConst.APP_SECRET, KeyConst.appSecret);
@@ -226,9 +260,7 @@ public class Api {
                     }
                 }
             });
-
-        });
-        thread.start();
+        }).start();
     }
     public void getFactorDetail(int FK_NO, final ResultFactorDetailPresenter resultFactorDetailPresenter){
         final String url = dataSaver.getHost()+"Fac/"+FK_NO;

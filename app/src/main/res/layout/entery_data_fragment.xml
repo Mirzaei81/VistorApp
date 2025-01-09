@@ -22,7 +22,7 @@
             android:contentDescription="@string/kalas"
             android:layout_gravity="center"
             android:layout_centerVertical="true"
-            app:srcCompat="@drawable/box" />
+            android:src="@drawable/box" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -41,9 +41,9 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:contentDescription="@string/add"
-            app:srcCompat="@drawable/ic_baseline_add_24"
             android:layout_alignParentEnd="true"
-            app:tint="@color/gray" />
+            android:src="@drawable/ic_baseline_add_24"
+            android:tint="@color/gray" />
     </RelativeLayout>
     <View
         android:layout_width="match_parent"
@@ -63,7 +63,7 @@
             android:layout_gravity="center"
             android:layout_centerVertical="true"
             android:contentDescription="@string/persons"
-            app:srcCompat="@drawable/persons" />
+            android:src="@drawable/persons" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -80,7 +80,7 @@
             android:layout_height="60dp"
             android:layout_alignParentEnd="true"
             android:contentDescription="@string/add"
-            app:srcCompat="@drawable/ic_baseline_add_24"
-            app:tint="@color/gray" />
+            android:src="@drawable/ic_baseline_add_24"
+            android:tint="@color/gray" />
     </RelativeLayout>
 </LinearLayout>

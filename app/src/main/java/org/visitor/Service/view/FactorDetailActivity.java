@@ -13,27 +13,18 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.LayoutRes;
 import androidx.appcompat.widget.AppCompatButton;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.alarmamir.R;
-import org.jetbrains.annotations.NotNull;
 import org.visitor.Api;
-import org.visitor.Service.adapter.FactorAdapter;
 import org.visitor.Service.adapter.FactorDetailAdapter;
 import org.visitor.Service.presenter.ResultFactorDetailPresenter;
-import org.visitor.Service.presenter.ResultFactorPresenter;
 import org.visitor.Service.presenter.SelectItemList;
-import org.visitor.Service.presenter.model.AccHsbPrsnsKoliResponse;
 import org.visitor.Service.presenter.model.FactorDetail;
 import org.visitor.Service.presenter.model.HsbPrsnsKoli;
 import org.visitor.Service.presenter.model.Moshtari;
@@ -151,7 +142,7 @@ public class FactorDetailActivity extends BaseActivity {
         public void onErrorServer(String e) {
             runOnUiThread(() ->{
                 loading.setVisibility(View.GONE);
-                snackbar.setText("Check you're internet connection");
+                snackbar.setText(e);
                 snackbar.show();
             });
         }

@@ -19,19 +19,26 @@ import com.google.android.material.snackbar.Snackbar;
 import org.alarmamir.R;
 import org.visitor.Tools.Databace.DataSaver;
 
+import java.util.Locale;
+
 public abstract class BaseActivity extends AppCompatActivity {
     private AlertDialog.Builder builder;
     private DataSaver dataSaver;
     public Snackbar snackbar;
 
+
     @SuppressLint("NewApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("BASE_ACTIVTY","Creating Base");
         setContentView(getLayoutResource());
         dataSaver = new DataSaver(this);
         ImageView Settings =  findViewById(R.id.Settings);
+        ImageView backBtn = findViewById(R.id.imgBack);
+        backBtn.setOnClickListener(view -> {
+                    onBackPressed();
+                }
+        );
         Settings.setOnClickListener(view -> {
             builder = new AlertDialog.Builder(BaseActivity.this);
             builder.setTitle("App settings");
@@ -43,6 +50,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             final EditText input = new EditText(BaseActivity.this);
             input.setKeyListener(DigitsKeyListener.getInstance("09123456789."));
             input.setHint("Host Address");
+            duration.setText(String.format(Locale.forLanguageTag("en-us"),"%d",dataSaver.getDuraiton()/1000));
             layout.addView(input);
             layout.addView(duration);
             builder.setView(layout);

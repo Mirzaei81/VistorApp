@@ -37,12 +37,16 @@ import org.visitor.NetworkListener;
 import org.visitor.ResponseUser;
 import org.visitor.Service.presenter.ResultLoginPresenter;
 import org.visitor.Service.presenter.ResultUserNamePreasenter;
+import org.visitor.Service.presenter.model.Markaz;
+import org.visitor.Service.presenter.model.User;
+import org.visitor.Service.presenter.model.UserConfig;
 import org.visitor.Service.presenter.model.UserResponse;
 import org.visitor.WebServiceNetwork;
 import org.visitor.userModel.ResultUserPresenter;
 import org.visitor.Tools.Databace.DataSaver;
 
 import java.util.Collections;
+import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
     private Api busApi;
@@ -72,16 +76,13 @@ public class LoginActivity extends AppCompatActivity {
             input.setInputType(InputType.TYPE_CLASS_TEXT);
             input.setKeyListener(DigitsKeyListener.getInstance("09123456789.:"));
             builder.setView(input);
-            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    try{
-                        dataSaver.setHost(input.getText().toString());
-                        getUser();
-                    }catch (Exception e){
-                        snackbar.setText(e.getMessage());
-                        snackbar.show();
-                    }
+            builder.setPositiveButton("OK", (dialog, which) -> {
+                try{
+                    dataSaver.setHost(input.getText().toString());
+                    getUser();
+                }catch (Exception e){
+                    snackbar.setText(Objects.requireNonNull(e.getMessage()));
+                    snackbar.show();
                 }
             });
             builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -125,7 +126,9 @@ public class LoginActivity extends AppCompatActivity {
                     Intent ConfigActivity = new Intent(LoginActivity.this,ConfigActivity.class);
                     Bundle bundle =new Bundle();
                     bundle.putBoolean("RememberMe",checkBox.isChecked());
-                    bundle.putSerializable("Configurations",response.serverDetail);
+                    bundle.putSerializable(UserConfig.class.getName(),response.serverDetail);
+                    bundle.putSerializable(Markaz.class.getName(),response.markazs);
+                    bundle.putFloat(User.class.getName(),response.UserObject.UNo);
                     ConfigActivity.putExtras(bundle);
                     startActivity(ConfigActivity);
                 }

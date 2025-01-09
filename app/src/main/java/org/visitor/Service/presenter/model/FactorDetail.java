@@ -27,5 +27,5 @@ public class FactorDetail {
         public long fK_Mab;
         @SerializedName("FK_Mab_koli")
         @Expose
-        public int fK_Mab_koli;
+        public long fK_Mab_koli;
 }

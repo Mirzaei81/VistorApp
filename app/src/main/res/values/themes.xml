@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.AlarmAmir" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="Theme.AlarmAmir" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
@@ -21,8 +21,6 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="colorControlNormal">@color/material_dynamic_primary0</item>
     </style>
-
-
     <!-- Here is your custom date picker theme -->
     <style name="customNumberPicker">
         <!-- use this for text color -->
@@ -50,5 +48,12 @@
     </style>
     <style name="AppModalStyle" parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@drawable/rounded_dialog</item>
+    </style>
+    <style name="rounded_btn_overlay" >
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerFamilyTopRight">cut</item>
+        <item name="cornerFamilyBottomRight">cut</item>
+        <item name="cornerSizeTopLeft">32dp</item>
+        <item name="cornerSizeBottomLeft">32dp</item>
     </style>
 </resources>

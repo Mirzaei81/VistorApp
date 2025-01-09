@@ -19,4 +19,9 @@
     <string name="persons">اشخاص</string>
     <string name="groups">groups</string>
     <string name="group_description">group1</string>
+    <string name="prompt_Markaz">مرکز\n</string>
+    <string name="year">سال مالی</string>
+    <string name="anbar">انبار</string>
+    <string name="moshtari">مشتری</string>
+    <string name="submit">ثبت سفارش</string>
 </resources>

@@ -14,10 +14,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.Gson;
 
 import org.alarmamir.R;
 import org.visitor.Api;
 import org.visitor.Service.presenter.ResultConfigPresenter;
+import org.visitor.Service.presenter.model.ConfigResponse;
+import org.visitor.Service.presenter.model.Markaz;
+import org.visitor.Service.presenter.model.User;
 import org.visitor.Service.presenter.model.UserConfig;
 import org.visitor.Tools.Databace.DataSaver;
 
@@ -33,7 +37,9 @@ public class ConfigActivity extends AppCompatActivity {
     private ArrayList<Float> yearItems;
     private ArrayList<String> dafterItems;
     private ArrayList<String> companyItems;
+    private ArrayList<String> markazItem;
     private ImageView submit;
+    private  Spinner markaz;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,15 +53,21 @@ public class ConfigActivity extends AppCompatActivity {
         if (b == null) {
             Log.v("Config","Config Detail not Found");
             return;
-        } else if (!b.containsKey("Configurations")){
-            Log.v("Bundle","Config Detail type is Incorrect");
         }
         Boolean rememberMe = b.getBoolean("RememberMe");
-        ArrayList<UserConfig> serverDetail = (ArrayList<UserConfig>) b.get("Configurations");
+        ArrayList<UserConfig> serverDetail = (ArrayList<UserConfig>) b.get(UserConfig.class.getName());
+        ArrayList<Markaz> markazs = (ArrayList<Markaz>) b.get(Markaz.class.getName());
+        float loginId = (float) b.get(User.class.getName());
+        assert loginId !=0.0f;
         assert serverDetail != null;
+        assert markazs != null;
         yearItems = new ArrayList<>();
         dafterItems  = new ArrayList<>();
         companyItems = new ArrayList<>();
+        markazItem = new ArrayList<>();
+        for (Markaz markaz:markazs){
+            markazItem.add(markaz.zName);
+        }
         for (UserConfig uc:serverDetail) {
             yearItems.add(uc.YYear);
             dafterItems.add(uc.YDaftar);
@@ -80,7 +92,10 @@ public class ConfigActivity extends AppCompatActivity {
 
                 @Override
                 public void onFinish(String response) {
-                    dataSaver.setConfig(response);
+                    ConfigResponse config = new  Gson().fromJson(response, ConfigResponse.class);
+                    config.markaz =markazs.get(markaz.getSelectedItemPosition()).zCode;
+                    config.loginId =(int)loginId;
+                    dataSaver.setConfig(config);
                     Intent intent = new Intent(ConfigActivity.this,MainActivity.class);
                     Bundle bundle = new Bundle();
                     bundle.putBoolean("RememberMe",rememberMe);
@@ -94,7 +109,17 @@ public class ConfigActivity extends AppCompatActivity {
         initYearSpinner();
         initDaftarSpinner();
         initCompanySpinner();
+        initMarkazSpinner();
 
+    }
+
+    public void initMarkazSpinner(){
+        markaz=  findViewById(R.id.markaz);
+        ArrayAdapter<String> markazAdapter = new ArrayAdapter<String>(ConfigActivity.this, com.google.android.material.R.layout.support_simple_spinner_dropdown_item,markazItem);
+        markazAdapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
+        markaz.setAdapter(markazAdapter);
+        ItemSelect markazItemSelect = new ItemSelect(DropDowns.markaz);
+        markaz.setOnItemSelectedListener(markazItemSelect);
     }
     public void initCompanySpinner(){
         Spinner company=  findViewById(R.id.company);
@@ -122,7 +147,7 @@ public class ConfigActivity extends AppCompatActivity {
     }
 
     enum DropDowns {
-        year,daftar,company
+        year,daftar,company,markaz
     }
 
     private class ItemSelect extends Activity implements AdapterView.OnItemSelectedListener{

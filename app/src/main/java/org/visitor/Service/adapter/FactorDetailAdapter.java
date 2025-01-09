@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import org.alarmamir.R;
 import org.visitor.Service.presenter.model.FactorDetail;
+
+import java.text.NumberFormat;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -33,18 +35,18 @@ public class FactorDetailAdapter extends RecyclerView.Adapter<FactorDetailAdapte
         @Override
         public void onBindViewHolder(@NonNull final FactorDetailViewHolder viewHolder, final int position) {
             FactorDetail  factorDetail= listItem.get(position);
+            NumberFormat nf = NumberFormat.getInstance();
             if(factorDetail.fK_Num==0){
-                viewHolder.view.setBackgroundColor(Color.parseColor("#CCCCCC"));
+//                viewHolder.view.setBackgroundColor(Color.parseColor("#CCCCCC"));
             }
-            viewHolder.txtNO.setText(String.format(Locale.forLanguageTag("en-US"),"%d",factorDetail.fK_Num ));
+            viewHolder.txtNO.setText(String.format(Locale.forLanguageTag("en-US"),"%d",position+1 ));
             viewHolder.txtCode.setText(String.format(Locale.forLanguageTag("en-US"),"%d",factorDetail.k_Code));
             viewHolder.txtName.setText(factorDetail.k_Name);
             viewHolder.txtCount.setText(String.format(Locale.forLanguageTag("en-US"),"%d",factorDetail.fK_koli));
             viewHolder.txtperPeckage.setText(String.format(Locale.forLanguageTag("en-US"),"%d",factorDetail.k_zarib));
-            viewHolder.txtPrice.setText(String.format(Locale.forLanguageTag("en-US"), "%d",factorDetail.fK_Mab));
-            viewHolder.txtTotal.setText(String.format(Locale.forLanguageTag("en-US"), "%d",factorDetail.fK_Mab_koli));
-            //   viewHolder.txtStatus.setText(group.getStatus());
-
+            viewHolder.txtVahed.setText(factorDetail.k_Vahed);
+            viewHolder.txtPrice.setText(nf.format(factorDetail.fK_Mab));
+            viewHolder.txtTotal.setText(nf.format(factorDetail.fK_Mab_koli));
         }
 
         public void addItems(List<FactorDetail> listItem) {
@@ -55,7 +57,7 @@ public class FactorDetailAdapter extends RecyclerView.Adapter<FactorDetailAdapte
         }
 
         public static class FactorDetailViewHolder extends RecyclerView.ViewHolder {
-            public TextView txtNO,txtCode,txtName,txtCount,txtperPeckage,txtPrice,txtTotal;
+            public TextView txtVahed,txtNO,txtCode,txtName,txtCount,txtperPeckage,txtPrice,txtTotal;
             public View view;
 
             public FactorDetailViewHolder(final View itemLayoutView) {
@@ -66,6 +68,7 @@ public class FactorDetailAdapter extends RecyclerView.Adapter<FactorDetailAdapte
                 txtCode = itemLayoutView.findViewById(R.id.code);
                 txtName = itemLayoutView.findViewById(R.id.name);
                 txtCount = itemLayoutView.findViewById(R.id.count);
+                txtVahed = itemLayoutView.findViewById(R.id.vahed);
                 txtperPeckage = itemLayoutView.findViewById(R.id.perPeckage);
                 txtPrice = itemLayoutView.findViewById(R.id.price);
                 txtTotal = itemLayoutView.findViewById(R.id.total);

@@ -62,10 +62,11 @@ public class DataSaver {
         String configS = sharedPreferences.getString(CONFIG,"");
         return new Gson().fromJson(configS, ConfigResponse.class);
     }
-    public void setConfig(String DbName){
+    public void setConfig(ConfigResponse config){
         SharedPreferences sharedPreferences =  PreferenceManager.getDefaultSharedPreferences(this.context);
         SharedPreferences.Editor  editor = sharedPreferences.edit();
-        editor.putString(CONFIG,DbName);
+        String configString = new Gson().toJson(config);
+        editor.putString(CONFIG,configString);
         editor.apply();
     }
     public Boolean hasLogin() {

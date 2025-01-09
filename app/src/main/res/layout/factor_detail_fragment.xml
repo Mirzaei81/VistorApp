@@ -3,10 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="480dp">
+    android:layout_width="wrap_content"
+    android:layout_height="40dp">
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:layoutDirection="rtl"
         android:orientation="horizontal"
@@ -20,6 +20,7 @@
             android:background="#FFFFFF"
             android:layout_marginHorizontal="1dp"
             android:padding="10dp"
+            android:textColor="@color/black"
             android:text="ردیف" />
 
         <TextView
@@ -30,6 +31,7 @@
             android:layout_marginHorizontal="1dp"
             android:background="#FFFFFF"
             android:padding="10dp"
+            android:textColor="@color/black"
             android:text="کد کالا" />
 
         <TextView
@@ -38,6 +40,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="10dp"
+            android:textColor="@color/black"
             android:layout_marginHorizontal="1dp"
             android:background="#FFFFFF"
             android:text="نام کالا" />
@@ -46,6 +49,7 @@
             android:id="@+id/count"
             android:layout_width="80dp"
             android:layout_height="wrap_content"
+            android:textColor="@color/black"
             android:gravity="center"
             android:layout_marginHorizontal="1dp"
             android:background="#FFFFFF"
@@ -54,12 +58,13 @@
 
         <TextView
             android:id="@+id/perPeckage"
-            android:layout_width="80dp"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:layout_marginHorizontal="1dp"
             android:padding="10dp"
             android:background="#FFFFFF"
+            android:textColor="@color/black"
             android:text="مقدار در بسته" />
 
         <TextView
@@ -70,8 +75,19 @@
             android:padding="10dp"
             android:layout_marginHorizontal="1dp"
             android:background="#FFFFFF"
-            android:text="مقدار" />
+            android:textColor="@color/black"
+            android:text="واحد" />
 
+        <TextView
+            android:id="@+id/meghdar"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="10dp"
+            android:layout_marginHorizontal="1dp"
+            android:background="#FFFFFF"
+            android:textColor="@color/black"
+            android:text="مقدار" />
         <TextView
             android:id="@+id/price"
             android:layout_width="120dp"
@@ -79,6 +95,7 @@
             android:gravity="center"
             android:padding="10dp"
             android:background="#FFFFFF"
+            android:textColor="@color/black"
             android:text="فی" />
         <TextView
             android:id="@+id/total"
@@ -87,7 +104,9 @@
             android:gravity="center"
             android:padding="10dp"
             android:layout_marginHorizontal="1dp"
+            android:text="جمع"
             android:background="#FFFFFF"
-            android:text="جمع" />
+            android:textColor="@color/black"
+            />
     </LinearLayout>
 </LinearLayout>

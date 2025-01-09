@@ -57,7 +57,7 @@ public class FactorAdapter extends RecyclerView.Adapter<FactorAdapter.MyViewHold
         if(hsbPrsnsKoli.getNo()==null){
             viewHolder.view.setBackgroundColor(Color.parseColor("#CCCCCC"));
         }
-        if(Objects.equals(hsbPrsnsKoli.getKind(), "F")){
+        if(Objects.equals(hsbPrsnsKoli.getKindFactor(), "F")){
             viewHolder.detailView.setOnClickListener(this.onItemClick(position));
             viewHolder.detailView.setImageResource(R.drawable.clipboard);
         }

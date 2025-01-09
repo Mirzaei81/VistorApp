@@ -1,6 +1,6 @@
 package org.visitor.Service.presenter.model;
 public class User {
-    private float UNo;
+    public float UNo;
     private String UName;
     private float UKind;
     private boolean UAdd;
