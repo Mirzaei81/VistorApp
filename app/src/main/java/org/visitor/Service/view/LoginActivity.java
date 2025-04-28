@@ -35,9 +35,12 @@ import org.visitor.KeyConst;
 
 import org.visitor.NetworkListener;
 import org.visitor.ResponseUser;
+import org.visitor.Room.MyRoomDatabase;
 import org.visitor.Service.presenter.ResultLoginPresenter;
+import org.visitor.Service.presenter.ResultMoshtariPresenter;
 import org.visitor.Service.presenter.ResultUserNamePreasenter;
 import org.visitor.Service.presenter.model.Markaz;
+import org.visitor.Service.presenter.model.MoshtariResponse;
 import org.visitor.Service.presenter.model.User;
 import org.visitor.Service.presenter.model.UserConfig;
 import org.visitor.Service.presenter.model.UserResponse;
@@ -45,6 +48,7 @@ import org.visitor.WebServiceNetwork;
 import org.visitor.userModel.ResultUserPresenter;
 import org.visitor.Tools.Databace.DataSaver;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Objects;
 
@@ -74,7 +78,7 @@ public class LoginActivity extends AppCompatActivity {
             builder.setTitle("Server Address");
             final EditText input = new EditText(LoginActivity.this);
             input.setInputType(InputType.TYPE_CLASS_TEXT);
-            input.setKeyListener(DigitsKeyListener.getInstance("09123456789.:"));
+//            input.setKeyListener(DigitsKeyListener.getInstance("09123456789.:"));
             builder.setView(input);
             builder.setPositiveButton("OK", (dialog, which) -> {
                 try{
@@ -119,7 +123,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 @Override
                 public void onFinish(UserResponse response) {
-                    CheckBox checkBox = findViewById(androidx.appcompat.R.id.checkbox);
+                    CheckBox checkBox = findViewById(R.id.checkbox);
                     if(checkBox.isChecked()){
                         dataSaver.setLogin(response);
                     }
@@ -164,8 +168,8 @@ public class LoginActivity extends AppCompatActivity {
     }
     private void initUserNamesSpinner(String[] userNameItem){
         Spinner userName=  findViewById(R.id.usernames);
-        ArrayAdapter<String> companyAdapter =  new ArrayAdapter<>(LoginActivity.this, com.google.android.material.R.layout.support_simple_spinner_dropdown_item, userNameItem);
-        companyAdapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
+        ArrayAdapter<String> companyAdapter =  new ArrayAdapter<>(LoginActivity.this, android.R.layout.simple_spinner_dropdown_item, userNameItem);
+        companyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         userName.setAdapter(companyAdapter);
         LoginActivity.this.SelectedUser =  companyAdapter.getItem(0);
         ItemSelect companyItemSelect = new ItemSelect();

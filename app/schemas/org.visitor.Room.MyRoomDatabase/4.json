@@ -1,8 +1,8 @@
 {
   "formatVersion": 1,
   "database": {
-    "version": 1,
-    "identityHash": "8c2d3455cb03e086b32ff6b5caad6e77",
+    "version": 4,
+    "identityHash": "33494c26537d72e0f3ebaf64801f8534",
     "entities": [
       {
         "tableName": "kala_info",
@@ -361,12 +361,298 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "Moshtari",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`mCode` INTEGER, `mGoroh` INTEGER, `mName` TEXT, `mAtbar` INTEGER, `mTel1` TEXT, `mTel2` TEXT, `mMobil` TEXT, `mAddress` TEXT, `mMeli` TEXT, `mLog` INTEGER, `mLogHsab` INTEGER, `mKol` TEXT, `mMoein` TEXT, `mTfzili` TEXT, `mAcc` TEXT, `mPic` TEXT, `mTxt` TEXT, `mHmkar` INTEGER, `mLan` INTEGER, `mNameL` TEXT, `mOnvan` INTEGER, `mDateList` INTEGER, `mEconomy` TEXT, `mPost` TEXT, `mCity` TEXT, `mOstan` TEXT, `mPorsant` INTEGER, `mEmail` TEXT, `mCodeMantagh` INTEGER, `mTel3` TEXT, `mTel4` TEXT, `mMobile2` TEXT, `mTelSms` INTEGER, `mSabt` TEXT, `mModir` INTEGER, `mAccNavigation` INTEGER, `mGorohNavigation` INTEGER, `moshtariTkmili` INTEGER, PRIMARY KEY(`mCode`))",
+        "fields": [
+          {
+            "fieldPath": "mCode",
+            "columnName": "mCode",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mGoroh",
+            "columnName": "mGoroh",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mName",
+            "columnName": "mName",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mAtbar",
+            "columnName": "mAtbar",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mTel1",
+            "columnName": "mTel1",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mTel2",
+            "columnName": "mTel2",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mMobil",
+            "columnName": "mMobil",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mAddress",
+            "columnName": "mAddress",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mMeli",
+            "columnName": "mMeli",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mLog",
+            "columnName": "mLog",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mLogHsab",
+            "columnName": "mLogHsab",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mKol",
+            "columnName": "mKol",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mMoein",
+            "columnName": "mMoein",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mTfzili",
+            "columnName": "mTfzili",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mAcc",
+            "columnName": "mAcc",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mPic",
+            "columnName": "mPic",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mTxt",
+            "columnName": "mTxt",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mHmkar",
+            "columnName": "mHmkar",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mLan",
+            "columnName": "mLan",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mNameL",
+            "columnName": "mNameL",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mOnvan",
+            "columnName": "mOnvan",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mDateList",
+            "columnName": "mDateList",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mEconomy",
+            "columnName": "mEconomy",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mPost",
+            "columnName": "mPost",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mCity",
+            "columnName": "mCity",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mOstan",
+            "columnName": "mOstan",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mPorsant",
+            "columnName": "mPorsant",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mEmail",
+            "columnName": "mEmail",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mCodeMantagh",
+            "columnName": "mCodeMantagh",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mTel3",
+            "columnName": "mTel3",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mTel4",
+            "columnName": "mTel4",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mMobile2",
+            "columnName": "mMobile2",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mTelSms",
+            "columnName": "mTelSms",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mSabt",
+            "columnName": "mSabt",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mModir",
+            "columnName": "mModir",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mAccNavigation",
+            "columnName": "mAccNavigation",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mGorohNavigation",
+            "columnName": "mGorohNavigation",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "moshtariTkmili",
+            "columnName": "moshtariTkmili",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "mCode"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "gorohm_info",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`gmCode` INTEGER, `gmName` TEXT, `gmInKharid` INTEGER, `gmInForosh` INTEGER, `gmInPosnt` INTEGER, PRIMARY KEY(`gmCode`))",
+        "fields": [
+          {
+            "fieldPath": "gmCode",
+            "columnName": "gmCode",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "gmName",
+            "columnName": "gmName",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "gmInKharid",
+            "columnName": "gmInKharid",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "gmInForosh",
+            "columnName": "gmInForosh",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "gmInPosnt",
+            "columnName": "gmInPosnt",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "gmCode"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '8c2d3455cb03e086b32ff6b5caad6e77')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '33494c26537d72e0f3ebaf64801f8534')"
     ]
   }
 }

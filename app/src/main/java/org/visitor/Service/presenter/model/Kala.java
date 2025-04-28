@@ -21,25 +21,25 @@ public class Kala implements Serializable {
     @SerializedName("KCode")
     @Expose
     public Long KCode;
-    @SerializedName("kVahed")
+    @SerializedName("KVahed")
     @Expose
     public String KVahed;
-    @SerializedName("kVahedKoli")
+    @SerializedName("KVahedKoli")
     @Expose
     public String KVahedKoli;
-    @SerializedName("kZarib")
+    @SerializedName("KZarib")
     @Expose
     public Double KZarib;
-    @SerializedName("kForoshM")
+    @SerializedName("KForoshM")
     @Expose
     public Double KForoshM;
-    @SerializedName("kArz")
+    @SerializedName("KArz")
     @Expose
     public Long KArz;
-    @SerializedName("kArzMab")
+    @SerializedName("KArzMab")
     @Expose
     public Double KArzMab;
-    @SerializedName("kMinF")
+    @SerializedName("KMinF")
     @Expose
     public Double KMinF;
     @SerializedName("KMaxF")
@@ -48,124 +48,124 @@ public class Kala implements Serializable {
     @SerializedName("KForoshH")
     @Expose
     public Double KForoshH;
-    @SerializedName("kFani")
+    @SerializedName("KFani")
     @Expose
     public String KFani;
-    @SerializedName("kSharh")
+    @SerializedName("KSharh")
     @Expose
     public String KSharh;
-    @SerializedName("kPic")
+    @SerializedName("KPic")
     @Expose
     public String KPic;
-    @SerializedName("kLog")
+    @SerializedName("KLog")
     @Expose
     public Boolean KLog;
-    @SerializedName("kLan")
+    @SerializedName("KLan")
     @Expose
     public Long KLan;
-    @SerializedName("kNameL")
+    @SerializedName("KNameL")
     @Expose
     public String KNameL;
-    @SerializedName("kTolid")
+    @SerializedName("KTolid")
     @Expose
     public String KTolid;
-    @SerializedName("kHtolid")
+    @SerializedName("KHtolid")
     @Expose
     public String KHtolid;
-    @SerializedName("kSarbar")
+    @SerializedName("KSarbar")
     @Expose
     public String KSarbar;
-    @SerializedName("kHtmam")
+    @SerializedName("KHtmam")
     @Expose
     public String KHtmam;
-    @SerializedName("kBarcode")
+    @SerializedName("KBarcode")
     @Expose
     public String KBarcode;
-    @SerializedName("kOmde")
+    @SerializedName("KOmde")
     @Expose
     public Double KOmde;
-    @SerializedName("kVazn")
+    @SerializedName("KVazn")
     @Expose
     public Double KVazn;
-    @SerializedName("kDarsad")
+    @SerializedName("KDarsad")
     @Expose
     public Double KDarsad;
-    @SerializedName("kKeshvar")
+    @SerializedName("KKeshvar")
     @Expose
     public String KKeshvar;
-    @SerializedName("kFmonth")
+    @SerializedName("KFmonth")
     @Expose
     public String KFmonth;
-    @SerializedName("kFyear")
+    @SerializedName("KFyear")
     @Expose
     public String KFyear;
-    @SerializedName("kFmonth2")
+    @SerializedName("KFmonth2")
     @Expose
     public Double KFmonth2;
-    @SerializedName("kFmonth3")
+    @SerializedName("KFmonth3")
     @Expose
     public Double KFmonth3;
-    @SerializedName("kFmonth4")
+    @SerializedName("KFmonth4")
     @Expose
     public Double KFmonth4;
-    @SerializedName("kFmonth1")
+    @SerializedName("KFmonth1")
     @Expose
     public Double KFmonth1;
-    @SerializedName("kFmonth5")
+    @SerializedName("KFmonth5")
     @Expose
     public Double KFmonth5;
-    @SerializedName("kFmonth6")
+    @SerializedName("KFmonth6")
     @Expose
     public Double KFmonth6;
-    @SerializedName("kFmonth7")
+    @SerializedName("KFmonth7")
     @Expose
     public Double KFmonth7;
-    @SerializedName("kFmonth8")
+    @SerializedName("KFmonth8")
     @Expose
     public Double KFmonth8;
-    @SerializedName("kFmonth9")
+    @SerializedName("KFmonth9")
     @Expose
     public Double KFmonth9;
-    @SerializedName("kFmonth10")
+    @SerializedName("KFmonth10")
     @Expose
     public Double KFmonth10;
-    @SerializedName("kFmonth11")
+    @SerializedName("KFmonth11")
     @Expose
     public Double KFmonth11;
-    @SerializedName("kFmonth12")
+    @SerializedName("KFmonth12")
     @Expose
     public Double KFmonth12;
-    @SerializedName("kMaliatIs")
+    @SerializedName("KMaliatIs")
     @Expose
     public Boolean KMaliatIs;
-    @SerializedName("kMaliat")
+    @SerializedName("KMaliat")
     @Expose
     public String KMaliat;
-    @SerializedName("kAvarezIs")
+    @SerializedName("KAvarezIs")
     @Expose
     public Boolean KAvarezIs;
-    @SerializedName("kAvarez")
+    @SerializedName("KAvarez")
     @Expose
     public String KAvarez;
-    @SerializedName("kFani2")
+    @SerializedName("KFani2")
     @Expose
     public String KFani2;
-    @SerializedName("kPorsant")
+    @SerializedName("KPorsant")
     @Expose
     public Double KPorsant;
-    @SerializedName("kIsBarcode")
+    @SerializedName("KIsBarcode")
     @Expose
     public Boolean KIsBarcode;
-    @SerializedName("kForoshN")
+    @SerializedName("KForoshN")
     @Expose
     public Long KForoshN;
-    @SerializedName("kForoshMd")
+    @SerializedName("KForoshMd")
     @Expose
     public Long KForoshMd;
-    @SerializedName("kForoshMsrf")
+    @SerializedName("KForoshMsrf")
     @Expose
     public Long KForoshMsrf;
-    @SerializedName("kGorohNavigation")
+    @SerializedName("KGorohNavigation")
     @Expose
     public String KGorohNavigation;
 /*    @SerializedName("factor2s")
@@ -187,6 +187,7 @@ public class Kala implements Serializable {
     @Expose
     private List<String> tCodes;*/
 
+    public int count =0;
     public Long getkCode() {
         return KCode;
     }

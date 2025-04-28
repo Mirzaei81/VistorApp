@@ -1,5 +1,7 @@
 package org.visitor.Service.view;
 
+import static android.content.ContentValues.TAG;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,9 +20,12 @@ import com.google.gson.Gson;
 
 import org.alarmamir.R;
 import org.visitor.Api;
+import org.visitor.Room.MyRoomDatabase;
 import org.visitor.Service.presenter.ResultConfigPresenter;
+import org.visitor.Service.presenter.ResultMoshtariPresenter;
 import org.visitor.Service.presenter.model.ConfigResponse;
 import org.visitor.Service.presenter.model.Markaz;
+import org.visitor.Service.presenter.model.MoshtariResponse;
 import org.visitor.Service.presenter.model.User;
 import org.visitor.Service.presenter.model.UserConfig;
 import org.visitor.Tools.Databace.DataSaver;
@@ -77,7 +82,7 @@ public class ConfigActivity extends AppCompatActivity {
         snackbar = Snackbar.make(view,"",10000);
         submit = findViewById(R.id.submit);
         submit.setOnClickListener(view1 -> {
-            ResultConfigPresenter resaultConfigPresenter = new ResultConfigPresenter() {
+            ResultConfigPresenter resultConfigPresenter = new ResultConfigPresenter() {
                 @Override
                 public void onErrorServer(String e) {
                     snackbar.setText(e);
@@ -98,13 +103,15 @@ public class ConfigActivity extends AppCompatActivity {
                     dataSaver.setConfig(config);
                     Intent intent = new Intent(ConfigActivity.this,MainActivity.class);
                     Bundle bundle = new Bundle();
+
+                    busApi.getMoshtaris(resultPresenterGetMoshtaries);
                     bundle.putBoolean("RememberMe",rememberMe);
                     intent.putExtras(bundle);
                     startActivity(intent);
                     finish();
                 }
             };
-            busApi.getDbName(SelectedYear,SelectedDaftar,SelectedCompany,resaultConfigPresenter);
+            busApi.getDbName(SelectedYear,SelectedDaftar,SelectedCompany,resultConfigPresenter);
         });
         initYearSpinner();
         initDaftarSpinner();
@@ -115,32 +122,32 @@ public class ConfigActivity extends AppCompatActivity {
 
     public void initMarkazSpinner(){
         markaz=  findViewById(R.id.markaz);
-        ArrayAdapter<String> markazAdapter = new ArrayAdapter<String>(ConfigActivity.this, com.google.android.material.R.layout.support_simple_spinner_dropdown_item,markazItem);
-        markazAdapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
+        ArrayAdapter<String> markazAdapter = new ArrayAdapter<String>(ConfigActivity.this, android.R.layout.simple_spinner_dropdown_item,markazItem);
+        markazAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         markaz.setAdapter(markazAdapter);
         ItemSelect markazItemSelect = new ItemSelect(DropDowns.markaz);
         markaz.setOnItemSelectedListener(markazItemSelect);
     }
     public void initCompanySpinner(){
         Spinner company=  findViewById(R.id.company);
-        ArrayAdapter<String> companyAdapter = new ArrayAdapter<String>(ConfigActivity.this, com.google.android.material.R.layout.support_simple_spinner_dropdown_item, companyItems);
-        companyAdapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
+        ArrayAdapter<String> companyAdapter = new ArrayAdapter<String>(ConfigActivity.this, android.R.layout.simple_spinner_dropdown_item, companyItems);
+        companyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         company.setAdapter(companyAdapter);
         ItemSelect companyItemSelect = new ItemSelect(DropDowns.company);
         company.setOnItemSelectedListener(companyItemSelect);
     }
     public void  initDaftarSpinner(){
         Spinner daftar=  findViewById(R.id.daftar);
-        ArrayAdapter<String> daftarAdapter = new ArrayAdapter<String>(ConfigActivity.this, com.google.android.material.R.layout.support_simple_spinner_dropdown_item, dafterItems);
-        daftarAdapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
+        ArrayAdapter<String> daftarAdapter = new ArrayAdapter<String>(ConfigActivity.this, android.R.layout.simple_spinner_dropdown_item, dafterItems);
+        daftarAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         daftar.setAdapter(daftarAdapter);
         ItemSelect daftarItemSelect = new ItemSelect(DropDowns.daftar);
         daftar.setOnItemSelectedListener(daftarItemSelect);
     }
     public void  initYearSpinner(){
         Spinner year =  findViewById(R.id.year);
-        ArrayAdapter<Float> year1 = new ArrayAdapter<Float>(ConfigActivity.this, com.google.android.material.R.layout.support_simple_spinner_dropdown_item, yearItems);
-        year1.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
+        ArrayAdapter<Float> year1 = new ArrayAdapter<Float>(ConfigActivity.this, android.R.layout.simple_spinner_dropdown_item, yearItems);
+        year1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         year.setAdapter(year1);
         ItemSelect yearItemSelect = new ItemSelect(DropDowns.year);
         year.setOnItemSelectedListener(yearItemSelect);
@@ -172,5 +179,40 @@ public class ConfigActivity extends AppCompatActivity {
 
         @Override
         public void onNothingSelected(AdapterView<?> adapterView) {}
+    };
+
+    private final ResultMoshtariPresenter resultPresenterGetMoshtaries = new ResultMoshtariPresenter() {
+        @Override
+        public void onErrorServer(String e) {
+            runOnUiThread(() -> {
+                snackbar.setText(e);
+                snackbar.show();
+            });
+        }
+
+        @Override
+        public void onErrorInternetConnection() {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    snackbar.setText("please check you're internet connection");
+                    snackbar.show();
+                }
+            });
+        }
+        @Override
+        public void onSuccessResultSearch(MoshtariResponse response) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Log.i(TAG, "success");
+                    if (!response.getMoshtaris().isEmpty()){
+                        MyRoomDatabase.getAppDatabase(ConfigActivity.this).moshtariDao().insertAll(response.getMoshtaris());
+                        MyRoomDatabase.getAppDatabase(ConfigActivity.this).moshtariDao().insertGorohMs(response.getGorohMs());
+                    }
+                }
+            });
+
+        }
     };
 }

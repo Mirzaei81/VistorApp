@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/rect_rounded_white"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Add one EditText for each field following this pattern -->
+        <TextView android:text="نام و نام خانوادگی" android:textSize="24sp" android:textAppearance="?attr/textAppearanceBodyMedium" android:layout_height="45dp" android:layout_width="match_parent"/>
+        <EditText android:id="@+id/etMName" android:inputType="textPersonName" android:layout_height="45dp" android:layout_width="match_parent"/>
+
+
+        <TextView android:text="موبایل" android:textSize="24sp"  android:textAppearance="?attr/textAppearanceBodyMedium" android:layout_height="45dp" android:layout_width="match_parent"/>
+        <EditText android:id="@+id/etMMobil" android:inputType="phone" android:layout_height="45dp" android:layout_width="match_parent"/>
+          <TextView android:text="ادرس" android:textSize="24sp" android:textAppearance="?attr/textAppearanceBodyMedium" android:layout_height="45dp" android:layout_width="match_parent"/>
+        <EditText android:id="@+id/etMAddress" android:inputType="textPostalAddress" android:layout_height="45dp" android:layout_width="match_parent"/>
+        <TextView android:text="کد ملی" android:textSize="24sp" android:textAppearance="?attr/textAppearanceBodyMedium" android:layout_height="45dp" android:layout_width="match_parent"/>
+        <EditText android:id="@+id/etMMeli" android:inputType="number" android:layout_height="45dp" android:layout_width="match_parent"/>
+           <TextView android:text="توع همکار" android:textAppearance="?attr/textAppearanceBodyMedium" android:layout_height="45dp" android:layout_width="match_parent"/>
+        <Spinner android:id="@+id/etMHmkar" android:inputType="text" android:layout_height="45dp" android:layout_width="match_parent"/>
+          <TextView android:text="کد پستی" android:textAppearance="?attr/textAppearanceBodyMedium" android:layout_height="45dp" android:layout_width="match_parent"/>
+        <EditText android:id="@+id/etMPost" android:inputType="number" android:layout_height="45dp" android:layout_width="match_parent"/>
+         <TextView android:text="شهر" android:textAppearance="?attr/textAppearanceBodyMedium" android:layout_height="45dp" android:layout_width="match_parent"/>
+        <EditText android:id="@+id/etMCity" android:inputType="text" android:layout_height="45dp" android:layout_width="match_parent"/>
+
+          <TextView android:text="استان" android:textAppearance="?attr/textAppearanceBodyMedium" android:layout_height="45dp" android:layout_width="match_parent"/>
+        <EditText android:id="@+id/etMOstan" android:inputType="text" android:layout_height="45dp" android:layout_width="match_parent"/>
+
+        <Button
+            android:id="@+id/btnSubmit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ثبت"
+            android:layout_gravity="center"/>
+    </LinearLayout>
+</ScrollView>

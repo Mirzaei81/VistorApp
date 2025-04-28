@@ -13,28 +13,32 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         app:srcCompat="@drawable/cogwheel_outline_svgrepo_com" />
+
     <FrameLayout
         android:id="@+id/flCarts"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        android:visibility="gone">
+        android:layout_toStartOf="@+id/txtTitle"
+        android:visibility="visible">
+
         <ImageView
             android:id="@+id/imgCarts"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@drawable/carts"
+            android:layout_gravity="top|start"
             android:padding="2dp"
-            android:layout_gravity="top|start" />
+            android:src="@drawable/carts" />
+
         <TextView
+            android:id="@+id/cartCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="5"
             android:layout_gravity="center"
             android:background="@android:color/holo_red_dark"
+            android:padding="2dp"
             android:textColor="@android:color/white"
-            android:padding="2dp"/>
+            tools:text="5" />
     </FrameLayout>
     <ImageView
         android:id="@+id/imgBack"
@@ -61,15 +65,15 @@
 
     <ImageView
         android:id="@+id/imgConfirm"
-        android:layout_width="wrap_content"
+        android:layout_width="20dp"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_check"
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
-        android:padding="5dp"
         android:clickable="true"
         android:focusable="true"
-        app:tint="@color/white"
-        android:visibility="gone"/>
+        android:padding="5dp"
+        android:src="@drawable/ic_check"
+        android:visibility="gone"
+        app:tint="@color/white" />
 
 </RelativeLayout>

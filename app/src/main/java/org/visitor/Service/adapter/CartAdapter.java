@@ -23,6 +23,7 @@ import org.visitor.Service.presenter.model.Kala;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> {
@@ -49,6 +50,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
     public void onBindViewHolder(final CartAdapter.MyViewHolder viewHolder, final int position) {
         Kala kala = listItem.get(position);
         viewHolder.txtName.setText(kala.getkName());
+        viewHolder.txtNumber.setText(String.format(Locale.US,"%d",kala.count));
         viewHolder.txtMojodi.setText("");
         if (null!=kala.getkPic()) {
             final String pureBase64Encoded = kala.getkPic().substring(kala.getkPic().indexOf(",") + 1);

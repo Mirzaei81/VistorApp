@@ -73,6 +73,12 @@ public class DataSaver {
         SharedPreferences sharedpreferences =  PreferenceManager.getDefaultSharedPreferences(this.context);
         return sharedpreferences.contains(USER_JSON);
     }
+    public void rmConfig(){
+        SharedPreferences sharedPreferences =  PreferenceManager.getDefaultSharedPreferences(this.context);
+        SharedPreferences.Editor  editor = sharedPreferences.edit();
+        editor.remove(CONFIG);
+        editor.apply();
+    }
     public void setLogin(UserResponse userResponse) {
         SharedPreferences sharedpreferences =  PreferenceManager.getDefaultSharedPreferences(this.context);
         SharedPreferences.Editor editor = sharedpreferences.edit();

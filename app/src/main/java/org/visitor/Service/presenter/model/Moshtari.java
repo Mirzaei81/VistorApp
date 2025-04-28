@@ -1,127 +1,134 @@
 package org.visitor.Service.presenter.model;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import java.io.Serializable;
+import java.time.LocalDateTime;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 
+@Entity(tableName = "Moshtari")
 public class Moshtari implements Serializable
 {
 
+    @PrimaryKey
     @SerializedName("MCode")
     @Expose
-    private Integer mCode;
+    public Integer mCode;
     @SerializedName("MGoroh")
     @Expose
-    private Integer mGoroh;
+    public Integer mGoroh;
     @SerializedName("MName")
     @Expose
-    private String mName;
+    public String mName;
     @SerializedName("MAtbar")
     @Expose
-    private Integer mAtbar;
+    public Integer mAtbar;
     @SerializedName("MTel1")
     @Expose
-    private String mTel1;
+    public String mTel1;
     @SerializedName("MTel2")
     @Expose
-    private String mTel2;
+    public String mTel2;
     @SerializedName("MMobil")
     @Expose
-    private String mMobil;
+    public String mMobil;
     @SerializedName("MAddress")
     @Expose
-    private String mAddress;
+    public String mAddress;
     @SerializedName("MMeli")
     @Expose
-    private String mMeli;
+    public String mMeli;
     @SerializedName("MLog")
     @Expose
-    private Boolean mLog;
+    public Boolean mLog;
     @SerializedName("MLogHsab")
     @Expose
-    private Boolean mLogHsab;
+    public Boolean mLogHsab;
     @SerializedName("MKol")
     @Expose
-    private String mKol;
+    public String mKol;
     @SerializedName("MMoein")
     @Expose
-    private String mMoein;
+    public String mMoein;
     @SerializedName("MTfzili")
     @Expose
-    private String mTfzili;
+    public String mTfzili;
     @SerializedName("MAcc")
     @Expose
-    private String mAcc;
+    public String mAcc;
     @SerializedName("MPic")
     @Expose
-    private String mPic;
+    public String mPic;
     @SerializedName("MTxt")
     @Expose
-    private String mTxt;
+    public String mTxt;
     @SerializedName("MHmkar")
     @Expose
-    private Integer mHmkar;
+    public Integer mHmkar;
     @SerializedName("MLan")
     @Expose
-    private Integer mLan;
+    public Integer mLan;
     @SerializedName("MNameL")
     @Expose
-    private String mNameL;
+    public String mNameL;
     @SerializedName("MOnvan")
     @Expose
-    private Integer mOnvan;
+    public Integer mOnvan;
     @SerializedName("MDateList")
     @Expose
-    private Object mDateList;
+    public Integer mDateList;
     @SerializedName("MEconomy")
     @Expose
-    private String mEconomy;
+    public String mEconomy;
     @SerializedName("MPost")
     @Expose
-    private String mPost;
+    public String mPost;
     @SerializedName("MCity")
     @Expose
-    private String mCity;
+    public String mCity;
     @SerializedName("MOstan")
     @Expose
-    private String mOstan;
+    public String mOstan;
     @SerializedName("MPorsant")
     @Expose
-    private Object mPorsant;
+    public Integer mPorsant;
     @SerializedName("MEmail")
     @Expose
-    private String mEmail;
+    public String mEmail;
     @SerializedName("MCodeMantagh")
     @Expose
-    private Integer mCodeMantagh;
+    public Integer mCodeMantagh;
     @SerializedName("MTel3")
     @Expose
-    private String mTel3;
+    public String mTel3;
     @SerializedName("MTel4")
     @Expose
-    private String mTel4;
+    public String mTel4;
     @SerializedName("MMobile2")
     @Expose
-    private String mMobile2;
+    public String mMobile2;
     @SerializedName("MTelSms")
     @Expose
-    private Boolean mTelSms;
+    public Boolean mTelSms;
     @SerializedName("MSabt")
     @Expose
-    private String mSabt;
+    public String mSabt;
     @SerializedName("MModir")
     @Expose
-    private Boolean mModir;
+    public Boolean mModir;
     @SerializedName("MAccNavigation")
     @Expose
-    private Object mAccNavigation;
+    public Integer mAccNavigation;
     @SerializedName("MGorohNavigation")
     @Expose
-    private Object mGorohNavigation;
+    public Integer mGorohNavigation;
     @SerializedName("MoshtariTkmili")
     @Expose
-    private Object moshtariTkmili;
+    public Integer moshtariTkmili;
     private final static long serialVersionUID = 8492332403414069907L;
 
     public Integer getmCode() {
@@ -292,11 +299,11 @@ public class Moshtari implements Serializable
         this.mOnvan = mOnvan;
     }
 
-    public Object getmDateList() {
+    public Integer getmDateList() {
         return mDateList;
     }
 
-    public void setmDateList(Object mDateList) {
+    public void setmDateList(Integer mDateList) {
         this.mDateList = mDateList;
     }
 
@@ -332,11 +339,11 @@ public class Moshtari implements Serializable
         this.mOstan = mOstan;
     }
 
-    public Object getmPorsant() {
+    public Integer getmPorsant() {
         return mPorsant;
     }
 
-    public void setmPorsant(Object mPorsant) {
+    public void setmPorsant(Integer mPorsant) {
         this.mPorsant = mPorsant;
     }
 
@@ -404,27 +411,27 @@ public class Moshtari implements Serializable
         this.mModir = mModir;
     }
 
-    public Object getmAccNavigation() {
+    public Integer getmAccNavigation() {
         return mAccNavigation;
     }
 
-    public void setmAccNavigation(Object mAccNavigation) {
+    public void setmAccNavigation(Integer mAccNavigation) {
         this.mAccNavigation = mAccNavigation;
     }
 
-    public Object getmGorohNavigation() {
+    public Integer getmGorohNavigation() {
         return mGorohNavigation;
     }
 
-    public void setmGorohNavigation(Object mGorohNavigation) {
+    public void setmGorohNavigation(Integer mGorohNavigation) {
         this.mGorohNavigation = mGorohNavigation;
     }
 
-    public Object getMoshtariTkmili() {
+    public Integer getMoshtariTkmili() {
         return moshtariTkmili;
     }
 
-    public void setMoshtariTkmili(Object moshtariTkmili) {
+    public void setMoshtariTkmili(Integer moshtariTkmili) {
         this.moshtariTkmili = moshtariTkmili;
     }
 

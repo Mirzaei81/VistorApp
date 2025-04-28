@@ -8,4 +8,5 @@ public interface ResultAnbarPresenter {
     void onErrorServer(String e);
     void onErrorInternetConnection();
     void onFinish(ArrayList<Anbar> anbars);
+
 }

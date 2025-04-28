@@ -36,7 +36,7 @@ public class MainActivity extends FragmentActivity {
         viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                tabLayout.selectTab(tabLayout.getTabAt(position));
+                tabLayout.selectTab(tabLayout.getTabAt(position%3));
             }
         });
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {

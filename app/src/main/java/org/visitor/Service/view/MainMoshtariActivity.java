@@ -23,6 +23,7 @@ import com.google.android.material.snackbar.Snackbar;
 import org.alarmamir.R;
 import org.visitor.Api;
 
+import org.visitor.Room.MyRoomDatabase;
 import org.visitor.Service.adapter.MoshtariAdapter;
 import org.visitor.Service.presenter.ResultFactorPresenter;
 import org.visitor.Service.presenter.ResultGroupPresenter;
@@ -91,16 +92,14 @@ public class MainMoshtariActivity extends BaseActivity{
                 return false;
             }
         });
+        setupRecyclerGrup(MyRoomDatabase.getAppDatabase(MainMoshtariActivity.this).moshtariDao().getAll()); ;
         busApi.getMoshtaris(resultPresenterGetMoshtaries);
     }
     View.OnClickListener onclickListener=new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            switch (view.getId()){
-                case R.id.btnAddMoshtari:
-                    busApi.getMoshtaris(resultPresenterGetMoshtaries);
-                    break;
-
+            if (view.getId() == R.id.btnAddMoshtari) {
+                busApi.getMoshtaris(resultPresenterGetMoshtaries);
             }
         }
     };
@@ -128,13 +127,10 @@ public class MainMoshtariActivity extends BaseActivity{
     private ResultMoshtariPresenter resultPresenterGetMoshtaries = new ResultMoshtariPresenter() {
         @Override
         public void onErrorServer(String e) {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    snackbar.setText(e);
-                    snackbar.show();
-                    loading.setVisibility(View.GONE);
-                }
+            runOnUiThread(() -> {
+                snackbar.setText(e);
+                snackbar.show();
+                loading.setVisibility(View.GONE);
             });
         }
 
@@ -151,16 +147,18 @@ public class MainMoshtariActivity extends BaseActivity{
         }
         @Override
         public void onSuccessResultSearch(MoshtariResponse response) {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    Log.i(TAG, "success");
-                    loading.setVisibility(View.GONE);
-                    if (!response.getMoshtaris().isEmpty()){
-                        setupRecyclerGrup(response.getMoshtaris());
-                    }else
-                        setupRecyclerGrup(new ArrayList<>());
-                }
+            runOnUiThread(() -> {
+                Log.i(TAG, "success");
+                loading.setVisibility(View.GONE);
+                if (!response.getMoshtaris().isEmpty()){
+                    var  moshtariDao= MyRoomDatabase.getAppDatabase(MainMoshtariActivity.this).moshtariDao();
+                    moshtariDao.deleteAll();
+                    moshtariDao.deleteAllGorohMs();
+                    moshtariDao.insertAll(response.getMoshtaris());
+                    moshtariDao.insertGorohMs(response.getGorohMs());
+                    setupRecyclerGrup(response.getMoshtaris());
+                }else
+                    setupRecyclerGrup(new ArrayList<>());
             });
 
         }

@@ -18,7 +18,6 @@ public abstract class KalaDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     public abstract void insertKalas(Kala kala);
 
-
     @Update
     public abstract void updateKala(Kala kala);
 

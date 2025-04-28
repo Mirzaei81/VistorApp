@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- res/layout/spinner_item_two_texts.xml -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:showDividers="middle"
+    android:padding="8dp">
+
+
+    <TextView
+        android:id="@+id/text_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="start"
+        android:layout_alignParentEnd="true"
+        android:layout_weight="1"
+        android:textColor="@color/black"
+        android:text="Right"
+        android:textSize="16sp" />
+    <TextView
+        android:id="@+id/text_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:gravity="end"
+        android:textColor="@color/black"
+        android:text="Left"
+        android:textSize="16sp" />
+</RelativeLayout>

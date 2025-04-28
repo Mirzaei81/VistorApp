@@ -65,12 +65,9 @@ public class GroupActivity extends BaseActivity {
         myRoomDatabase = MyRoomDatabase.getAppDatabase(this);
         FrameLayout flCarts=findViewById(R.id.flCarts);
         flCarts.setVisibility(View.VISIBLE);
-        flCarts.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent( GroupActivity.this,MainKalaActivity.class);
-                startActivity(intent);
-            }
+        flCarts.setOnClickListener(view -> {
+            Intent intent=new Intent( GroupActivity.this,CartsActivity.class);
+            startActivity(intent);
         });
         busApi = new Api(GroupActivity.this,dataSaver);
 

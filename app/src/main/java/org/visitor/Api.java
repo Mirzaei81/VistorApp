@@ -10,24 +10,31 @@ import org.visitor.Service.presenter.ResultAnbarPresenter;
 import org.visitor.Service.presenter.ResultConfigPresenter;
 import org.visitor.Service.presenter.ResultFactorDetailPresenter;
 import org.visitor.Service.presenter.ResultFactorPresenter;
+import org.visitor.Service.presenter.ResultFactorSubmitPresenter;
 import org.visitor.Service.presenter.ResultLoginPresenter;
 import org.visitor.Service.presenter.ResultMoshtariPresenter;
 import org.visitor.Service.presenter.ResultUserNamePreasenter;
 import org.visitor.Service.presenter.model.AccHsbPrsnsKoliResponse;
 import org.visitor.Service.presenter.model.Anbar;
+import org.visitor.Service.presenter.model.CreateMoshtariDTO;
 import org.visitor.Service.presenter.model.FactorDetail;
+import org.visitor.Service.presenter.model.FactorResponse;
 import org.visitor.Service.presenter.model.Groups;
+import org.visitor.Service.presenter.model.ItemDetail;
 import org.visitor.Service.presenter.model.Kala;
 import org.visitor.Service.presenter.model.KalaResponse;
 import org.visitor.Service.presenter.ResultKalaPresenter;
+import org.visitor.Service.presenter.model.Moshtari;
 import org.visitor.Service.presenter.model.MoshtariResponse;
 import org.visitor.Service.presenter.ResultGroupPresenter;
+import org.visitor.Service.presenter.model.SubmitFactor;
 import org.visitor.Service.presenter.model.UserResponse;
 import org.visitor.Tools.Databace.DataSaver;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 
 
@@ -147,49 +154,45 @@ public class Api {
     public void getKalas(final int gId,final ResultKalaPresenter resultSearchBusPresenter) {
         final String url =dataSaver.getHost()+"groups/"+gId;
         cancelRequest();
-        thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                HashMap<String, String> getHashMap = new HashMap<>();
-                getHashMap.put(KeyConst.APP_KEY, KeyConst.appKey);
-                getHashMap.put(KeyConst.APP_SECRET, KeyConst.appSecret);
-                new WebServiceNetwork(context).requestWebServiceByGet(url,DbName, null, new NetworkListener() {
-                    @Override
-                    public void onStart() {
-                        resultSearchBusPresenter.onStart();
-                    }
+        new Thread(() -> {
+            HashMap<String, String> getHashMap = new HashMap<>();
+            getHashMap.put(KeyConst.APP_KEY, KeyConst.appKey);
+            getHashMap.put(KeyConst.APP_SECRET, KeyConst.appSecret);
+            new WebServiceNetwork(context).requestWebServiceByGet(url,DbName, null, new NetworkListener() {
+                @Override
+                public void onStart() {
+                    resultSearchBusPresenter.onStart();
+                }
 
-                    @Override
-                    public void onErrorInternetConnection() {
-                        resultSearchBusPresenter.onErrorInternetConnection();
+                @Override
+                public void onErrorInternetConnection() {
+                    resultSearchBusPresenter.onErrorInternetConnection();
+                    resultSearchBusPresenter.onFinish();
+                }
+
+                @Override
+                public void onErrorServer(String e) {
+                    resultSearchBusPresenter.onErrorServer(e);
+                    resultSearchBusPresenter.onFinish();
+                }
+                @Override
+                public void onFinish(String result) {
+                    try {
+                        Type kalaList = new TypeToken<ArrayList<Kala >>(){}.getType();
+                        ArrayList<Kala> response =new Gson().fromJson(result,kalaList);
+                        if (response !=null &&  !response.isEmpty()  ) {
+                            resultSearchBusPresenter.onSuccessResultSearch(response);
+                        } else
+                            resultSearchBusPresenter.noBus();
+                    } catch (Exception e) {
+                        resultSearchBusPresenter.onErrorServer(e.toString());
+                    } finally {
                         resultSearchBusPresenter.onFinish();
                     }
+                }
+            });
 
-                    @Override
-                    public void onErrorServer(String e) {
-                        resultSearchBusPresenter.onErrorServer(e);
-                        resultSearchBusPresenter.onFinish();
-                    }
-                    @Override
-                    public void onFinish(String result) {
-                        try {
-                            Type kalaList = new TypeToken<ArrayList<Kala >>(){}.getType();
-                            ArrayList<Kala> response =new Gson().fromJson(result,kalaList);
-                            if (response !=null &&  !response.isEmpty()  ) {
-                                resultSearchBusPresenter.onSuccessResultSearch(response);
-                            } else
-                                resultSearchBusPresenter.noBus();
-                        } catch (Exception e) {
-                            resultSearchBusPresenter.onErrorServer(e.toString());
-                        } finally {
-                            resultSearchBusPresenter.onFinish();
-                        }
-                    }
-                });
-
-            }
-        });
-        thread.start();
+        }).start();
     }
     public void getAnbars(final ResultAnbarPresenter resultAnbarPresenter){
         final String  url = dataSaver.getHost()+"anbar";
@@ -364,49 +367,43 @@ public class Api {
         thread.start();
 }
 
-    public void sendFactor(String endDate, String startDate, String codeMoshtari, final ResultFactorPresenter resultSearchBusPresenter) {
-        final String url =BaseConfig.BASE_URL_MASTER+"acc_HsbPrsnsKoli?dateTo="+endDate+"&dateFrom="+startDate+"&codeM="+codeMoshtari+"&mrkaz=1&mandDate=0&kind=A";
+    public void sendFactor(int F_Markz, int LoginId, int Anbar, int MoshtaryId, List<FactorDetail> itemDetails,String sharh, final ResultFactorSubmitPresenter resultSearchBusPresenter) {
+        final String url = dataSaver.getHost()+"SubmitFactor";
+        Gson gson = new Gson();
+
+        final SubmitFactor submitFactor = new SubmitFactor(F_Markz,LoginId,Anbar,MoshtaryId,sharh,itemDetails);
         cancelRequest();
-
-        thread = new Thread(new Runnable() {
+        String factorString = gson.toJson(submitFactor);
+        System.out.println(factorString);
+        new Thread(() -> new WebServiceNetwork(context).requestWebServiceByPost(url,factorString, new NetworkListener() {
             @Override
-            public void run() {
-                HashMap<String, String> getHashMap = new HashMap<>();
-                getHashMap.put(KeyConst.APP_KEY, KeyConst.appKey);
-                getHashMap.put(KeyConst.APP_SECRET, KeyConst.appSecret);
-                new WebServiceNetwork(context).requestWebServiceByGet(url,DbName, null, new NetworkListener() {
-                    @Override
-                    public void onStart() {
-                    }
+            public void onStart() {
+            }
 
-                    @Override
-                    public void onErrorInternetConnection() {
-                        resultSearchBusPresenter.onErrorInternetConnection();
-                    }
+            @Override
+            public void onErrorInternetConnection() {
+                resultSearchBusPresenter.onErrorInternetConnection();
+            }
 
-                    @Override
-                    public void onErrorServer(String e) {
-                        resultSearchBusPresenter.onErrorServer(e);
-                    }
+            @Override
+            public void onErrorServer(String e) {
+                resultSearchBusPresenter.onErrorServer(e);
+            }
 
-                    @Override
-                    public void onFinish(String result) {
-                        try {
-                            Gson gson = new Gson();
-                            AccHsbPrsnsKoliResponse response = gson.fromJson(result, AccHsbPrsnsKoliResponse.class);
-                            if (response != null  ) {
-                                resultSearchBusPresenter.onSuccessResultSearch(response);
-                            }
-                        } catch (Exception e) {
-                            resultSearchBusPresenter.onErrorServer(e.toString());
-                        }
-
+            @Override
+            public void onFinish(String result) {
+                try {
+                    Gson gson = new Gson();
+                    FactorResponse response  = gson.fromJson(result, FactorResponse.class);
+                    if (response != null  ) {
+                        resultSearchBusPresenter.onSuccessResultSearch(response);
                     }
-                });
+                } catch (Exception e) {
+                    resultSearchBusPresenter.onErrorServer(e.toString());
+                }
 
             }
-        });
-        thread.start();
+        })).start();
     }
     public synchronized void cancelRequest() {
         if (thread != null) {
