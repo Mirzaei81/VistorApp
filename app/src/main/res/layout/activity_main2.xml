@@ -33,6 +33,14 @@
             android:text="تنظیمات"
             tools:ignore="HardcodedText" />
     </com.google.android.material.tabs.TabLayout>
+    <TextView
+        android:id="@+id/personName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textSize="24dp"
+        android:layout_gravity="center"
+        android:text="welcome"/>
     <androidx.viewpager2.widget.ViewPager2
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/pager"

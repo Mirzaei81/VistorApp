@@ -1,6 +1,8 @@
 package org.visitor.Service.view;
 
 import static android.content.ContentValues.TAG;
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -10,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,26 +28,35 @@ import org.visitor.Service.presenter.ResultConfigPresenter;
 import org.visitor.Service.presenter.ResultMoshtariPresenter;
 import org.visitor.Service.presenter.model.ConfigResponse;
 import org.visitor.Service.presenter.model.Markaz;
+import org.visitor.Service.presenter.model.Moshtari;
 import org.visitor.Service.presenter.model.MoshtariResponse;
 import org.visitor.Service.presenter.model.User;
 import org.visitor.Service.presenter.model.UserConfig;
 import org.visitor.Tools.Databace.DataSaver;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class ConfigActivity extends AppCompatActivity {
     private Snackbar snackbar;
     private float SelectedYear;
     private String SelectedDaftar;
     private String SelectedCompany;
+    private String SelectedVisitor;
     private DataSaver dataSaver;
     private Api busApi;
     private ArrayList<Float> yearItems;
     private ArrayList<String> dafterItems;
     private ArrayList<String> companyItems;
     private ArrayList<String> markazItem;
+    private ArrayList<String> vistiorNames = new ArrayList<>();
+    private ArrayList<Moshtari> vistiorItem;
+    private MyRoomDatabase mRoom;
     private ImageView submit;
     private  Spinner markaz;
+    private  Spinner visitorSpinner;
+    private ProgressBar progressBar;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,13 +78,28 @@ public class ConfigActivity extends AppCompatActivity {
         assert loginId !=0.0f;
         assert serverDetail != null;
         assert markazs != null;
+        progressBar = findViewById(R.id.progressbar);
+        progressBar.setVisibility(VISIBLE);
+        visitorSpinner = findViewById(R.id.visitor);
         yearItems = new ArrayList<>();
         dafterItems  = new ArrayList<>();
         companyItems = new ArrayList<>();
         markazItem = new ArrayList<>();
+        vistiorItem = new ArrayList<>();
+
         for (Markaz markaz:markazs){
             markazItem.add(markaz.zName);
         }
+        mRoom = MyRoomDatabase.getAppDatabase(this);
+        List<Moshtari> moshtaris  = mRoom.moshtariDao().getAll();
+        vistiorItem = (ArrayList<Moshtari>) moshtaris;
+        if(!moshtaris.isEmpty()){
+            for(Moshtari m : moshtaris){
+                vistiorNames.add(m.mName);
+            }
+            initVisitorSpinner();
+        }
+        busApi.getMoshtaris(resultPresenterGetMoshtaries);
         for (UserConfig uc:serverDetail) {
             yearItems.add(uc.YYear);
             dafterItems.add(uc.YDaftar);
@@ -82,29 +109,36 @@ public class ConfigActivity extends AppCompatActivity {
         snackbar = Snackbar.make(view,"",10000);
         submit = findViewById(R.id.submit);
         submit.setOnClickListener(view1 -> {
+            progressBar.setVisibility(VISIBLE);
             ResultConfigPresenter resultConfigPresenter = new ResultConfigPresenter() {
                 @Override
                 public void onErrorServer(String e) {
-                    snackbar.setText(e);
-                    snackbar.show();
+                    runOnUiThread(()->{
+                    });
                 }
 
                 @Override
                 public void onErrorInternetConnection() {
-                    snackbar.setText("Check you're internet connection");
-                    snackbar.show();
+                    runOnUiThread(()->{
+                        snackbar.setText("Check you're internet connection");
+                        snackbar.show();
+                    });
                 }
 
                 @Override
                 public void onFinish(String response) {
+
+                    runOnUiThread(()->{
+                        progressBar.setVisibility(GONE);
+                    });
                     ConfigResponse config = new  Gson().fromJson(response, ConfigResponse.class);
                     config.markaz =markazs.get(markaz.getSelectedItemPosition()).zCode;
                     config.loginId =(int)loginId;
+                    config.visitorName = vistiorItem.get(visitorSpinner.getSelectedItemPosition()).getmName();
+                    config.mCode = vistiorItem.get(visitorSpinner.getSelectedItemPosition()).getmCode();
                     dataSaver.setConfig(config);
                     Intent intent = new Intent(ConfigActivity.this,MainActivity.class);
                     Bundle bundle = new Bundle();
-
-                    busApi.getMoshtaris(resultPresenterGetMoshtaries);
                     bundle.putBoolean("RememberMe",rememberMe);
                     intent.putExtras(bundle);
                     startActivity(intent);
@@ -117,6 +151,7 @@ public class ConfigActivity extends AppCompatActivity {
         initDaftarSpinner();
         initCompanySpinner();
         initMarkazSpinner();
+
 
     }
 
@@ -153,8 +188,17 @@ public class ConfigActivity extends AppCompatActivity {
         year.setOnItemSelectedListener(yearItemSelect);
     }
 
+    public void  initVisitorSpinner(){
+        Spinner year =  findViewById(R.id.visitor);
+        ArrayAdapter<String> year1 = new ArrayAdapter<String>(ConfigActivity.this, android.R.layout.simple_spinner_dropdown_item, vistiorNames);
+        year1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        year.setAdapter(year1);
+        ItemSelect yearItemSelect = new ItemSelect(DropDowns.visitor);
+        year.setOnItemSelectedListener(yearItemSelect);
+    }
+
     enum DropDowns {
-        year,daftar,company,markaz
+        year,daftar,company,markaz,visitor
     }
 
     private class ItemSelect extends Activity implements AdapterView.OnItemSelectedListener{
@@ -174,6 +218,8 @@ public class ConfigActivity extends AppCompatActivity {
                 case company:
                     ConfigActivity.this.SelectedCompany= (String)adapterView.getItemAtPosition(i);
                     break;
+                case  visitor:
+                    ConfigActivity.this.SelectedVisitor= (String)adapterView.getItemAtPosition(i);
             }
         }
 
@@ -185,6 +231,7 @@ public class ConfigActivity extends AppCompatActivity {
         @Override
         public void onErrorServer(String e) {
             runOnUiThread(() -> {
+                progressBar.setVisibility(GONE);
                 snackbar.setText(e);
                 snackbar.show();
             });
@@ -195,6 +242,7 @@ public class ConfigActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+                    progressBar.setVisibility(GONE);
                     snackbar.setText("please check you're internet connection");
                     snackbar.show();
                 }
@@ -202,14 +250,17 @@ public class ConfigActivity extends AppCompatActivity {
         }
         @Override
         public void onSuccessResultSearch(MoshtariResponse response) {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    Log.i(TAG, "success");
-                    if (!response.getMoshtaris().isEmpty()){
-                        MyRoomDatabase.getAppDatabase(ConfigActivity.this).moshtariDao().insertAll(response.getMoshtaris());
-                        MyRoomDatabase.getAppDatabase(ConfigActivity.this).moshtariDao().insertGorohMs(response.getGorohMs());
+            runOnUiThread(() -> {
+                progressBar.setVisibility(GONE);
+                if (!response.getMoshtaris().isEmpty()){
+                    MyRoomDatabase.getAppDatabase(ConfigActivity.this).moshtariDao().insertAll(response.getMoshtaris());
+                    MyRoomDatabase.getAppDatabase(ConfigActivity.this).moshtariDao().insertGorohMs(response.getGorohMs());
+                    vistiorNames = new ArrayList<>();
+                    vistiorItem = (ArrayList<Moshtari>) response.getMoshtaris();
+                    for(Moshtari m : response.getMoshtaris()){
+                        vistiorNames.add(m.mName);
                     }
+                    initVisitorSpinner();
                 }
             });
 

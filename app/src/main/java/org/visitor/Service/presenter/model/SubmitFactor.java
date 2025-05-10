@@ -19,7 +19,9 @@ public class SubmitFactor {
     @SerializedName("MoshtaryId")
     @Expose
     private Integer moshtaryId;
-
+    @SerializedName("F_Porsant")
+    @Expose
+    private Integer FPorsant;
     @SerializedName("Sharh")
     @Expose
     private String Sharh;
@@ -29,8 +31,9 @@ public class SubmitFactor {
     public SubmitFactor() {
     }
 
-    public SubmitFactor(Integer fMarkz, Integer loginId, Integer anbar, Integer moshtaryId,String Sharh, List<FactorDetail> factorDetails) {
+    public SubmitFactor(Integer fMarkz, Integer loginId, Integer anbar, Integer fPorsant,Integer moshtaryId,String Sharh, List<FactorDetail> factorDetails) {
         super();
+        this.FPorsant = fPorsant;
         this.Sharh = Sharh;
         this.fMarkz = fMarkz;
         this.loginId = loginId;

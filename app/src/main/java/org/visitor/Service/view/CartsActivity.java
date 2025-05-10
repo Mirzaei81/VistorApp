@@ -5,6 +5,7 @@ import static android.view.View.VISIBLE;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -35,6 +36,7 @@ import org.visitor.Tools.Databace.DataSaver;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 public class CartsActivity extends BaseActivity {
     private CartAdapter cartAdapter;
@@ -62,6 +64,48 @@ public class CartsActivity extends BaseActivity {
         init();
     }
 
+    private void showConfigMoshtariDialog(String mName) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("ویزیتور خود را انتخاب کنید");
+        ConfigResponse configResponse = dataSaver.getConfig();
+        // Create Spinner programmatically
+        Spinner spinner = new Spinner(this) ;
+
+        MoshtariDropDown adapter = new MoshtariDropDown(this,items);
+        spinner.setAdapter(adapter);
+
+        // Add Spinner to dialog
+        LinearLayout layout = new LinearLayout(this);
+        layout.setOrientation(LinearLayout.VERTICAL);
+        layout.addView(spinner);
+        builder.setView(layout);
+        String  visitorName = items.get(spinner.getSelectedItemPosition()).left;
+        int mCode = moshtaris.stream().filter(moshtari -> moshtari.getmName().equals(visitorName)).findFirst().map(moshtari -> moshtari.mCode).orElse(0);
+        builder.setPositiveButton("ثبت", (dialog, which) -> {
+            sendFactor(mName,mCode);
+        });
+
+        builder.setNegativeButton("انصراف", null);
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+    private void showConfirmationDialog(String mName) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Confirmation");
+        ConfigResponse configResponse = dataSaver.getConfig();
+        builder.setMessage(String.format(new Locale("fa", "IR")
+                ,"ایا مطمئنید که میخواهید با کاربر %s فاکتور ثبت کنید",configResponse.visitorName));
+        builder.setPositiveButton("OK", (dialog, which) -> {
+            sendFactor(mName,configResponse.mCode);
+        });
+        builder.setNegativeButton("Cancel", (dialog, which) -> {
+            // Handle Cancel action here
+            dialog.dismiss();
+            showConfigMoshtariDialog(mName);
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
     @Override
     protected int getLayoutResource() {
         return R.layout.activity_carts;
@@ -104,7 +148,7 @@ public class CartsActivity extends BaseActivity {
             showSpinnerDialogBasic();
         }
     };
-    private void sendFactor(String mName){
+    private void sendFactor(String mName,int mPorsant){
         txtBuy.setEnabled(false);
         loading.setVisibility(VISIBLE);
         ConfigResponse config =  dataSaver.getConfig();
@@ -116,7 +160,6 @@ public class CartsActivity extends BaseActivity {
                 buyer = m ;
             }
         }
-
         if(buyer==null){
             snackbar.setText("مشکلی پیش امده کاربر مورد نظر یافت نشد");
             return;
@@ -142,13 +185,13 @@ public class CartsActivity extends BaseActivity {
         if (buyer.getmCode()==10001){
             AddMoshtariActivity dialog = new AddMoshtariActivity();
             dialog.setFormDialogListener((m)->{
-                busApi.sendFactor(config.markaz,config.loginId,config.markaz,1001,factorDetails,m.toString(),presenter);
+                busApi.sendFactor(config.markaz,config.loginId,config.markaz,10001,mPorsant,factorDetails,m.toString(),presenter);
                 txtBuy.setEnabled(true);
             });
             dialog.show(getSupportFragmentManager(), "form_dialog");
 
         }else {
-            busApi.sendFactor(config.markaz,config.loginId,0,buyer.getmCode(),factorDetails,"",presenter);
+            busApi.sendFactor(config.markaz,config.loginId,0,buyer.getmCode(),mPorsant,factorDetails,"",presenter);
         }
     }
 
@@ -260,8 +303,9 @@ public class CartsActivity extends BaseActivity {
         builder.setView(layout);
 
         builder.setPositiveButton("ثبت", (dialog, which) -> {
+
             SpinnerItem  item =(SpinnerItem) spinner.getSelectedItem();
-            sendFactor(item.left);
+            showConfirmationDialog(item.left);
         });
 
         builder.setNegativeButton("انصراف", null);

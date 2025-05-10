@@ -59,6 +59,7 @@ public class SubmitFactorFragment extends Fragment {
         api.getMoshtaris(resultMoshtariPresenter);
     }
 
+
     private final ResultMoshtariPresenter  resultMoshtariPresenter = new ResultMoshtariPresenter() {
         @Override
         public void onErrorServer(String e) {

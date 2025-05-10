@@ -11,6 +11,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.DataOutput;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -19,6 +20,8 @@ import java.io.UnsupportedEncodingException;
 import java.net.CookieHandler;
 import java.net.CookieManager;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
@@ -130,55 +133,101 @@ public class WebServiceNetwork {
     public String requestWebServiceByGet(String serviceUrl,String dbName, @Nullable HashMap<String, String> postDataParams,NetworkListener networkListener) {
         URL url;
         String response = "";
-        String ConfigCoockie = String.format("Configuration=%s",dbName);
-        try {
-            networkListener.onStart();
-            if (!this.isOnline()) {
-                networkListener.onErrorInternetConnection();
-                return null;
-            } else {
-                if (postDataParams == null)
+        String ConfigCoockie = String.format("Configuration=%s", dbName);
+        networkListener.onStart();
+        if (!this.isOnline()) {
+            networkListener.onErrorInternetConnection();
+            return null;
+        } else {
+            if (postDataParams == null) {
+                try {
                     url = new URL(serviceUrl);
-                else
-                    url = new URL(serviceUrl + "?" + getPostDataString(postDataParams));
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.setReadTimeout(TIMEOUT);
-                CookieManager cookieManager = new CookieManager();
-                CookieHandler.setDefault(cookieManager);
-                conn.setRequestProperty("Cookie",ConfigCoockie);
-                conn.setConnectTimeout(TIMEOUT);
-                conn.setRequestMethod("GET");
-                conn.setRequestProperty("Connection","close");
-                conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
-                conn.setRequestProperty("Accept","application/json");
-                conn.setUseCaches(false);
-                conn.setAllowUserInteraction(false);
-                int responseCode = conn.getResponseCode();
-                if (responseCode == HttpURLConnection.HTTP_OK) {
-                    String line;
-                    BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                    while ((line = br.readLine()) != null) {
-                        response +=line;
-                    }
-                    networkListener.onFinish(response);
-                    return response;
-                } else if (responseCode==HttpsURLConnection.HTTP_NOT_FOUND) {
-                   networkListener.onErrorServer("404 not found");
-                   return null;
-                } else {
-                    String line;
-                    BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                    StringBuilder sb  =new StringBuilder();
-                    while((line = br.readLine())!=null){
-                       sb.append(line);
-                    }
-                    networkListener.onErrorServer(sb.toString());
+                } catch (MalformedURLException e) {
+                    networkListener.onErrorServer(e.toString());
                     return null;
                 }
+            } else {
+                try {
+                    url = new URL(serviceUrl + "?" + getPostDataString(postDataParams));
+                } catch (MalformedURLException e) {
+                    networkListener.onErrorServer(e.toString());
+                    return null;
+                } catch (UnsupportedEncodingException e) {
+                    throw new RuntimeException(e);
+                }
             }
-        } catch (Exception e) {
-            networkListener.onErrorServer(e.getMessage());
-            return null;
+            HttpURLConnection conn = null;
+            try {
+                conn = (HttpURLConnection) url.openConnection();
+            } catch (IOException e) {
+                networkListener.onErrorServer(e.toString());
+                return null;
+            }
+            conn.setReadTimeout(TIMEOUT);
+            CookieManager cookieManager = new CookieManager();
+            CookieHandler.setDefault(cookieManager);
+            if(dbName!=null){
+                conn.setRequestProperty("Cookie", ConfigCoockie);
+            }
+            conn.setConnectTimeout(TIMEOUT);
+            try {
+                conn.setRequestMethod("GET");
+            } catch (ProtocolException e) {
+                networkListener.onErrorServer(e.toString());
+                return null;
+            }
+            conn.setRequestProperty("Connection", "close");
+            conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
+            conn.setRequestProperty("Accept", "application/json");
+            conn.setUseCaches(false);
+            conn.setAllowUserInteraction(false);
+            int responseCode = 0;
+            try {
+                responseCode = conn.getResponseCode();
+            } catch (IOException e) {
+                networkListener.onErrorServer(e.toString());
+                return null;
+            }
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                String line;
+                BufferedReader br = null;
+                try {
+                    br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                } catch (IOException e) {
+                    networkListener.onErrorServer(e.toString());
+                    return null;
+                }
+                while (true) {
+                    try {
+                        if (!((line = br.readLine()) != null)) break;
+                    } catch (IOException e) {
+                        networkListener.onErrorServer(e.toString());
+                        break;
+                    }
+                    response += line;
+                }
+                networkListener.onFinish(response);
+                return response;
+            } else if (responseCode == HttpsURLConnection.HTTP_NOT_FOUND) {
+                networkListener.onErrorServer("404 not found");
+                return null;
+            } else {
+                String line;
+                BufferedReader br;
+                br = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+                StringBuilder sb = new StringBuilder();
+                while (true) {
+                    try {
+                        if ((line = br.readLine()) == null) break;
+                    } catch (IOException e) {
+                        networkListener.onErrorServer(sb.toString());
+                        break;
+                    }
+                    sb.append(line);
+                }
+                networkListener.onErrorServer(sb.toString());
+                return null;
+            }
         }
     }
 

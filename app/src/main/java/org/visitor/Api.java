@@ -367,11 +367,11 @@ public class Api {
         thread.start();
 }
 
-    public void sendFactor(int F_Markz, int LoginId, int Anbar, int MoshtaryId, List<FactorDetail> itemDetails,String sharh, final ResultFactorSubmitPresenter resultSearchBusPresenter) {
+    public void sendFactor(int F_Markz, int LoginId, int Anbar, int MoshtaryId,int porsantId, List<FactorDetail> itemDetails,String sharh, final ResultFactorSubmitPresenter resultSearchBusPresenter) {
         final String url = dataSaver.getHost()+"SubmitFactor";
         Gson gson = new Gson();
 
-        final SubmitFactor submitFactor = new SubmitFactor(F_Markz,LoginId,Anbar,MoshtaryId,sharh,itemDetails);
+        final SubmitFactor submitFactor = new SubmitFactor(F_Markz,LoginId,Anbar,porsantId,MoshtaryId,sharh,itemDetails);
         cancelRequest();
         String factorString = gson.toJson(submitFactor);
         System.out.println(factorString);
