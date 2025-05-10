@@ -3,6 +3,7 @@ package org.visitor.Service.fragments;
 import static android.content.ContentValues.TAG;
 import com.google.android.material.textfield.TextInputLayout;
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -79,14 +80,19 @@ public class SubmitFactorFragment extends Fragment {
         public void onSuccessResultSearch(MoshtariResponse response) {
             activity.runOnUiThread(() -> {
                 Log.i(TAG, "success");
-                if (!response.getMoshtaris().isEmpty()){
-                    List<String> moshtryNames = response.getMoshtaris()
-                            .stream()
-                            .map(Moshtari::getmName).collect(Collectors.toList());
-                    moshtaries.setAdapter(new ArrayAdapter<String>(getContext(),R.layout.item,moshtryNames));
 
-                }else
-                   moshtaries.setAdapter(new ArrayAdapter<String>(getContext(),R.layout.item,new ArrayList<>()));
+                Context context =  getContext();
+                if(context!=null){
+                    if (!response.getMoshtaris().isEmpty()){
+                        List<String> moshtryNames = response.getMoshtaris()
+                                .stream()
+                                .map(Moshtari::getmName).collect(Collectors.toList());
+                        moshtaries.setAdapter(new ArrayAdapter<String>(getContext(),R.layout.item,moshtryNames));
+
+                    }else
+                        moshtaries.setAdapter(new ArrayAdapter<String>(getContext(),R.layout.item,new ArrayList<>()));
+
+                }
 
                 moshtaries.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override

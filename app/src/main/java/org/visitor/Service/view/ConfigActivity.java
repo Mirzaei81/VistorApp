@@ -43,19 +43,14 @@ public class ConfigActivity extends AppCompatActivity {
     private float SelectedYear;
     private String SelectedDaftar;
     private String SelectedCompany;
-    private String SelectedVisitor;
     private DataSaver dataSaver;
     private Api busApi;
     private ArrayList<Float> yearItems;
     private ArrayList<String> dafterItems;
     private ArrayList<String> companyItems;
     private ArrayList<String> markazItem;
-    private ArrayList<String> vistiorNames = new ArrayList<>();
-    private ArrayList<Moshtari> vistiorItem;
-    private MyRoomDatabase mRoom;
     private ImageView submit;
     private  Spinner markaz;
-    private  Spinner visitorSpinner;
     private ProgressBar progressBar;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -79,27 +74,14 @@ public class ConfigActivity extends AppCompatActivity {
         assert serverDetail != null;
         assert markazs != null;
         progressBar = findViewById(R.id.progressbar);
-        progressBar.setVisibility(VISIBLE);
-        visitorSpinner = findViewById(R.id.visitor);
         yearItems = new ArrayList<>();
         dafterItems  = new ArrayList<>();
         companyItems = new ArrayList<>();
         markazItem = new ArrayList<>();
-        vistiorItem = new ArrayList<>();
 
         for (Markaz markaz:markazs){
             markazItem.add(markaz.zName);
         }
-        mRoom = MyRoomDatabase.getAppDatabase(this);
-        List<Moshtari> moshtaris  = mRoom.moshtariDao().getAll();
-        vistiorItem = (ArrayList<Moshtari>) moshtaris;
-        if(!moshtaris.isEmpty()){
-            for(Moshtari m : moshtaris){
-                vistiorNames.add(m.mName);
-            }
-            initVisitorSpinner();
-        }
-        busApi.getMoshtaris(resultPresenterGetMoshtaries);
         for (UserConfig uc:serverDetail) {
             yearItems.add(uc.YYear);
             dafterItems.add(uc.YDaftar);
@@ -109,7 +91,9 @@ public class ConfigActivity extends AppCompatActivity {
         snackbar = Snackbar.make(view,"",10000);
         submit = findViewById(R.id.submit);
         submit.setOnClickListener(view1 -> {
-            progressBar.setVisibility(VISIBLE);
+            runOnUiThread(()->{
+                progressBar.setVisibility(VISIBLE);
+            });
             ResultConfigPresenter resultConfigPresenter = new ResultConfigPresenter() {
                 @Override
                 public void onErrorServer(String e) {
@@ -134,15 +118,14 @@ public class ConfigActivity extends AppCompatActivity {
                     ConfigResponse config = new  Gson().fromJson(response, ConfigResponse.class);
                     config.markaz =markazs.get(markaz.getSelectedItemPosition()).zCode;
                     config.loginId =(int)loginId;
-                    config.visitorName = vistiorItem.get(visitorSpinner.getSelectedItemPosition()).getmName();
-                    config.mCode = vistiorItem.get(visitorSpinner.getSelectedItemPosition()).getmCode();
                     dataSaver.setConfig(config);
-                    Intent intent = new Intent(ConfigActivity.this,MainActivity.class);
+                    Intent intent = new Intent(ConfigActivity.this,Visitor_activity.class);
                     Bundle bundle = new Bundle();
                     bundle.putBoolean("RememberMe",rememberMe);
                     intent.putExtras(bundle);
                     startActivity(intent);
                     finish();
+                    return;
                 }
             };
             busApi.getDbName(SelectedYear,SelectedDaftar,SelectedCompany,resultConfigPresenter);
@@ -188,17 +171,10 @@ public class ConfigActivity extends AppCompatActivity {
         year.setOnItemSelectedListener(yearItemSelect);
     }
 
-    public void  initVisitorSpinner(){
-        Spinner year =  findViewById(R.id.visitor);
-        ArrayAdapter<String> year1 = new ArrayAdapter<String>(ConfigActivity.this, android.R.layout.simple_spinner_dropdown_item, vistiorNames);
-        year1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        year.setAdapter(year1);
-        ItemSelect yearItemSelect = new ItemSelect(DropDowns.visitor);
-        year.setOnItemSelectedListener(yearItemSelect);
-    }
+
 
     enum DropDowns {
-        year,daftar,company,markaz,visitor
+        year,daftar,company,markaz
     }
 
     private class ItemSelect extends Activity implements AdapterView.OnItemSelectedListener{
@@ -218,8 +194,6 @@ public class ConfigActivity extends AppCompatActivity {
                 case company:
                     ConfigActivity.this.SelectedCompany= (String)adapterView.getItemAtPosition(i);
                     break;
-                case  visitor:
-                    ConfigActivity.this.SelectedVisitor= (String)adapterView.getItemAtPosition(i);
             }
         }
 
@@ -227,43 +201,4 @@ public class ConfigActivity extends AppCompatActivity {
         public void onNothingSelected(AdapterView<?> adapterView) {}
     };
 
-    private final ResultMoshtariPresenter resultPresenterGetMoshtaries = new ResultMoshtariPresenter() {
-        @Override
-        public void onErrorServer(String e) {
-            runOnUiThread(() -> {
-                progressBar.setVisibility(GONE);
-                snackbar.setText(e);
-                snackbar.show();
-            });
-        }
-
-        @Override
-        public void onErrorInternetConnection() {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    progressBar.setVisibility(GONE);
-                    snackbar.setText("please check you're internet connection");
-                    snackbar.show();
-                }
-            });
-        }
-        @Override
-        public void onSuccessResultSearch(MoshtariResponse response) {
-            runOnUiThread(() -> {
-                progressBar.setVisibility(GONE);
-                if (!response.getMoshtaris().isEmpty()){
-                    MyRoomDatabase.getAppDatabase(ConfigActivity.this).moshtariDao().insertAll(response.getMoshtaris());
-                    MyRoomDatabase.getAppDatabase(ConfigActivity.this).moshtariDao().insertGorohMs(response.getGorohMs());
-                    vistiorNames = new ArrayList<>();
-                    vistiorItem = (ArrayList<Moshtari>) response.getMoshtaris();
-                    for(Moshtari m : response.getMoshtaris()){
-                        vistiorNames.add(m.mName);
-                    }
-                    initVisitorSpinner();
-                }
-            });
-
-        }
-    };
 }
